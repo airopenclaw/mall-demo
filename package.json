@@ -1,0 +1,31 @@
+{
+  "name": "mall-demo",
+  "version": "1.0.0",
+  "description": "万商优选 Axure 原型项目 - 支付分账系统",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "scan": "node scan_html.js",
+    "build": "node scan_html.js",
+    "publish": "node scripts/publish.js",
+    "deploy": "bash scripts/quick-deploy.sh",
+    "deploy:full": "bash scripts/deploy.sh",
+    "test": "node scan_html.js && echo '✓ 配置生成成功'"
+  },
+  "keywords": [
+    "axure",
+    "prototype",
+    "ecommerce",
+    "payment",
+    "split-account"
+  ],
+  "author": "万商优选团队",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "local",
+    "description": "万商优选 Axure 原型项目"
+  }
+}

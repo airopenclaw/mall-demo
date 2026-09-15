@@ -1,0 +1,75 @@
+# 万商优选 - 部署配置示例
+# 复制此文件为 deploy.config.yaml 并填入真实配置
+
+server:
+  host: "123.45.67.89"              # 替换为你的阿里云ECS公网IP
+  user: "root"                       # SSH用户名，通常是 root
+  port: 22                            # SSH端口，默认22
+  remote_dir: "/data/www/mall-demo"   # 服务器部署目录
+
+# 域名配置（可选）
+domain:
+  enabled: false                     # 是否启用域名，设为 true 启用
+  name: "www.example.com"            # 你的域名
+
+# 部署选项
+deploy:
+  # 打包时排除的文件/文件夹
+  excludes:
+    - "node_modules"
+    - "备份"
+    - ".history"
+    - "*.log"
+    - ".git"
+    - ".DS_Store"
+    - "scripts/tmp"
+
+  # 需要包含的顶层文件夹
+  include_folders:
+    - "支付分账"
+    - "店铺首页"
+    - "店铺中心"
+    - "移动商城"
+    - "商家入驻"
+
+  # 需要包含的根目录文件
+  include_files:
+    - "server.js"
+    - "scan_html.js"
+    - "package.json"
+    - "README.md"
+
+  # 服务器端自动执行的命令
+  post_deploy:
+    - "npm install"
+    - "node scan_html.js"
+    - "systemctl restart nginx"
+
+# Nginx配置模板
+nginx:
+  config_path: "/etc/nginx/conf.d/mall-demo.conf"
+  template: |
+    server {
+        listen 80;
+        server_name {{DOMAIN}};
+
+        root {{REMOTE_DIR}}/支付分账/平台后台;
+        index index.html;
+
+        # 静态资源缓存
+        location ~* \.(html|css|js|png|jpg|gif|ico|svg)$ {
+            expires 7d;
+            add_header Cache-Control "public, immutable";
+        }
+
+        # Axure原型支持
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        # 错误页面
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+    }

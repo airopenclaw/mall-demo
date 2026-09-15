@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+.tmp/
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+
+# Environment
+.env
+.env.local
+
+# Backup files
+备份/
+.history/
