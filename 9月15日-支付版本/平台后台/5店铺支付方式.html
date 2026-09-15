@@ -1068,7 +1068,7 @@
         .state-machine-diagram {
             display: flex;
             flex-direction: row;
-            align-items: stretch;
+            align-items: center;
             justify-content: center;
             gap: 0;
             overflow-x: auto;
@@ -1137,22 +1137,31 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 0 10px;
+            padding: 0 15px;
             flex-shrink: 0;
-        }
-
-        .arrow-text {
-            font-size: 11px;
-            color: #999;
-            margin-bottom: 4px;
-            white-space: nowrap;
+            position: relative;
         }
 
         .arrow-line {
-            font-size: 20px;
+            font-size: 24px;
             color: #1890ff;
             font-weight: bold;
             line-height: 1;
+        }
+
+        .arrow-action {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: #666;
+            border: 1px solid #d9d9d9;
+            border-radius: 10px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -1526,7 +1535,7 @@
                     <div class="state-node" data-page-node-id="stateInitial">
                         <div class="state-content">商户入驻<br>审核通过</div>
                         <div class="state-arrow">
-                            <span class="arrow-text">初始化</span>
+                            <div class="arrow-action" data-page-node-id="arrowAction1">初始化</div>
                             <div class="arrow-line">→</div>
                         </div>
                     </div>
@@ -1538,7 +1547,7 @@
                             <div class="state-field">• 用户支付费率：<br>初始化值</div>
                         </div>
                         <div class="state-arrow">
-                            <span class="arrow-text">开户成功</span>
+                            <div class="arrow-action" data-page-node-id="arrowAction2">开户成功</div>
                             <div class="arrow-line">→</div>
                         </div>
                     </div>
@@ -1547,6 +1556,8 @@
                         <div class="state-header">已开通</div>
                         <div class="state-body">
                             <div class="state-field">• 支持支付交易</div>
+                            <div class="state-field">• 可修改分账时点</div>
+                            <div class="state-field">• 可修改支付费率</div>
                         </div>
                     </div>
                 </div>
