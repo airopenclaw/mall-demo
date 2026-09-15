@@ -1,0 +1,32 @@
+<div id="page-body">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">商品列表</div>
+      <div class="table-actions">
+        <button class="btn btn-primary btn-sm">+ 添加商品</button>
+        <button class="btn btn-default btn-sm">批量导入</button>
+      </div>
+    </div>
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>商品ID</th><th>商品名称</th><th>分类</th><th>品牌</th><th>价格(¥)</th><th>库存</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>P001</td><td>格力空调 KFR-35GW</td><td>空调</td><td>格力</td><td>3,299.00</td><td>128</td><td><span class="tag tag-success">上架</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">下架</a></td></tr>
+          <tr><td>P002</td><td>美的电饭煲 MB-FB40</td><td>厨房电器</td><td>美的</td><td>459.00</td><td>56</td><td><span class="tag tag-success">上架</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">下架</a></td></tr>
+          <tr><td>P003</td><td>海尔冰箱 BCD-470</td><td>冰箱</td><td>海尔</td><td>4,599.00</td><td>32</td><td><span class="tag tag-success">上架</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">下架</a></td></tr>
+          <tr><td>P004</td><td>西门子洗衣机 WM12</td><td>洗衣机</td><td>西门子</td><td>3,899.00</td><td>0</td><td><span class="tag tag-danger">缺货</span></td><td><a class="link-primary" href="#">补货</a></td></tr>
+          <tr><td>P005</td><td>TCL电视 65V8E</td><td>电视</td><td>TCL</td><td>2,799.00</td><td>88</td><td><span class="tag tag-success">上架</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">下架</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 5 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

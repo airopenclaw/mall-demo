@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="scs0bbBwaDUVweUHFkMPKo">
+<head data-page-node-id="YLes0aHxfo1nkv7qoKRUPN">
+    <meta charset="UTF-8" data-page-node-id="uXeBBowaZbk1gVQ54CsCAu">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="N4ZZ0GQmVrtwMgMOfH06Ch">
+    <title>账户流水</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        /* 顶部菜单栏 */
+        .top-menu {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .top-menu-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 20px;
+            border-right: 1px solid #e0e0e0;
+            margin-right: 0;
+            white-space: nowrap;
+            width: 180px;
+            flex-shrink: 0;
+        }
+
+        .top-menu-left {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .top-menu-item {
+            padding: 0 15px;
+            height: 50px;
+            line-height: 50px;
+            cursor: default;
+            color: #666;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .top-menu-item:hover {
+            color: #333;
+        }
+
+        .top-menu-item.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .top-menu-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #667eea;
+        }
+
+        .top-menu-right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-text {
+            background: transparent;
+            border: 1px solid #667eea;
+            color: #667eea;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-text:hover {
+            background: #667eea;
+            color: #fff;
+        }
+
+        /* 主体布局 */
+        .main-container {
+            display: flex;
+            margin-top: 50px;
+            min-height: calc(100vh - 50px);
+        }
+
+        /* 左侧菜单 */
+        .left-sidebar {
+            width: 200px;
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+
+        .menu-level-1 {
+            margin-bottom: 5px;
+        }
+
+        .menu-level-1-header {
+            padding: 10px 20px;
+            cursor: default;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .menu-level-1-header::after {
+            content: '▼';
+            font-size: 10px;
+            color: #999;
+        }
+
+        .menu-level-2 {
+            padding-left: 0;
+        }
+
+        .menu-level-2-item {
+            padding: 8px 20px 8px 40px;
+            cursor: default;
+            color: #666;
+        }
+
+        .menu-level-2-item:hover {
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .menu-level-2-item.active {
+            color: #667eea;
+            background: #f0f4ff;
+            font-weight: 500;
+        }
+
+        /* 右侧内容区 */
+        .content-area {
+            flex: 1;
+            background: #f0f2f5;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            background: #fff;
+            padding: 20px;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 0;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .breadcrumb span {
+            margin: 0 5px;
+            color: #999;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            background: #fff;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0 14px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            background: #207FE9;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: #fff;
+            border: none;
+            padding: 0 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            height: 32px;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid #ebeef5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px 0;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 0;
+            padding: 0 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+
+        thead {
+            background: #fafafa;
+        }
+
+        thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #606266;
+            border-bottom: 1px solid #e4e7ed;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #ebeef5;
+            font-size: 13px;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* 操作列固定在右侧 */
+        .table-container table thead th:last-child,
+        .table-container table tbody tr td:last-child {
+            position: sticky;
+            right: 10px;
+            background: #fff;
+            z-index: 10;
+        }
+
+        .table-container table thead th:last-child {
+            background: #fafafa;
+            z-index: 11;
+        }
+
+        /* 查看流水按钮样式 */
+        .btn-view {
+            background: transparent;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .btn-view:hover {
+            color: #5568d3;
+            text-decoration: underline;
+        }
+
+        .form-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .form-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .form-group {
+            display: inline-block;
+            width: calc(33.33% - 20px);
+            margin-right: 20px;
+            margin-bottom: 15px;
+            vertical-align: top;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group label::before {
+            content: "* ";
+            color: #f44336;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .rule-table {
+            margin-top: 15px;
+        }
+
+        .rule-table th {
+            background: #f0f4ff;
+        }
+
+        .rule-table td {
+            padding: 15px 12px;
+        }
+
+        .btn-link {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 搜索区域 */
+        .search-area {
+            background: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            border: none;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 0;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-item label {
+            display: inline-block;
+            margin-bottom: 0;
+            font-size: 13px;
+            color: #606266;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .search-item .form-control {
+            width: 150px;
+            height: 32px;
+            padding: 0 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #606266;
+            background: #fff;
+        }
+
+        .search-item .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            padding-bottom: 0;
+        }
+
+        .search-btn {
+            height: 32px;
+            padding: 0 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid #dcdfe6;
+            background: #fff;
+            color: #606266;
+        }
+
+        .search-btn:hover {
+            color: #667eea;
+            border-color: #667eea;
+        }
+
+        .search-btn.primary {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+
+        .search-btn.primary:hover {
+            background: #5568d3;
+            border-color: #5568d3;
+        }
+
+        .sub-table {
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .sub-table table {
+            border: none;
+        }
+
+        .sub-table th {
+            background: #fafafa;
+            padding: 10px;
+            font-size: 13px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .sub-table td {
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .note-section {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #fff9e6;
+            border-left: 4px solid #ffa726;
+        }
+
+        .note-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f57c00;
+        }
+
+        .note-section p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* 抽屉样式 */
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .drawer-overlay.show {
+            display: block;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .drawer.show {
+            right: 0;
+        }
+
+        .drawer-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1;
+        }
+
+        .drawer-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .drawer-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-close:hover {
+            color: #333;
+        }
+
+        .drawer-body {
+            padding: 20px;
+        }
+
+        /* 需求抽屉中的表格样式 */
+        .drawer-body .note-section + .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .drawer-body .note-section + .table-container thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #606266;
+            border-bottom: 1px solid #e4e7ed;
+            font-size: 13px;
+            background: #fafafa;
+        }
+
+        .drawer-body .note-section + .table-container tbody td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #ebeef5;
+            font-size: 13px;
+        }
+
+        .drawer-body .note-section + .table-container table th:first-child,
+        .drawer-body .note-section + .table-container table td:first-child {
+            width: 25%;
+            font-weight: 600;
+        }
+
+        .drawer-body .note-section + .table-container table th:last-child,
+        .drawer-body .note-section + .table-container table td:last-child {
+            width: 75%;
+        }
+
+        /* 修正：需求抽屉内字段说明表格不应用主表格"操作列固定右侧"样式，
+           避免被钉住且超宽的"说明"列遮挡"元素"列 */
+        .drawer-body .note-section + .table-container table thead th:last-child,
+        .drawer-body .note-section + .table-container table tbody td:last-child {
+            position: static;
+            right: auto;
+            background: transparent;
+            z-index: auto;
+        }
+    </style>
+</head>
+<body data-page-node-id="QmBUrrSgBdIHrvDKaBVRBm">
+    <!-- 顶部菜单栏 -->
+    <div class="top-menu" data-page-node-id="HtPB7caCBzvGRo8CMipNMc">
+        <div class="top-menu-title" data-page-node-id="c7wlLMvzxl3ZhRoOWx3vhM">平台后台</div>
+        <div class="top-menu-item" data-page-node-id="9zuyHJp93RHGmEQ6rBJiIX">运营</div>
+        <div class="top-menu-item" data-page-node-id="Yfag9mV8pB62Z8EYw5hLNe">商品</div>
+        <div class="top-menu-item" data-page-node-id="ZTIsIeWTfzwgQ9QbJv0sYG">订单</div>
+        <div class="top-menu-item" data-page-node-id="RO2woTwAloAqA6uCgG4SHP">客户</div>
+        <div class="top-menu-item" data-page-node-id="oj8QTYF8tR5n90xLpV3Z8w">plus客户</div>
+        <div class="top-menu-item" data-page-node-id="hAEivtI2BykkSxZf6PZ9Nz">营销</div>
+        <div class="top-menu-item" data-page-node-id="wZt9NfxNIIckOFLefLOh3y">装修</div>
+        <div class="top-menu-item" data-page-node-id="exTEThHVBnYEmD7I92IMWD">店铺</div>
+        <div class="top-menu-item" data-page-node-id="ICH9tHihAj1ZOxtOxHXT43">财务</div>
+        <div class="top-menu-item" data-page-node-id="vfhJYK4PJFZgWV7tdRfg20">风控</div>
+        <div class="top-menu-item active" data-page-node-id="7Ffbid1CptSi1PX45CgIEM">入驻</div>
+        <div class="top-menu-item" data-page-node-id="iEvJOZ8NvVjziVeuBaeioI">设置</div>
+        <div class="top-menu-right" data-page-node-id="TnTbNuWp8VAZdQ1f74lKbB">
+            <button class="btn-text" id="viewRequirementBtn" data-page-node-id="geF5Wb5uZREBcYuJmAu3Gp">查看需求</button>
+        </div>
+    </div>
+
+    <!-- 主体容器 -->
+    <div class="main-container" data-page-node-id="SrtFpE3rUvGOkUiLbgWW8Z">
+        <!-- 左侧菜单 -->
+        <div class="left-sidebar" data-page-node-id="gqi4IPCFq8RDFoD05KFGgA">
+            <div class="menu-level-1" data-page-node-id="q8Q7Iaii0QtmBfO7uBFckD">
+                <div class="menu-level-1-header" data-page-node-id="674BLpnZ0hnTvkSKRoffmO">商家管理</div>
+                <div class="menu-level-2" data-page-node-id="czKb1whU9hTwUE5ruHfGVQ">
+                    <div class="menu-level-2-item" data-page-node-id="lZQhfp7LjBdPZ2IUCH08G3">商家审核</div>
+                    <div class="menu-level-2-item" data-page-node-id="ysiHAXFRx59yKBn3GzxMs9">账户流水</div>
+                </div>
+            </div>
+            <div class="menu-level-1" data-page-node-id="NUih1MvRYkzTjRcsSgizBQ">
+                <div class="menu-level-1-header" data-page-node-id="i6z0j6te6skbxXL0u4CjOA">财务管理</div>
+                <div class="menu-level-2" data-page-node-id="wTeISflanDKOXMIbD1Cgeo">
+                    <div class="menu-level-2-item active" data-page-node-id="gmuclFkOqHHxjS7mzbNE0Q">支付流水</div>
+                    <div class="menu-level-2-item" data-page-node-id="Gsbo6z9F5fmdXM3UjhCF40">分账明细</div>
+                </div>
+            </div>
+            <div class="menu-level-1" data-page-node-id="TIoEU0rdU7K6sGgB477gZu">
+                <div class="menu-level-1-header" data-page-node-id="SWD3YHPNz8LOk1DqRzv1Mg">分账设置</div>
+                <div class="menu-level-2" data-page-node-id="SyvV76CDaCdVXQ7QrNMSnu">
+                    <div class="menu-level-2-item" data-page-node-id="7lB8rhfnVe1TBjqErhtNBJ">分账规则</div>
+                    <div class="menu-level-2-item" data-page-node-id="OL8exk310hvkgFYkJ7dGLg">类目服务费</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧内容区 -->
+        <div class="content-area" data-page-node-id="K8WdcJEw2DFJDxN0sYwrdV">
+            <!-- 搜索卡片 -->
+            <div class="card" data-page-node-id="9yHxUNrG65CzQjKO5a0Q56">
+                <div class="card-body" data-page-node-id="ZbeUh1c4ROelKXw25NHBid">
+                    <div class="search-area" data-page-node-id="ewhHGncqdXMzncPKpxWY8m">
+                        <div class="search-row" data-page-node-id="A37KiYXiABrYXVI0zcZsfW">
+                            <div class="search-item" data-page-node-id="Rm3XW0Ipc1jGNiPKrmsXF2">
+                                <label data-page-node-id="D4NNwCvZAz21cHzs1QAvbG">商家名称</label>
+                                <input type="text" class="form-control" placeholder="请输入商家名称" data-page-node-id="tTao2JrQIs15lddAFJTOfk">
+                            </div>
+                                                        <div class="search-item" data-page-node-id="aYjgunmoI4HSA7jvNRyioM">
+                                <label data-page-node-id="lbUcget1aMcAqm7fPd2Bai">信用代码</label>
+                                <input type="text" class="form-control" placeholder="请输入信用代码" data-page-node-id="PsrLcrpmlkflSArmrBbEh7">
+                            </div>
+                            <div class="search-item" data-page-node-id="pH0EYECvUhMHuYMhPUnb1H">
+                                <label data-page-node-id="VwsKWHzk2tHpz5xgEOYqXC">商户号</label>
+                                <input type="text" class="form-control" placeholder="请输入商户号" data-page-node-id="2wyl1YzCtEQHzoNOoz7HjO">
+                            </div>
+                            <div class="search-buttons" data-page-node-id="gmCdCcnQaEJAA3FPw5BpPB">
+                                <button class="search-btn primary" data-page-node-id="BEeYIl99WelQyVnj0XKXVp">搜索</button>
+                                <button class="search-btn" data-page-node-id="u4jQFRo842BI7V1gi3fw7S">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分账规则卡片 -->
+            <div class="card" data-page-node-id="roCQs0WpY8fbhi8g5kG4jL">
+                <div class="card-header" data-page-node-id="ZZdAj0IoVElIqtJtAApEbj">
+                    <div class="card-title" data-page-node-id="KU8KpHlVMVxFyotX2HnOoL">账户流水</div>
+                </div>
+                <div class="card-body" data-page-node-id="Dvq9fgawqHYccpLD2S9nW0">
+                    <div class="table-container" data-page-node-id="3QN9z5iUZmb3H07Gelylm5">
+                        <table data-page-node-id="UB2rBJoXB2zG15pMrH8bHT">
+                    </thead>
+                        <tr>
+                            <th width="50">序号</th>
+                            <th>商家名称</th>
+                            <th>信用代码</th>
+                            <th>商户号</th>
+                            <th>变动类型</th>
+                            <th>变动金额</th>
+                            <th>可结算金额</th>
+                            <th>变动时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>XX科技有限公司</td>
+                            <td>91110000MA01234567</td>
+                            <td>M202309001</td>
+                            <td>货款</td>
+                            <td>10000</td>
+                            <td>9000</td>
+                            <td>2023-09-01 14:30:25</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>XX科技有限公司</td>
+                            <td>91110000MA01234567</td>
+                            <td>M202309001</td>
+                            <td>充值</td>
+                            <td>2000</td>
+                            <td>11000</td>
+                            <td>2023-09-01 15:20:10</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>XX科技有限公司</td>
+                            <td>91110000MA01234567</td>
+                            <td>M202309001</td>
+                            <td>支付手续费</td>
+                            <td>-50</td>
+                            <td>10950</td>
+                            <td>2023-09-01 16:05:33</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>XX科技有限公司</td>
+                            <td>91110000MA01234567</td>
+                            <td>M202309001</td>
+                            <td>类目服务费</td>
+                            <td>-30</td>
+                            <td>10920</td>
+                            <td>2023-09-02 09:15:00</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>XX科技有限公司</td>
+                            <td>91110000MA01234567</td>
+                            <td>M202309001</td>
+                            <td>支付手续费（客户）</td>
+                            <td>-20</td>
+                            <td>10900</td>
+                            <td>2023-09-02 14:30:00</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>YY商贸有限公司</td>
+                            <td>91110000MA09876543</td>
+                            <td>M202309002</td>
+                            <td>货款</td>
+                            <td>5000</td>
+                            <td>5000</td>
+                            <td>2023-09-01 10:00:00</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>YY商贸有限公司</td>
+                            <td>91110000MA09876543</td>
+                            <td>M202309002</td>
+                            <td>提现</td>
+                            <td>-1000</td>
+                            <td>4000</td>
+                            <td>2023-09-02 11:20:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增分账规则弹窗 -->
+    <div class="modal-overlay" id="addRuleModal" data-page-node-id="npF1SATc1EpqIcAazks5ve">
+        <div class="modal" data-page-node-id="X9HQWXzRcLWby7vcS8zZ9Z">
+            <div class="modal-header" data-page-node-id="8WkeLBe0nq1WpPVdMhBHLk">
+                <h2 class="modal-title" data-page-node-id="TaxqegGm42MVYxZU5C4DDX">新增分账规则</h2>
+                <button class="modal-close" id="closeModal" data-page-node-id="8adHew3vMTPaPATW8hrcAe">&times;</button>
+            </div>
+            <div class="modal-body" data-page-node-id="puKJY9wNPOoN9TI5NfVk1X">
+                <div class="form-row" data-page-node-id="HNcK5uUdKdJokJnibD6Sif">
+                    <div class="form-group" data-page-node-id="rNPXiuO1dWUZn3lqB5B0KJ">
+                        <label data-page-node-id="AmXqV8KbjdWrFrzZ9H8SrC">支付机构</label>
+                        <select class="form-control" data-page-node-id="DIQls1xEwHks6IFD3BGthg">
+                            <option data-page-node-id="HmVZq8OyuganaMDb9A7Car">智付支付</option>
+                        </select>
+                    </div>
+
+                    <div clas
+                    s="form-group" data-page-node-id="b0y814VFnAARkRN5EF9P0l">
+                        <label data-page-node-id="TwvIs5R1oAIF2XimWZtdMp">支付方式</label>
+                        <select class="form-control" data-page-node-id="eGb3ocdG6aBtGonjBPZRRN">
+                            <option data-page-node-id="ZGwRpyVWHymt7gaYva9kBh">微信</option>
+                            <option data-page-node-id="JjSSyh1hvM2m8Wd3PJKz5w">支付宝</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" data-page-node-id="IzRbiVnn6FKfkxkujqfMRf">
+                        <label data-page-node-id="3A8h95B882FCxC0iRAOXqV">分账款项</label>
+                        <select class="form-control" data-page-node-id="cnCpjFREZr3CXDkOvhBfQE">
+                            <option data-page-node-id="T3sDQgXH4xkBjtH8w62nbX">订单支付</option>
+                            <option data-page-node-id="vjvJJdYfU5UAEWAkz3A3B3">订单退货</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 分账规则表格 -->
+                <div class="sub-table" data-page-node-id="dXR1ua53eU0tzFVapmkw4C">
+                    <table data-page-node-id="jQ0gzGnOGloD8Df6Z5MWjq">
+                        <thead data-page-node-id="sydH2WX4fSyoroZAt8g6nQ">
+                            <tr data-page-node-id="CuclgdNXNtchvNq1kUhHRK">
+                                <th width="30%" data-page-node-id="N6uGaIDERNPR0tOf9Vu52D">款项类型</th>
+                                <th width="30%" data-page-node-id="sRNmfNNeY6nLP68ZsDGvy1">分账比例%</th>
+                                <th width="30%" data-page-node-id="d75SPgarqe9TO9HJMgkQNw">收款角色</th>
+                            </tr>
+                        </thead>
+                        <tbody id="splitRulesTable" data-page-node-id="KN61NyfQRLkBzm4J6GAL1X">
+                            <tr data-page-node-id="nUtChqXJPqn9uH2MZ6eQJZ">
+                                <td data-page-node-id="OQ3jFWhBeXa3PLAO7fGb5B">支付手续费</td>
+                                <td data-page-node-id="nEe1JZW4jEql1VLArzZwq9"><input type="text" class="form-control" placeholder="请输入" style="width: 120px;" data-page-node-id="VjVwBv75fB1EhDBEe3w6Lt"></td>
+                                <td data-page-node-id="5JInxL7R6Pjk4BklLCVEku">平台</td>
+                            </tr>
+                            <tr data-page-node-id="a9enFEwMC7YErKc9F0DjJM">
+                                <td data-page-node-id="FxR8UahH5rjrVXYF3lxMlw">类目服务费</td>
+                                <td data-page-node-id="0h61o5ZYGAUfnRmKz2ChUR">按类目</td>
+                                <td data-page-node-id="IPtYvpI4KT9AHK9yUgDXD6">平台</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" data-page-node-id="FLnH1EjLeWwQRiE4gbBSJk">
+                <button class="btn-secondary" id="cancelBtn" data-page-node-id="JX5QQ0xz7Vv7vwdKasN8Mh">取消</button>
+                <button class="btn-primary" data-page-node-id="EmdTvrmv2MrU1XazwJl0zJ">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 需求抽屉 -->
+    <div class="drawer-overlay" id="drawerOverlay" data-page-node-id="PKL3YENEUmQpwMmpvcZgxj"></div>
+    <div class="drawer" id="requirementDrawer" data-page-node-id="Tydc755vory6lEa03BGDHo">
+        <div class="drawer-header" data-page-node-id="sCh3rC7B6fTU5Ddth6znBi">
+            <h2 class="drawer-title" data-page-node-id="uyNOXHBjaotQEl6W5Iu3pV">功能说明</h2>
+            <button class="drawer-close" id="drawerClose" data-page-node-id="IUjiFqpwkHC0LhmOL5Kwhy">&times;</button>
+        </div>
+        <div class="drawer-body" data-page-node-id="kaPPPUsrFvPjL7yEu2d9f5">
+            <!-- 需求说明 -->
+            <div class="note-section">
+                <h4>需求</h4>
+                <p>
+                    1、本功能主要提供查看各个入驻店铺的账户流水明细<br>
+                    2、展示商家的账户流水各类变动流水记录<br>
+                    3、本页面为只读页面，不支持新增、编辑、删除操作<br>
+                    4、支持按商家名称、商户号、信用代码搜索<br>
+                    5、货款和充值类型的金额为正数，其他类型为负数
+                </p>
+            </div>
+
+            <!-- 字段说明表格 -->
+            <div class="table-container" data-page-node-id="wOEm6IVbzJGDV9FR0hSFFS">
+                <table data-page-node-id="9FyG6Skr5pF8uWwjDjWhOQ">
+                    <thead data-page-node-id="jEDGBs93qH3kIUlekhbV4z">
+                        <tr data-page-node-id="u58PzbcJchyr4SJiKUdtT9">
+                            <th data-page-node-id="zCqKQPw4Ki3acBRXZJcfeP">元素</th>
+                            <th data-page-node-id="UNEP332BDHqcV2kGd5sok5">说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>序号</strong></td>
+                            <td>
+                                1、自增序号，从1开始
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>商家名称</strong></td>
+                            <td>
+                                1、入驻企业的全称
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>信用代码</strong></td>
+                            <td>
+                                1、企业的统一社会信用代码<br>
+                                2、格式示例：91110000MA01234567
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>商户号</strong></td>
+                            <td>
+                                1、商家在支付平台的唯一标识号<br>
+                                2、格式示例：M202309001
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>变动类型</strong></td>
+                            <td>
+                                1、货款：商家销售所得的正向货款<br>
+                                2、充值：商家充值账户的正向金额<br>
+                                3、支付手续费：平台收取商家的支付服务费<br>
+                                4、类目服务费：平台收取的类目服务费<br>
+                                5、支付手续费（客户）：平台在支付方式中设置的收取客户的支付手续费<br>
+                                6、提现：商家从平台账户提现的金额
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>变动金额</strong></td>
+                            <td>
+                                1、货款和充值为正数（整数）<br>
+                                2、其他类型为负数<br>
+                                3、格式：整数（货款、充值）或负数（其他）
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>可结算金额</strong></td>
+                            <td>
+                                1、商家当前可结算的金额<br>
+                                2、计算公式：可结算金额 = 账户余额 - 冻结金额<br>
+                                3、格式：保留两位小数
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>变动时间</strong></td>
+                            <td>
+                                1、记录账户变动的精确时间<br>
+                                2、格式：YYYY-MM-DD HH:mm:ss
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 抽屉控制
+        const viewRequirementBtn = document.getElementById('viewRequirementBtn');
+        const requirementDrawer = document.getElementById('requirementDrawer');
+        const drawerClose = document.getElementById('drawerClose');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+
+        // 打开抽屉
+        viewRequirementBtn.addEventListener('click', function() {
+            requirementDrawer.classList.add('show');
+            drawerOverlay.classList.add('show');
+        });
+
+        // 关闭抽屉
+        function closeDrawerFunc() {
+            requirementDrawer.classList.remove('show');
+            drawerOverlay.classList.remove('show');
+        }
+
+        drawerClose.addEventListener('click', closeDrawerFunc);
+
+        // 点击遮罩层关闭抽屉
+        drawerOverlay.addEventListener('click', function(e) {
+            if (e.target === drawerOverlay) {
+                closeDrawerFunc();
+            }
+        });
+    </script>
+</body>
+</html>

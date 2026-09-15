@@ -1,0 +1,31 @@
+<div id="page-body">
+  <div class="search-bar">
+    <div class="search-item">分账单号：<input type="text" placeholder="请输入分账单号"></div>
+    <div class="search-item">店铺：<select><option>全部</option><option>格力官方旗舰店</option><option>美的生活电器</option><option>海尔智家</option></select></div>
+    <div class="search-item">日期：<input type="text" placeholder="开始日期" style="width:120px;"> - <input type="text" placeholder="结束日期" style="width:120px;"></div>
+    <button class="btn btn-primary btn-sm">🔍 搜索</button>
+    <button class="btn btn-default btn-sm">重置</button>
+  </div>
+  <div class="card">
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>分账单号</th><th>订单号</th><th>店铺</th><th>分账总额</th><th>主账户到账</th><th>子账户到账</th><th>状态</th><th>分账时间</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SP20250610001</td><td>DD20250610001</td><td>格力官方旗舰店</td><td>¥3,299.00</td><td>¥2,309.30</td><td>¥989.70</td><td><span class="tag tag-success">已完成</span></td><td>2025-06-10 14:35</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>SP20250610002</td><td>DD20250610002</td><td>美的生活电器</td><td>¥918.00</td><td>¥550.80</td><td>¥367.20</td><td><span class="tag tag-warning">处理中</span></td><td>2025-06-10 15:15</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>SP20250609003</td><td>DD20250609012</td><td>海尔智家</td><td>¥12,800.00</td><td>¥10,240.00</td><td>¥2,560.00</td><td><span class="tag tag-success">已完成</span></td><td>2025-06-09 10:20</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>SP20250609004</td><td>DD20250609008</td><td>西门子家电</td><td>¥7,450.00</td><td>¥5,587.50</td><td>¥1,862.50</td><td><span class="tag tag-success">已完成</span></td><td>2025-06-09 16:45</td><td><a class="link-primary" href="#">详情</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 4 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

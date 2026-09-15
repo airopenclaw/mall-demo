@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+    <title>清空缓存工具</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>清空本地缓存</h1>
+    <button onclick="clearAll()">清空 localStorage 和 sessionStorage</button>
+    <div id="result"></div>
+
+    <script src="resources/scripts/jquery-3.2.1.min.js"></script>
+    <script>
+        function clearAll() {
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // 也清除可能的 indexedDB
+            if (window.indexedDB) {
+                indexedDB.databases().then(dbs => {
+                    dbs.forEach(db => {
+                        indexedDB.deleteDatabase(db.name);
+                    });
+                });
+            }
+
+            $('#result').html('<p style="color:green">✓ 已清空所有缓存数据</p>');
+        }
+
+        $(document).ready(function() {
+            const saved = localStorage.getItem('prototypePageConfig');
+            $('#result').html('<p>localStorage 数据: ' + (saved ? '有数据' : '无数据') + '</p>');
+
+            if (saved) {
+                try {
+                    const config = JSON.parse(saved);
+                    const versionCount = Object.keys(config.versions || {}).length;
+                    $('#result').append('<p>版本数量: ' + versionCount + '</p>');
+                } catch(e) {
+                    $('#result').append('<p style="color:red">数据格式错误: ' + e.message + '</p>');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

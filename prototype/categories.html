@@ -1,0 +1,32 @@
+<div id="page-body">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">分类管理</div>
+      <div class="table-actions">
+        <button class="btn btn-primary btn-sm">+ 添加分类</button>
+      </div>
+    </div>
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>分类ID</th><th>分类名称</th><th>父级分类</th><th>排序</th><th>商品数</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>C001</td><td>大家电</td><td>—</td><td>1</td><td>256</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><td>C002</td><td>空调</td><td>大家电</td><td>1</td><td>89</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><td>C003</td><td>冰箱</td><td>大家电</td><td>2</td><td>64</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><td>C004</td><td>洗衣机</td><td>大家电</td><td>3</td><td>52</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><td>C005</td><td>厨房电器</td><td>—</td><td>2</td><td>178</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><td>C006</td><td>生活电器</td><td>—</td><td>3</td><td>312</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 6 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

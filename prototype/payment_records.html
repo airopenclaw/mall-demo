@@ -1,0 +1,33 @@
+<div id="page-body">
+  <div class="search-bar">
+    <div class="search-item">流水号：<input type="text" placeholder="请输入流水号"></div>
+    <div class="search-item">店铺：<select><option>全部</option><option>格力官方旗舰店</option><option>美的生活电器</option><option>海尔智家</option></select></div>
+    <div class="search-item">类型：<select><option>全部</option><option>收入</option><option>支出</option><option>分账</option><option>退款</option></select></div>
+    <div class="search-item">日期：<input type="text" placeholder="开始日期" style="width:120px;"> - <input type="text" placeholder="结束日期" style="width:120px;"></div>
+    <button class="btn btn-primary btn-sm">🔍 搜索</button>
+    <button class="btn btn-default btn-sm">导出</button>
+  </div>
+  <div class="card">
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>流水号</th><th>关联单号</th><th>账户</th><th>类型</th><th>金额</th><th>余额</th><th>备注</th><th>时间</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>T20250610001</td><td>DD20250610001</td><td>格力分账主账户</td><td><span class="tag tag-success">收入</span></td><td>+¥3,299.00</td><td>¥128,450.00</td><td>订单收款</td><td>2025-06-10 14:32</td></tr>
+          <tr><td>T20250610002</td><td>SP20250610001</td><td>格力供应链子账户</td><td><span class="tag tag-success">收入</span></td><td>+¥989.70</td><td>¥56,230.00</td><td>分账入账</td><td>2025-06-10 14:35</td></tr>
+          <tr><td>T20250610003</td><td>RF20250609002</td><td>格力分账主账户</td><td><span class="tag tag-danger">支出</span></td><td>-¥459.00</td><td>¥127,991.00</td><td>退款出款</td><td>2025-06-09 16:50</td></tr>
+          <tr><td>T20250609004</td><td>DD20250609012</td><td>海尔分账主账户</td><td><span class="tag tag-success">收入</span></td><td>+¥12,800.00</td><td>¥45,120.00</td><td>订单收款</td><td>2025-06-09 10:15</td></tr>
+          <tr><td>T20250609005</td><td>SP20250609003</td><td>海尔分账主账户</td><td><span class="tag tag-info">分账</span></td><td>-¥2,560.00</td><td>¥42,560.00</td><td>分账出款</td><td>2025-06-09 10:20</td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 5 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

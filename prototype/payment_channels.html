@@ -1,0 +1,30 @@
+<div id="page-body">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">支付渠道管理</div>
+      <div class="table-actions">
+        <button class="btn btn-primary btn-sm">+ 添加渠道</button>
+      </div>
+    </div>
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>渠道ID</th><th>渠道名称</th><th>渠道类型</th><th>商户号</th><th>手续费率</th><th>单笔限额</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>CH001</th><td>微信支付</td><td>线上支付</td><td>1234567890</td><td>0.60%</td><td>¥50,000</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary channel-edit-btn" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><th>CH002</th><td>支付宝</td><td>线上支付</td><td>0987654321</td><td>0.60%</td><td>¥50,000</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary channel-edit-btn" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><th>CH003</th><td>银联云闪付</td><td>线上支付</td><td>1122334455</td><td>0.55%</td><td>¥100,000</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary channel-edit-btn" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+          <tr><th>CH004</th><td>对公转账</td><td>线下支付</td><td>—</td><td>0.00%</td><td>—</td><td><span class="tag tag-success">启用</span></td><td><a class="link-primary channel-edit-btn" href="#">编辑</a> <a class="link-danger" href="#">删除</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 4 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

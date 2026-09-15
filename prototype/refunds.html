@@ -1,0 +1,31 @@
+<div id="page-body">
+  <div class="search-bar">
+    <div class="search-item">退款单号：<input type="text" placeholder="请输入退款单号"></div>
+    <div class="search-item">店铺：<select><option>全部</option><option>格力官方旗舰店</option><option>美的生活电器</option><option>海尔智家</option></select></div>
+    <div class="search-item">状态：<select><option>全部</option><option>待审核</option><option>已通过</option><option>已拒绝</option><option>退款中</option><option>已完成</option></select></div>
+    <button class="btn btn-primary btn-sm">🔍 搜索</button>
+    <button class="btn btn-default btn-sm">重置</button>
+  </div>
+  <div class="card">
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>退款单号</th><th>原订单号</th><th>店铺</th><th>商品</th><th>退款金额</th><th>原因</th><th>状态</th><th>申请时间</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>RF20250610001</td><td>DD20250608015</td><td>格力官方旗舰店</td><td>空调 KFR-35GW</td><td>¥3,299.00</td><td>商品质量问题</td><td><span class="tag tag-warning">待审核</span></td><td>2025-06-10 09:15</td><td><a class="link-primary" href="#">审核</a></td></tr>
+          <tr><td>RF20250609002</td><td>DD20250608022</td><td>美的生活电器</td><td>电饭煲 MB-FB40</td><td>¥459.00</td><td>不想要了</td><td><span class="tag tag-success">已通过</span></td><td>2025-06-09 16:45</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>RF20250609003</td><td>DD20250607008</td><td>海尔智家</td><td>冰箱 BCD-470</td><td>¥4,599.00</td><td>尺寸不符</td><td><span class="tag tag-info">退款中</span></td><td>2025-06-09 11:30</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>RF20250608004</td><td>DD20250606033</td><td>西门子家电</td><td>洗衣机 WM12</td><td>¥3,899.00</td><td>商品损坏</td><td><span class="tag tag-success">已完成</span></td><td>2025-06-08 14:22</td><td><a class="link-primary" href="#">详情</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 4 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

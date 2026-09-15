@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>清除浏览器缓存 - 一键更新</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        h1 { color: #667eea; margin-bottom: 30px; text-align: center; }
+        .step { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea; }
+        .step h3 { margin-top: 0; color: #333; }
+        .btn { display: inline-block; padding: 15px 30px; margin: 10px 5px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-size: 16px; cursor: pointer; border: none; transition: all 0.3s; }
+        .btn:hover { background: #5568d3; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); }
+        .btn-success { background: #4caf50; }
+        .btn-success:hover { background: #45a049; }
+        .btn-danger { background: #f44336; }
+        .btn-danger:hover { background: #da190b; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; color: #856404; padding: 15px; border-radius: 6px; margin: 20px 0; }
+        code { background: #e8e8e8; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .shortcut { background: #667eea; color: white; padding: 3px 8px; border-radius: 4px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 强制刷新缓存</h1>
+
+        <div class="warning">
+            <strong>⚠️ 为什么修改没有生效？</strong><br>
+            浏览器缓存了旧的 CSS 和 JavaScript 文件。即使服务器有最新文件，浏览器也可能使用缓存。
+        </div>
+
+        <div class="step">
+            <h3>方法 1：强制刷新（最快）</h3>
+            <p>在打开 index.html 的页面按：</p>
+            <ul>
+                <li><strong>Mac</strong>: <span class="shortcut">Cmd</span> + <span class="shortcut">Shift</span> + <span class="shortcut">R</span></li>
+                <li><strong>Windows</strong>: <span class="shortcut">Ctrl</span> + <span class="shortcut">Shift</span> + <span class="shortcut">R</span></li>
+            </ul>
+            <p>这会强制浏览器从服务器重新加载所有文件。</p>
+        </div>
+
+        <div class="step">
+            <h3>方法 2：清除缓存数据</h3>
+            <p>清除 localStorage 和 sessionStorage：</p>
+            <button class="btn btn-danger" onclick="clearStorage()">🗑️ 清除所有缓存</button>
+            <div id="storageResult" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="step">
+            <h3>方法 3：打开新页面（带时间戳）</h3>
+            <p>访问带有时间戳的页面，绕过所有缓存：</p>
+            <button class="btn btn-success" onclick="openWithTimestamp()">🚀 打开新页面</button>
+        </div>
+
+        <div class="step">
+            <h3>方法 4：开发者工具强制刷新</h3>
+            <ol>
+                <li>打开 <span class="shortcut">F12</span> 或右键 → 检查</li>
+                <li>右键点击刷新按钮 <span class="shortcut">↻</span></li>
+                <li>选择 <strong>"清空缓存并硬性重新加载"</strong></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>方法 5：无痕/隐私模式</h3>
+            <p>使用浏览器的无痕模式，不会使用任何缓存：</p>
+            <ul>
+                <li><strong>Chrome</strong>: <span class="shortcut">Cmd</span>+<span class="shortcut">Shift</span>+<span class="shortcut">N</span> (Mac) 或 <span class="shortcut">Ctrl</span>+<span class="shortcut">Shift</span>+<span class="shortcut">N</span> (Windows)</li>
+                <li><strong>Safari</strong>: 文件 → 新建无痕浏览窗口</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index_force.html" class="btn">📄 打开强制更新版</a>
+            <a href="index.html" class="btn btn-success">✓ 打开标准版</a>
+        </div>
+    </div>
+
+    <script src="resources/scripts/jquery-3.2.1.min.js"></script>
+    <script>
+        function clearStorage() {
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // 清除 IndexedDB
+            if (window.indexedDB) {
+                indexedDB.databases().then(dbs => {
+                    dbs.forEach(db => indexedDB.deleteDatabase(db.name));
+                });
+            }
+
+            $('#storageResult').html('<p style="color: green; margin-top: 10px;">✓ 已清除所有缓存数据</p>');
+        }
+
+        function openWithTimestamp() {
+            const timestamp = new Date().getTime();
+            window.location.href = `index.html?v=${timestamp}`;
+        }
+
+        $(document).ready(function() {
+            console.log('缓存清除工具已加载');
+        });
+    </script>
+</body>
+</html>

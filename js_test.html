@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS 测试</title>
+</head>
+<body>
+    <h1>JavaScript 测试</h1>
+    <div id="result"></div>
+
+    <script>
+        try {
+            console.log('开始测试...');
+
+            // 测试 1: localStorage
+            const test = localStorage.getItem('test');
+            console.log('✓ localStorage 工作正常');
+
+            // 测试 2: 定义对象
+            const testConfig = {
+                versions: {
+                    'V1.0': {
+                        categories: {
+                            '分类1': {
+                                pages: [
+                                    { name: '页面1', file: 'page1.html' }
+                                ]
+                            }
+                        }
+                    }
+                }
+            };
+            console.log('✓ 配置对象创建成功');
+
+            // 测试 3: JSON
+            const json = JSON.stringify(testConfig);
+            const parsed = JSON.parse(json);
+            console.log('✓ JSON 序列化/反序列化正常');
+
+            // 测试 4: Object.keys
+            const versions = Object.keys(parsed.versions);
+            console.log('✓ Object.keys 工作正常:', versions);
+
+            document.getElementById('result').innerHTML = `
+                <p style="color:green">✓ 所有测试通过</p>
+                <p>localStorage: 正常</p>
+                <p>JSON: 正常</p>
+                <p>Object.keys: ${versions}</p>
+            `;
+        } catch (e) {
+            console.error('错误:', e);
+            document.getElementById('result').innerHTML = `
+                <p style="color:red">✗ 错误: ${e.message}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户管理 - 店铺后台</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'PingFang SC','Helvetica Neue',Arial,sans-serif; font-size: 14px; color: #303133; background: #f0f2f5; }
+.page { padding: 20px; }
+.page-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.card { background: #fff; border-radius: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); margin-bottom: 16px; }
+.card-header { padding: 14px 20px; border-bottom: 1px solid #ebeef5; display: flex; justify-content: space-between; align-items: center; }
+.card-title { font-size: 15px; font-weight: 600; }
+.card-body { padding: 20px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: #fafafa; }
+thead th { padding: 12px 16px; text-align: left; font-weight: 600; color: #606266; border-bottom: 1px solid #e4e7ed; }
+tbody td { padding: 11px 16px; border-bottom: 1px solid #ebeef5; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 12px; }
+.tag-success { background: #f0f9eb; color: #67c23a; border: 1px solid #e1f3d8; }
+.tag-warning { background: #fdf6ec; color: #e6a23c; border: 1px solid #faecd8; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 14px; border: 1px solid transparent; border-radius: 4px; font-size: 13px; cursor: pointer; background: #207FE9; color: #fff; }
+.pagination { display: flex; align-items: center; justify-content: flex-end; padding: 14px 20px; gap: 6px; font-size: 13px; color: #606266; }
+.page-btn { min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid #e4e7ed; border-radius: 4px; background: #fff; }
+.page-btn.active { background: #207FE9; color: #fff; }
+.page-btn.disabled { opacity: 0.4; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page-title">用户管理</div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">用户列表</div><button class="btn">+ 添加用户</button></div>
+    <div class="card-body table-wrap">
+      <table>
+        <thead><tr><th>用户ID</th><th>用户名</th><th>姓名</th><th>角色</th><th>所属店铺</th><th>手机号</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr><td>U001</td><td>admin</td><td>系统管理员</td><td>超级管理员</td><td>—</td><td>138-0000-0001</td><td><span class="tag tag-success">正常</span></td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">禁用</a></td></tr>
+          <tr><td>U002</td><td>ge_zhangsan</td><td>张三</td><td>店铺管理员</td><td>格力官方旗舰店</td><td>139-0000-0002</td><td><span class="tag tag-success">正常</span></td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">禁用</a></td></tr>
+          <tr><td>U003</td><td>me_lisi</td><td>李四</td><td>店铺管理员</td><td>美的生活电器</td><td>137-0000-0003</td><td><span class="tag tag-success">正常</span></td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">禁用</a></td></tr>
+          <tr><td>U004</td><td>hr_wangwu</td><td>王五</td><td>财务人员</td><td>海尔智家</td><td>136-0000-0004</td><td><span class="tag tag-warning">待激活</span></td><td><a href="#">激活</a></td></tr>
+          <tr><td>U005</td><td>xm_zhaoliu</td><td>赵六</td><td>运营人员</td><td>西门子家电</td><td>135-0000-0005</td><td><span class="tag tag-success">正常</span></td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">禁用</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination"><span>共 5 条</span><span class="page-btn disabled">&lt;</span><span class="page-btn active">1</span><span class="page-btn disabled">&gt;</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

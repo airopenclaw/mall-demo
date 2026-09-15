@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+    <title>支付分账系统 - 原型查看器</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link type="text/css" href="resources/css/framework.css" rel="Stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet'>
+    <link rel="shortcut icon" href="resources/images/favicon_play.ico" />
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div id="topBar">
+        <div class="topBar-left">
+            <div class="logo">万商优选原型</div>
+        </div>
+        <div class="topBar-center">
+            <button id="requirementsBtn" class="topBar-btn" title="查看需求说明">
+                <span class="icon">📋</span>
+                <span class="text">需求说明</span>
+            </button>
+        </div>
+        <div class="topBar-right">
+            <button id="toggleSidebar" class="topBar-btn" title="切换菜单">
+                <span class="icon">☰</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 需求说明模态框 -->
+    <div id="requirementsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>需求说明</h2>
+                <button class="close-btn" id="closeRequirements">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="requirements-info">
+                    <div class="info-item">
+                        <label>项目名称：</label>
+                        <span>万商茂支付分账系统</span>
+                    </div>
+                    <div class="info-item">
+                        <label>需求版本：</label>
+                        <span id="versionCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <label>功能分类：</label>
+                        <span id="categoryCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <label>页面总数：</label>
+                        <span id="pageCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <label>最后更新：</label>
+                        <span id="lastUpdate"></span>
+                    </div>
+                </div>
+                <div class="requirements-section">
+                    <h3>使用说明</h3>
+                    <ul>
+                        <li>左侧菜单按<b>需求版本</b>组织原型页面</li>
+                        <li>每个版本包含多个功能分类</li>
+                        <li>点击页面名称即可在右侧查看</li>
+                        <li>点击顶部"需求说明"可查看项目信息</li>
+                        <li>支持响应式布局，适配不同屏幕尺寸</li>
+                    </ul>
+                </div>
+                <div class="requirements-section">
+                    <h3>版本分布</h3>
+                    <div id="categoryList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主容器 -->
+    <div id="mainContainer">
+        <!-- 左侧边栏 - 需求版本目录 -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>需求版本</h3>
+                <input type="text" id="searchInput" placeholder="🔍 搜索页面..." class="search-input" />
+            </div>
+            <div id="pageList" class="page-list">
+                <!-- 页面列表将由 JavaScript 动态生成 -->
+            </div>
+        </div>
+
+        <!-- 右侧内容区 -->
+        <div id="contentArea" class="content-area">
+            <div class="content-wrapper">
+                <iframe id="pageFrame" name="pageFrame" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="resources/scripts/jquery-3.2.1.min.js"></script>
+    <script src="resources/scripts/framework.js"></script>
+</body>
+</html>

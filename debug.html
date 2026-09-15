@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配置诊断工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .status {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .btn.secondary {
+            background: #6c757d;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>🔍 配置诊断工具</h2>
+            <div id="statusArea"></div>
+        </div>
+
+        <div class="card">
+            <h2>📊 诊断信息</h2>
+            <ul class="info-list">
+                <li><strong>当前地址：</strong><span id="currentUrl"></span></li>
+                <li><strong>访问方式：</strong><span id="accessMode"></span></li>
+                <li><strong>config.js 加载：</strong><span id="configStatus"></span></li>
+                <li><strong>页面数量：</strong><span id="pageCount"></span></li>
+                <li><strong>版本数量：</strong><span id="versionCount"></span></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🔧 操作</h2>
+            <button class="btn" onclick="testConfig()">测试配置加载</button>
+            <button class="btn secondary" onclick="testAPI()">测试 API</button>
+            <button class="btn" onclick="location.reload()">刷新页面</button>
+            <button class="btn secondary" onclick="window.open('/')">打开主页</button>
+        </div>
+
+        <div class="card">
+            <h2>📄 配置内容</h2>
+            <pre id="configContent">加载中...</pre>
+        </div>
+    </div>
+
+    <script>
+        // 显示基本信息
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('accessMode').textContent = window.location.protocol === 'file:' ? '本地文件 (file://)' : '服务器模式 (http://)';
+
+        // 测试配置
+        function testConfig() {
+            const statusArea = document.getElementById('statusArea');
+            const configContent = document.getElementById('configContent');
+
+            if (typeof defaultPageConfig !== 'undefined') {
+                const config = defaultPageConfig;
+                const versions = config.versions;
+
+                document.getElementById('configStatus').innerHTML = '<span style="color:green">✓ 已加载</span>';
+
+                // 统计信息
+                let pageCount = 0;
+                Object.keys(versions).forEach(versionName => {
+                    const version = versions[versionName];
+                    Object.keys(version.categories || version).forEach(categoryName => {
+                        const category = version.categories ? version.categories[categoryName] : version[categoryName];
+                        if (category.pages) {
+                            pageCount += category.pages.length;
+                        }
+                    });
+                });
+
+                document.getElementById('pageCount').textContent = pageCount;
+                document.getElementById('versionCount').textContent = Object.keys(versions).length;
+
+                statusArea.innerHTML = '<div class="status success">✓ config.js 加载成功</div>';
+                configContent.textContent = JSON.stringify(config, null, 2);
+            } else {
+                document.getElementById('configStatus').innerHTML = '<span style="color:red">✗ 未加载</span>';
+                statusArea.innerHTML = '<div class="status error">✗ config.js 未定义</div>';
+                configContent.textContent = 'config.js 未找到';
+            }
+        }
+
+        // 测试 API
+        function testAPI() {
+            const statusArea = document.getElementById('statusArea');
+
+            fetch('/api/config')
+                .then(res => res.json())
+                .then(data => {
+                    const versions = data.versions;
+                    let pageCount = 0;
+                    Object.keys(versions).forEach(versionName => {
+                        const version = versions[versionName];
+                        Object.keys(version.categories || version).forEach(categoryName => {
+                            const category = version.categories ? version.categories[categoryName] : version[categoryName];
+                            if (category.pages) {
+                                pageCount += category.pages.length;
+                            }
+                        });
+                    });
+
+                    document.getElementById('pageCount').textContent = pageCount;
+                    document.getElementById('versionCount').textContent = Object.keys(versions).length;
+
+                    statusArea.innerHTML = '<div class="status success">✓ API 连接成功</div>';
+                    document.getElementById('configContent').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(err => {
+                    statusArea.innerHTML = '<div class="status error">✗ API 连接失败: ' + err.message + '</div>';
+                    document.getElementById('configContent').textContent = '无法连接到 /api/config，请确保 server.js 正在运行';
+                });
+        }
+
+        // 页面加载时自动测试
+        window.onload = testConfig;
+    </script>
+</body>
+</html>

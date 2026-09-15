@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>供应商列表 - 店铺后台</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'PingFang SC','Helvetica Neue',Arial,sans-serif; font-size: 14px; color: #303133; background: #f0f2f5; }
+.page { padding: 20px; }
+.page-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.card { background: #fff; border-radius: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); margin-bottom: 16px; }
+.card-body { padding: 20px; }
+.search-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; }
+.search-bar input { height: 32px; border: 1px solid #e4e7ed; border-radius: 4px; padding: 0 10px; width: 240px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 14px; border: 1px solid transparent; border-radius: 4px; font-size: 13px; cursor: pointer; }
+.btn-primary { background: #207FE9; color: #fff; }
+.btn-default { background: #fff; color: #606266; border-color: #e4e7ed; }
+.btn-info { background: #2d8cf0; color: #fff; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: #fafafa; }
+thead th { padding: 12px 16px; text-align: left; font-weight: 600; color: #606266; border-bottom: 1px solid #e4e7ed; white-space: nowrap; }
+tbody td { padding: 11px 16px; border-bottom: 1px solid #ebeef5; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 12px; }
+.tag-success { background: #f0f9eb; color: #67c23a; border: 1px solid #e1f3d8; }
+.pagination { display: flex; align-items: center; justify-content: flex-end; padding: 14px 20px; gap: 6px; font-size: 13px; color: #606266; }
+.page-btn { min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid #e4e7ed; border-radius: 4px; background: #fff; }
+.page-btn.active { background: #207FE9; color: #fff; border-color: #207FE9; }
+.page-btn.disabled { opacity: 0.4; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div class="card-body">
+      <div class="search-bar">
+        <input type="text" placeholder="请输入供应商名称">
+        <button class="btn btn-primary">查询</button>
+      </div>
+      <div style="margin-bottom: 16px; display: flex; gap: 8px;">
+        <button class="btn btn-primary">+ 添加供应商</button>
+        <button class="btn btn-info">+ 添加万商云供应商</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>供应商ID</th><th>供应商名称</th><th>联系人</th><th>联系电话</th><th>是否启用</th><th>主营品牌</th><th>主营类别</th><th>关联仓库数</th><th>关联商品数</th><th>排序</th><th>万商云供应商ID</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr><td>3851</td><td>测试供应商</td><td>—</td><td>13535279054</td><td><span class="tag tag-success">开启</span></td><td>测试2</td><td>测试1</td><td>7</td><td>2</td><td>1</td><td>—</td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">删除</a></td></tr>
+            <tr><td>3833</td><td>合肥万和电气有限公司</td><td>刘佳莹</td><td>15813635826</td><td><span class="tag tag-success">开启</span></td><td>万和</td><td>全品</td><td>2</td><td>42</td><td>2</td><td>—</td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">删除</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span>共 2 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

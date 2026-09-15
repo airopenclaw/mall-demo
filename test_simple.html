@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>样式测试</title>
+    <link type="text/css" href="resources/css/framework.css" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial; }
+    </style>
+</head>
+<body>
+    <div id="topBar" style="position:fixed;top:0;left:0;right:0;height:50px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;padding:0 20px;">
+        <div style="color:#fff;font-size:18px;font-weight:600;">测试</div>
+    </div>
+    
+    <div style="margin-top:70px;">
+        <h3>版本层级测试</h3>
+        <div class="version-group expanded">
+            <div class="version-header">
+                <span class="version-icon">🎯</span>
+                <span class="version-name">V1.0 - 基础版</span>
+                <span class="version-desc">测试描述</span>
+                <span class="version-count">2</span>
+            </div>
+            <div class="version-categories" style="max-height:2000px;">
+                <div class="category-group expanded">
+                    <div class="category-header">
+                        <span class="category-icon">📂</span>
+                        <span class="category-name">店铺后台</span>
+                        <span class="category-count">3</span>
+                    </div>
+                    <div class="category-pages" style="max-height:2000px;">
+                        <div class="page-item">
+                            <span class="page-name">数据概览</span>
+                        </div>
+                        <div class="page-item active">
+                            <span class="page-name">基本设置</span>
+                        </div>
+                        <div class="page-item">
+                            <span class="page-name">用户管理</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

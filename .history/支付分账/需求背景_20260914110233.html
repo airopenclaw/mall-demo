@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>其它说明 - 支付分账系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 页面头部 */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* 信息卡片 */
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        /* 信息表格 */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        .info-table th {
+            background: #f5f7fa;
+            font-weight: 600;
+            color: #606266;
+            width: 150px;
+        }
+
+        .info-table td {
+            color: #333;
+        }
+
+        .info-table tr:last-child td,
+        .info-table tr:last-child th {
+            border-bottom: none;
+        }
+
+        .info-table tr:hover td {
+            background: #f9f9f9;
+        }
+
+        /* 标签 */
+        .label-cell {
+            background: #f0f4ff;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        /* 章节标题 */
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+
+        /* 内容区域 */
+        .section-content {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #606266;
+        }
+
+        /* 步骤指示器 */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            color: #606266;
+            font-size: 13px;
+        }
+
+        /* 需求列表 */
+        .requirement-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirement-list li {
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            color: #606266;
+        }
+
+        .requirement-list li:before {
+            content: "✓ ";
+            color: #67c23a;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        /* 状态徽章 */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-badge.draft {
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        .status-badge.published {
+            background: #f0f9ff;
+            color: #409eff;
+        }
+
+        /* 响应式 */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .page-header {
+                padding: 30px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .info-card,
+            .section-content {
+                padding: 20px;
+            }
+
+            .info-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .info-table th {
+                width: 120px;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .page-header {
+                background: #667eea;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .info-card,
+            .section-content {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* 锚点链接 */
+        .anchor-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 10px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .section-title:hover .anchor-link {
+            opacity: 1;
+        }
+
+        .anchor-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 分隔线 */
+        .divider {
+            height: 1px;
+            background: #ebeef5;
+            margin: 30px 0;
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #667eea;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .timeline-desc {
+            color: #606266;
+            font-size: 13px;
+        }
+
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: #5568d3;
+            transform: translateY(-3px);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <div class="page-header">
+            <h1>📋 支付分账系统 - 其它说明</h1>
+            <p class="subtitle">万商优选项目 | 版本 1.0</p>
+        </div>
+
+        <!-- 需求基本信息 -->
+        <div class="info-card">
+            <h2 class="section-title">需求基本信息</h2>
+            <table class="info-table">
+                <tr>
+                    <th>需求名称</th>
+                    <td>支付分账</td>
+                </tr>
+                <tr>
+                    <th>所属项目</th>
+                    <td>万商优选</td>
+                </tr>
+                <tr>
+                    <th>产品经理</th>
+                    <td>宁红锦</td>
+                </tr>
+                <tr>
+                    <th>文档状态</th>
+                    <td><span class="status-badge published">正式发布</span></td>
+                </tr>
+                <tr>
+                    <th>读者</th>
+                    <td>业务部门、产品、UI设计、技术、测试人员</td>
+                </tr>
+                <tr>
+                    <th>需求撰写时间</th>
+                    <td>2025.3.4 08:00</td>
+                </tr>
+                <tr>
+                    <th>期望上线时间</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 需求简介 -->
+        <div class="section-content">
+            <h2 class="section-title">
+                需求简介
+                <a href="#section1" class="anchor-link">#</a>
+            </h2>
+            <div class="timeline" id="section1">
+                <div class="timeline-item">
+                    <div class="timeline-title">功能背景</div>
+                    <div class="timeline-desc">
+                        建立完善的支付分账体系，支持多支付机构、多支付方式的店铺级配置
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">业务价值</div>
+                    <div class="timeline-desc">
+                        实现自动化分账，降低人工操作成本，提升资金清算效率
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">适用范围</div>
+                    <div class="timeline-desc">
+                        所有入驻平台的商家店铺
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <p>
+                本系统旨在为平台提供一个灵活、高效的支付分账解决方案。通过支持多支付机构（如智付支付等）和多支付方式（如微信、支付宝等），
+                平台可以根据不同店铺的需求定制分账策略。
+            </p>
+        </div>
+
+        <!-- 需求背景 -->
+        <div class="section-content">
+            <h2 class="section-title">
+                需求背景
+                <a href="#section2" class="anchor-link">#</a>
+            </h2>
+            <div id="section2">
+                <div class="step-indicator">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">业务痛点</div>
+                        <div class="step-desc">传统手工分账方式效率低下，容易出现差错</div>
+                    </div>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">市场趋势</div>
+                        <div class="step-desc">电商平台对资金管理的自动化和透明化需求日益增长</div>
+                    </div>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">监管要求</div>
+                        <div class="step-desc">需要符合监管要求，确保资金流向可追溯、可审计</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 需求目标 -->
+        <div class="section-content">
+            <h2 class="section-title">
+                需求目标
+                <a href="#section3" class="anchor-link">#</a>
+            </h2>
+            <div id="section3">
+                <ul class="requirement-list">
+                    <li>建立统一的分账规则配置系统，支持按店铺、支付机构、支付方式进行灵活配置</li>
+                    <li>实现自动化分账处理，订单满足分账条件后自动触发分账流程</li>
+                    <li>提供清晰的分账明细查询功能，支持多维度筛选和导出</li>
+                    <li>支持类目服务费的差异化设置，满足不同品类的分账需求</li>
+                    <li>提供完整的支付流水和资金流水追踪能力</li>
+                    <li>确保分账操作的合规性和安全性，支持操作日志审计</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 业务规则 -->
+        <div class="section-content">
+            <h2 class="section-title">
+                业务规则说明
+                <a href="#section4" class="anchor-link">#</a>
+            </h2>
+            <div id="section4">
+                <div class="step-indicator">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">分账时点规则</div>
+                        <div class="step-desc">
+                            支持发货日或收货日+N天的分账时点配置，默认分账时点为发货日+11天
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">支付费率规则</div>
+                        <div class="step-desc">
+                            支持按店铺配置客户支付费率，移动商城下单时按配置的费率读取
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">分账比例配置</div>
+                        <div class="step-desc">
+                            支持支付手续费和类目服务费的分账比例配置
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">状态管理</div>
+                        <div class="step-desc">
+                            实时同步支付机构的扫码产品开通状态，包括已开通和未开通两种状态
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 注意事项 -->
+        <div class="section-content">
+            <h2 class="section-title">
+                注意事项
+                <a href="#section5" class="anchor-link">#</a>
+            </h2>
+            <div id="section5">
+                <ul class="requirement-list">
+                    <li>分账时点一经配置，将在所有新订单中生效</li>
+                    <li>修改支付费率将影响后续订单，已生成的订单不受影响</li>
+                    <li>请确保支付机构已完成扫码产品的开通流程</li>
+                    <li>分账操作一旦发起，将无法撤销，请谨慎操作</li>
+                    <li>建议定期核对分账明细与银行流水</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 相关文档 -->
+        <div class="section-content">
+            <h2 class="section-title">
+                相关文档
+                <a href="#section6" class="anchor-link">#</a>
+            </h2>
+            <div id="section6">
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 10px; margin-bottom: 8px; background: #f9f9f9; border-radius: 4px;">
+                        <a href="需求背景.html" style="color: #667eea; text-decoration: none; font-weight: 500;">📄 需求背景</a>
+                        <span style="color: #999; margin-left: 10px; font-size: 12px;">系统整体需求说明</span>
+                    </li>
+                    <li style="padding: 10px; margin-bottom: 8px; background: #f9f9f9; border-radius: 4px;">
+                        <a href="#" style="color: #667eea; text-decoration: none; font-weight: 500;">📄 接口文档</a>
+                        <span style="color: #999; margin-left: 10px; font-size: 12px;">API接口规范</span>
+                    </li>
+                    <li style="padding: 10px; margin-bottom: 8px; background: #f9f9f9; border-radius: 4px;">
+                        <a href="#" style="color: #667eea; text-decoration: none; font-weight: 500;">📄 数据库设计</a>
+                        <span style="color: #999; margin-left: 10px; font-size: 12px;">数据表结构说明</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div style="text-align: center; padding: 30px 0; color: #999; font-size: 13px;">
+            <p>© 2025 万商优选 | 支付分账系统</p>
+            <p style="margin-top: 5px;">最后更新时间：2025.3.4</p>
+        </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // 回到顶部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 监听滚动显示/隐藏回到顶部按钮
+        window.addEventListener('scroll', function() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // 添加页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

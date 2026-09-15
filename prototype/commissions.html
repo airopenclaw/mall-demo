@@ -1,0 +1,30 @@
+<div id="page-body">
+  <div class="search-bar">
+    <div class="search-item">活动名称：<input type="text" placeholder="请输入活动名称"></div>
+    <div class="search-item">状态：<select><option>全部</option><option>待审核</option><option>已发放</option><option>已取消</option></select></div>
+    <div class="search-item">日期：<input type="text" placeholder="开始日期" style="width:120px;"> - <input type="text" placeholder="结束日期" style="width:120px;"></div>
+    <button class="btn btn-primary btn-sm">🔍 搜索</button>
+    <button class="btn btn-default btn-sm">导出</button>
+  </div>
+  <div class="card">
+    <div class="card-body table-container">
+      <table>
+        <thead>
+          <tr><th>佣金单号</th><th>活动名称</th><th>供应商</th><th>佣金金额</th><th>结算状态</th><th>创建时间</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CM20250610001</td><td>618推广佣金</td><td>格力官方旗舰店</td><td>¥12,580.00</td><td><span class="tag tag-success">已结算</span></td><td>2025-06-10 10:00</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>CM20250609002</td><td>新品推广奖励</td><td>美的生活电器</td><td>¥8,320.00</td><td><span class="tag tag-warning">待结算</span></td><td>2025-06-09 14:20</td><td><a class="link-primary" href="#">详情</a></td></tr>
+          <tr><td>CM20250609003</td><td>端午推广佣金</td><td>海尔智家</td><td>¥5,460.00</td><td><span class="tag tag-success">已结算</span></td><td>2025-06-09 09:15</td><td><a class="link-primary" href="#">详情</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="page-info">共 3 条</span>
+        <span class="page-btn disabled">&lt;</span>
+        <span class="page-btn active">1</span>
+        <span class="page-btn disabled">&gt;</span>
+        <span class="page-size">每页 <select><option>10</option><option>20</option><option>50</option></select> 条</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仓库管理 - 店铺后台</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'PingFang SC','Helvetica Neue',Arial,sans-serif; font-size: 14px; color: #303133; background: #f0f2f5; }
+.page { padding: 20px; }
+.page-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.card { background: #fff; border-radius: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); margin-bottom: 16px; }
+.card-header { padding: 14px 20px; border-bottom: 1px solid #ebeef5; display: flex; justify-content: space-between; align-items: center; }
+.card-title { font-size: 15px; font-weight: 600; }
+.card-body { padding: 20px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: #fafafa; }
+thead th { padding: 12px 16px; text-align: left; font-weight: 600; color: #606266; border-bottom: 1px solid #e4e7ed; }
+tbody td { padding: 11px 16px; border-bottom: 1px solid #ebeef5; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 12px; }
+.tag-success { background: #f0f9eb; color: #67c23a; border: 1px solid #e1f3d8; }
+.tag-warning { background: #fdf6ec; color: #e6a23c; border: 1px solid #faecd8; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 14px; border: 1px solid transparent; border-radius: 4px; font-size: 13px; cursor: pointer; background: #207FE9; color: #fff; }
+.pagination { display: flex; align-items: center; justify-content: flex-end; padding: 14px 20px; gap: 6px; font-size: 13px; color: #606266; }
+.page-btn { min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid #e4e7ed; border-radius: 4px; background: #fff; }
+.page-btn.active { background: #207FE9; color: #fff; }
+.page-btn.disabled { opacity: 0.4; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page-title">仓库管理</div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">仓库列表</div><button class="btn">+ 添加仓库</button></div>
+    <div class="card-body table-wrap">
+      <table>
+        <thead><tr><th>仓库ID</th><th>仓库名称</th><th>仓库类型</th><th>所在地区</th><th>联系人</th><th>联系电话</th><th>关联供应商数</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr><td>W001</td><td>合肥总仓</td><td>中心仓</td><td>安徽省合肥市</td><td>张经理</td><td>138-0000-2001</td><td>12</td><td><span class="tag tag-success">启用</span></td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">删除</a></td></tr>
+          <tr><td>W002</td><td>广州分拨仓</td><td>分拨仓</td><td>广东省广州市</td><td>李经理</td><td>139-0000-2002</td><td>8</td><td><span class="tag tag-success">启用</span></td><td><a href="#">编辑</a> <a href="#" style="color:#f56c6c;">删除</a></td></tr>
+          <tr><td>W003</td><td>北京前置仓</td><td>前置仓</td><td>北京市大兴区</td><td>王经理</td><td>137-0000-2003</td><td>5</td><td><span class="tag tag-warning">维护中</span></td><td><a href="#">编辑</a></td></tr>
+        </tbody>
+      </table>
+      <div class="pagination"><span>共 3 条</span><span class="page-btn disabled">&lt;</span><span class="page-btn active">1</span><span class="page-btn disabled">&gt;</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

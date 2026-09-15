@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家电S2B2B支付分账系统</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/iconfont.css">
+</head>
+<body>
+<div class="app-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span>支付分账系统</span></div>
+    <div class="sidebar-menu">
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">店铺管理 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="dashboard.html"><span class="menu-icon">📊</span>数据概览</div>
+          <div class="menu-item" data-page="store.html"><span class="menu-icon">🏪</span>店铺信息</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">商品管理 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="products.html"><span class="menu-icon">📦</span>商品列表</div>
+          <div class="menu-item" data-page="categories.html"><span class="menu-icon">📁</span>分类管理</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">订单管理 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="orders.html"><span class="menu-icon">📋</span>订单列表</div>
+          <div class="menu-item" data-page="refunds.html"><span class="menu-icon">💳</span>退款管理</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">分账管理 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="split_rules.html"><span class="menu-icon">📐</span>分账规则</div>
+          <div class="menu-item" data-page="split_records.html"><span class="menu-icon">💰</span>分账记录</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">支付机构 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="payment_channels.html"><span class="menu-icon">🏦</span>支付渠道</div>
+          <div class="menu-item" data-page="payment_accounts.html"><span class="menu-icon">🔑</span>支付账户</div>
+          <div class="menu-item" data-page="payment_records.html"><span class="menu-icon">📄</span>支付记录</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">仓配管理 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item active" data-page="suppliers.html"><span class="menu-icon">🏭</span>供应商列表</div>
+          <div class="menu-item" data-page="warehouses.html"><span class="menu-icon">🏪</span>仓库管理</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">营销管理 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="promotions.html"><span class="menu-icon">🎁</span>满返活动</div>
+          <div class="menu-item" data-page="commissions.html"><span class="menu-icon">💰</span>奖励佣金</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-section-title" onclick="toggleSection(this)">系统设置 <span class="arrow">▼</span></div>
+        <div class="menu-items">
+          <div class="menu-item" data-page="settings.html"><span class="menu-icon">⚙️</span>基本设置</div>
+          <div class="menu-item" data-page="users.html"><span class="menu-icon">👥</span>用户管理</div>
+          <div class="menu-item" data-page="roles.html"><span class="menu-icon">🔒</span>角色管理</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main area -->
+  <div class="main-area">
+    <header class="header">
+      <div class="header-left">
+        <div class="breadcrumb">首页 / <span class="current" id="page-title">数据概览</span></div>
+      </div>
+      <div class="header-right">
+        <span>🔔 消息 <span class="tag tag-warning" style="margin-left:4px;">3</span></span>
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content" id="main-content">
+      <!-- Content will be loaded dynamically or shown below -->
+      <div class="page-header">
+        <div class="page-title" id="page-header-title">数据概览</div>
+        <div class="page-actions" id="page-header-actions"></div>
+      </div>
+
+      <div id="page-body">
+        <!-- Dashboard content goes here -->
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-icon blue">📦</div>
+            <div class="stat-info">
+              <div class="stat-value">1,248</div>
+              <div class="stat-label">今日订单数</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">💰</div>
+            <div class="stat-info">
+              <div class="stat-value">¥86,430</div>
+              <div class="stat-label">今日交易额</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">🏪</div>
+            <div class="stat-info">
+              <div class="stat-value">56</div>
+              <div class="stat-label">活跃店铺数</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">⚠️</div>
+            <div class="stat-info">
+              <div class="stat-value">12</div>
+              <div class="stat-label">待处理退款</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">近7日交易趋势</div>
+          </div>
+          <div class="card-body">
+            <div class="chart-placeholder">图表区域（静态演示）</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">最近订单</div>
+          </div>
+          <div class="card-body table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>订单号</th>
+                  <th>店铺名称</th>
+                  <th>商品</th>
+                  <th>金额</th>
+                  <th>状态</th>
+                  <th>时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>DD20250610001</td><td>格力官方旗舰店</td><td>空调 KFR-35GW</td><td>¥3,299.00</td><td><span class="tag tag-success">已完成</span></td><td>2025-06-10 14:32</td></tr>
+                <tr><td>DD20250610002</td><td>美的生活电器</td><td>电饭煲 MB-FB40</td><td>¥459.00</td><td><span class="tag tag-warning">待发货</span></td><td>2025-06-10 15:10</td></tr>
+                <tr><td>DD20250610003</td><td>海尔智家</td><td>冰箱 BCD-470</td><td>¥4,599.00</td><td><span class="tag tag-primary">待支付</span></td><td>2025-06-10 16:05</td></tr>
+                <tr><td>DD20250610004</td><td>格力官方旗舰店</td><td>洗衣机 XQG80</td><td>¥2,199.00</td><td><span class="tag tag-success">已完成</span></td><td>2025-06-10 16:48</td></tr>
+                <tr><td>DD20250610005</td><td>美的厨房电器</td><td>微波炉 M3-L205</td><td>¥599.00</td><td><span class="tag tag-danger">已取消</span></td><td>2025-06-10 17:20</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

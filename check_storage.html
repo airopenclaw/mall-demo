@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>检查 localStorage</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f5f5f5; }
+        .info { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        pre { background: #eee; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>localStorage 检查工具</h1>
+
+    <div class="info">
+        <h3>操作</h3>
+        <button onclick="clearData()">清空 localStorage</button>
+        <button onclick="setDefaultData()">设置默认数据</button>
+        <button onclick="checkData()">检查数据</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const defaultData = {
+            versions: {
+                'V1.0 - 基础版': {
+                    icon: '🎯',
+                    description: '店铺后台与订单支付基础功能',
+                    categories: {
+                        '店铺后台': {
+                            icon: '📂',
+                            pages: [
+                                { name: '数据概览', file: '店铺后台_数据概览.html' },
+                                { name: '基本设置', file: '店铺后台_基本设置.html' }
+                            ]
+                        }
+                    }
+                }
+            },
+            defaultPage: '店铺后台_数据概览.html'
+        };
+
+        function checkData() {
+            const saved = localStorage.getItem('prototypePageConfig');
+            let html = '<div class="info"><h3>当前数据</h3>';
+
+            if (saved) {
+                html += '<p>✓ 存在保存的数据</p>';
+                try {
+                    const data = JSON.parse(saved);
+                    const versionCount = Object.keys(data.versions || {}).length;
+                    html += '<p>版本数量: ' + versionCount + '</p>';
+
+                    if (versionCount > 0) {
+                        html += '<pre>' + JSON.stringify(data, null, 2).substring(0, 500) + '...</pre>';
+                    } else {
+                        html += '<p style="color:red">✗ versions 为空</p>';
+                    }
+                } catch (e) {
+                    html += '<p style="color:red">✗ JSON 解析失败: ' + e.message + '</p>';
+                }
+            } else {
+                html += '<p>无保存数据</p>';
+            }
+
+            html += '</div>';
+            $('#result').html(html);
+        }
+
+        function clearData() {
+            localStorage.removeItem('prototypePageConfig');
+            $('#result').html('<div class="info"><p style="color:green">✓ 已清空 prototypePageConfig</p></div>');
+        }
+
+        function setDefaultData() {
+            localStorage.setItem('prototypePageConfig', JSON.stringify(defaultData));
+            $('#result').html('<div class="info"><p style="color:green">✓ 默认数据已设置</p></div>');
+            checkData();
+        }
+
+        $(document).ready(function() {
+            checkData();
+        });
+    </script>
+    <script src="resources/scripts/jquery-3.2.1.min.js"></script>
+</body>
+</html>

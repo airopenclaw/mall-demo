@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>提交订单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .page {
+            min-height: 100vh;
+            padding-bottom: 120px;
+        }
+
+        /* 收货地址 */
+        .address-section {
+            background: #fff;
+            padding: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .address-section::after {
+            content: '';
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 0;
+            height: 8px;
+            border-radius: 4px 4px 0 0;
+            background: repeating-linear-gradient(
+                90deg,
+                #F88379 0px, #F88379 24px, transparent 24px, transparent 42px,
+                #FAC898 42px, #FAC898 66px, transparent 66px, transparent 84px,
+                #FDE7A0 84px, #FDE7A0 108px, transparent 108px, transparent 126px,
+                #A8E6A1 126px, #A8E6A1 150px, transparent 150px, transparent 168px,
+                #8AB8F7 168px, #8AB8F7 192px, transparent 192px, transparent 210px,
+                #B88CF9 210px, #B88CF9 234px, transparent 234px, transparent 252px
+            );
+        }
+
+        .address-info {
+            flex: 1;
+        }
+
+        .address-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .receiver {
+            font-weight: bold;
+            font-size: 17px;
+            color: #333;
+        }
+
+        .phone {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .address-detail {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .address-empty {
+            flex: 1;
+            color: #999;
+            font-size: 15px;
+        }
+
+        .arrow {
+            font-size: 21px;
+            color: #999;
+            margin-left: 10px;
+        }
+
+        /* 商品列表 */
+        .shop-block {
+            background: #fff;
+            margin-bottom: 10px;
+        }
+
+        .shop-header {
+            padding: 12px 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+
+        .order-item {
+            display: flex;
+            padding: 12px 16px;
+            gap: 12px;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            background: #f5f5f5;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .item-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .product-title {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .sales-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.4;
+            flex-shrink: 0;
+            white-space: nowrap;
+            height: 20px;
+            margin-right: 2px;
+        }
+
+        .sales-tag.blue {
+            color: #409eff;
+            border: 1px solid #409eff;
+        }
+
+        .sales-tag.red {
+            color: #f56c6c;
+            border: 1px solid #f56c6c;
+        }
+
+        .sales-tag.orange {
+            color: #e6a23c;
+            border: 1px solid #e6a23c;
+        }
+
+        .sales-tag.gray {
+            color: #909399;
+            border: 1px solid #909399;
+        }
+
+        .product-spec {
+            font-size: 13px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price {
+            color: #f56c6c;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .return-tag {
+            font-size: 11px;
+            color: #409eff;
+            border: 1px solid #409eff;
+            padding: 1px 4px;
+            border-radius: 2px;
+            line-height: 1;
+            margin-left: 6px;
+            background: #ecf5ff;
+        }
+
+        .qty {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* 优惠券选择 */
+        .coupon-section {
+            background: #fff;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .label {
+            font-size: 15px;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        .coupon-value {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .placeholder {
+            color: #999;
+            font-size: 15px;
+        }
+
+        .selected-text {
+            color: #409eff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* 备注 */
+        .remark-section {
+            background: #fff;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remark-input {
+            flex: 1;
+            font-size: 15px;
+            padding: 6px 0;
+            border: none;
+            outline: none;
+        }
+
+        /* 底部操作栏 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 400px;
+            padding: 16px 24px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            background: #fff;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            gap: 12px;
+        }
+
+        .bottom-bar .right {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+        }
+
+        .total-info {
+            padding-left: 24px;
+        }
+
+        .total-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            white-space: nowrap;
+            flex-wrap: nowrap;
+        }
+
+        .total-label {
+            font-size: 15px;
+            color: #333;
+            min-width: 50px;
+            flex-shrink: 0;
+        }
+
+        .actual-price,
+        .price {
+            font-size: 19px;
+            color: #f56c6c;
+            font-weight: bold;
+        }
+
+        .discount-hint {
+            font-size: 13px;
+            color: #409eff;
+            text-decoration: underline;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+        }
+
+        .submit {
+            background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(64, 158, 255, 0.35);
+            cursor: pointer;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        .submit:active {
+            transform: scale(0.96);
+        }
+
+        .submit.disabled {
+            background: #c0c4cc;
+            box-shadow: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* 优惠券选择抽屉 */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .drawer-panel {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 32px;
+            position: relative;
+            border-bottom: 2px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .drawer-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .drawer-close {
+            position: absolute;
+            right: 32px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .coupon-drawer-body {
+            padding: 16px 24px;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .coupon-option {
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            margin-bottom: 12px;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .coupon-option.selected {
+            border-color: #409eff;
+        }
+
+        .coupon-left {
+            width: 140px;
+            background: #409eff;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 12px;
+            flex-shrink: 0;
+        }
+
+        .coupon-left.no-coupon {
+            background: #c0c4cc;
+        }
+
+        .coupon-left .amount {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .coupon-left .condition {
+            font-size: 12px;
+            margin-top: 6px;
+            opacity: 0.9;
+            line-height: 1.2;
+        }
+
+        .coupon-right {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .coupon-right .right-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .coupon-right .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .status-tag {
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .status-active {
+            color: #409eff;
+            background: rgba(64, 158, 255, 0.1);
+        }
+
+        .status-pending {
+            color: #e6a23c;
+            background: rgba(230, 162, 60, 0.1);
+        }
+
+        .status-expired {
+            color: #909399;
+            background: rgba(144, 147, 153, 0.1);
+        }
+
+        .date-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .desc {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .check-mark {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: #409eff;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .drawer-footer {
+            padding: 20px 32px calc(20px + env(safe-area-inset-bottom));
+            flex-shrink: 0;
+        }
+
+        .drawer-btn {
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            background: #409eff;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 22px;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .drawer-btn:active {
+            opacity: 0.85;
+        }
+
+        /* 优惠明细抽屉 */
+        .split-overlay {
+            bottom: 120px;
+            height: auto;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .split-panel {
+            align-self: center;
+            width: 100%;
+            max-width: 400px;
+            flex: 1;
+            max-height: none;
+        }
+
+        .split-drawer-body {
+            padding: 8px 32px 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .split-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+        }
+
+        .split-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .split-label-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .split-sub {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .split-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .split-discount {
+            color: #409eff;
+        }
+
+        .split-product-list {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 0 12px;
+            margin-bottom: 4px;
+        }
+
+        .split-pitem {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            gap: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .split-pitem:last-child {
+            border-bottom: none;
+        }
+
+        .split-pimg {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            background: #fff;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 10px;
+        }
+
+        .split-pinfo {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .split-pname {
+            font-size: 13px;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .split-pprice {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .split-pdiscount {
+            font-size: 13px;
+            color: #409eff;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .split-divider {
+            height: 2px;
+            background: #f0f0f0;
+            margin: 8px 0;
+        }
+
+        .split-total-row {
+            padding: 20px 0;
+        }
+
+        .split-total-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            min-width: 50px;
+            flex-shrink: 0;
+        }
+
+        .split-total-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f56c6c;
+        }
+    
+        /* 移动端宽度限制 */
+        .mobile-wrapper {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #f5f5f5;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 400px) {
+            .mobile-wrapper {
+                max-width: 100%;
+            }
+        }
+
+    
+        /* 需求抽屉样式 */
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .drawer-overlay.show {
+            display: block;
+        }
+
+        .requirement-drawer {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            max-width: 400px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+            z-index: 2001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .requirement-drawer.show {
+            right: 0;
+        }
+
+        .drawer-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1;
+        }
+
+        .drawer-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .drawer-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-close:hover {
+            color: #333;
+        }
+
+        .drawer-body {
+            padding: 20px;
+        }
+
+        .view-requirement-btn {
+            padding: 12px 20px;
+            background: #fff;
+            color: #409eff;
+            border: 1px solid #409eff;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            margin-left: 12px;
+        }
+
+        .view-requirement-btn:hover {
+            background: #409eff;
+            color: #fff;
+        }
+
+        .view-requirement-btn:active {
+            transform: scale(0.95);
+        }
+
+    
+        /* 支付方式抽屉样式 */
+        .payment-drawer-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .payment-drawer-overlay.show {
+            display: block;
+        }
+
+        .payment-drawer {
+            position: fixed;
+            bottom: -600px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 2001;
+            transition: bottom 0.3s ease;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-drawer.show {
+            bottom: 0;
+        }
+
+        .payment-drawer-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1;
+        }
+
+        .payment-drawer-header .payment-drawer-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .payment-drawer-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .payment-drawer-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-drawer-close:hover {
+            color: #333;
+        }
+
+        .payment-drawer-body {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .payment-amount-section {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .payment-amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            line-height: 1.2;
+        }
+
+        .payment-amount-hint {
+            font-size: 13px;
+            color: #999;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .payment-option:hover {
+            border-color: #409eff;
+        }
+
+        .payment-option.selected {
+            border-color: #409eff;
+            background: rgba(64, 158, 255, 0.05);
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .payment-icon.wechat {
+            background: #07c160;
+            color: #fff;
+        }
+
+        .payment-icon.alipay {
+            background: #1677ff;
+            color: #fff;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .payment-fee {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .payment-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .payment-option.selected .payment-check {
+            border-color: #409eff;
+            background: #409eff;
+        }
+
+        .payment-option.selected .payment-check::after {
+            content: '✓';
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .payment-drawer-footer {
+            padding: 16px 24px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            border-top: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .payment-submit-btn {
+            width: 100%;
+            height: 48px;
+            line-height: 48px;
+            background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(64, 158, 255, 0.35);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .payment-submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 400px) {
+            .payment-drawer {
+                max-height: 85vh;
+            }
+
+            .payment-amount {
+                font-size: 32px;
+            }
+        }
+
+    
+        /* 浮动查看需求按钮（在demo区域外） */
+        .floating-requirement-btn {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .floating-requirement-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+
+        .floating-requirement-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        @media (max-width: 1200px) {
+            .floating-requirement-btn {
+                right: 10px;
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .floating-requirement-btn {
+                display: none;
+            }
+        }
+
+    
+        /* 表格样式 - 参考分账明细.html */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 0;
+            padding: 0 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 100%;
+        }
+
+        table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #606266;
+            border-bottom: 2px solid #e4e7ed;
+            white-space: nowrap;
+            font-size: 14px;
+            background: #f5f7fa;
+        }
+
+        table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ebeef5;
+            font-size: 14px;
+            color: #333;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table tr:hover {
+            background: #f5f7fa;
+        }
+
+        /* 需求说明区块样式 */
+        .note-section {
+            margin-bottom: 24px;
+        }
+
+        .note-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            padding-left: 8px;
+            border-left: 3px solid #409eff;
+        }
+
+        .note-section p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 400px) {
+            table th,
+            table td {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="mobile-wrapper">
+    <div class="page">
+        <!-- 收货地址 -->
+        <div class="address-section">
+            <div class="address-info">
+                <div class="address-header">
+                    <text class="receiver">张三</text>
+                    <text class="phone">13800138000</text>
+                </div>
+                <text class="address-detail">
+                    广东省深圳市南山区科技园南路123号
+                </text>
+            </div>
+            <text class="arrow">›</text>
+        </div>
+
+        <!-- 商品列表 -->
+        <div class="shop-block">
+            <div class="shop-header">
+                示例店铺
+            </div>
+            <div class="order-item">
+                <div class="product-img">商品图</div>
+                <div class="item-content">
+                    <div class="title-row">
+                        <div class="sales-tag blue">现货</div>
+                        <text class="product-title">示例商品名称</text>
+                    </div>
+                    <text class="product-spec">规格编码 | 规格参数</text>
+                    <div class="item-footer">
+                        <div class="price-row">
+                            <text class="price">¥128.00</text>
+                        </div>
+                        <text class="qty">x2</text>
+                    </div>
+                </div>
+            </div>
+            <div class="order-item">
+                <div class="product-img">商品图</div>
+                <div class="item-content">
+                    <div class="title-row">
+                        <div class="sales-tag orange">预售</div>
+                        <text class="product-title">示例商品名称2</text>
+                    </div>
+                    <text class="product-spec">规格编码 | 规格参数</text>
+                    <div class="item-footer">
+                        <div class="price-row">
+                            <text class="price">¥88.00</text>
+                            <text class="return-tag">满就返</text>
+                        </div>
+                        <text class="qty">x1</text>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 优惠券选择 -->
+        <div class="coupon-section">
+            <text class="label">优惠券</text>
+            <div class="coupon-value">
+                <text class="selected-text">满100减10</text>
+                <text class="arrow">›</text>
+            </div>
+        </div>
+
+        <!-- 备注 -->
+        <div class="remark-section">
+            <text class="label">订单备注</text>
+            <input class="remark-input" placeholder="选填，备注信息" value="">
+        </div>
+
+        <!-- 底部操作栏 -->
+        <div class="bottom-bar">
+            <div class="left">
+                <div class="total-info">
+                    <div class="total-row">
+                        <text class="total-label">合计：</text>
+                        <text class="actual-price">¥344.00</text>
+                        <text class="discount-hint">
+                            共减¥12.00 ›
+                        </text>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="submit">立即下单</div>
+            </div>
+        </div>
+
+        <!-- 优惠券选择抽屉 -->
+        <div class="drawer-overlay" id="couponOverlay">
+            <div class="drawer-panel picker-panel" id="couponDrawer">
+                <div class="drawer-header">
+                    <text class="drawer-title">选择优惠券</text>
+                    <text class="drawer-close" onclick="closeCouponDrawer()">✕</text>
+                </div>
+                <div class="coupon-drawer-body">
+                    <div class="coupon-option" onclick="selectCoupon(null)">
+                        <div class="coupon-left no-coupon">
+                            <text class="amount">—</text>
+                            <text class="condition">不使用</text>
+                        </div>
+                        <div class="coupon-right">
+                            <text class="name">不使用优惠券</text>
+                        </div>
+                        <text class="check-mark">✓</text>
+                    </div>
+                    <div class="coupon-option selected" onclick="selectCoupon(this)">
+                        <div class="coupon-left">
+                            <text class="amount">¥10</text>
+                            <text class="condition">满100可用</text>
+                        </div>
+                        <div class="coupon-right">
+                            <div class="right-top">
+                                <text class="name">满减优惠券</text>
+                            </div>
+                            <div class="date-row">
+                                <text class="date">2024/1/1 - 2024/12/31</text>
+                                <text class="status-tag status-active">生效中</text>
+                            </div>
+                        </div>
+                        <text class="check-mark">✓</text>
+                    </div>
+                    <div class="coupon-option" onclick="selectCoupon(this)">
+                        <div class="coupon-left">
+                            <text class="amount">9折</text>
+                            <text class="condition">无门槛</text>
+                        </div>
+                        <div class="coupon-right">
+                            <div class="right-top">
+                                <text class="name">折扣优惠券</text>
+                            </div>
+                            <div class="date-row">
+                                <text class="date">至 2024/12/31</text>
+                                <text class="status-tag status-active">生效中</text>
+                            </div>
+                            <text class="desc">全场通用</text>
+                        </div>
+                        <text class="check-mark">✓</text>
+                    </div>
+                </div>
+                <div class="drawer-footer">
+                    <div class="drawer-btn" onclick="closeCouponDrawer()">确定</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 优惠明细抽屉 -->
+        <div class="drawer-overlay split-overlay" id="splitOverlay">
+            <div class="drawer-panel" id="splitDrawer">
+                <div class="drawer-header">
+                    <text class="drawer-title">优惠明细</text>
+                    <text class="drawer-close" onclick="closeSplitDrawer()">✕</text>
+                </div>
+                <div class="split-drawer-body">
+                    <!-- 商品总价 -->
+                    <div class="split-row">
+                        <text class="split-label">商品总价</text>
+                        <text class="split-value">¥344.00</text>
+                    </div>
+
+                    <!-- 优惠券 -->
+                    <div class="split-row">
+                        <div class="split-label-group">
+                            <text class="split-label">优惠券</text>
+                            <text class="split-sub">满100减10</text>
+                        </div>
+                        <text class="split-value split-discount">-¥10.00</text>
+                    </div>
+
+                    <!-- 参与优惠券的商品 -->
+                    <div class="split-product-list">
+                        <div class="split-pitem">
+                            <div class="split-pimg">商品</div>
+                            <div class="split-pinfo">
+                                <text class="split-pname">示例商品名称</text>
+                                <text class="split-pprice">¥128.00 x 2</text>
+                            </div>
+                            <text class="split-pdiscount">-¥10.00</text>
+                        </div>
+                    </div>
+
+                    <!-- 分割线 -->
+                    <div class="split-divider"></div>
+
+                    <!-- 合计 -->
+                    <div class="split-row split-total-row">
+                        <text class="split-label split-total-label">合计</text>
+                        <text class="split-value split-total-value">¥334.00</text>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 关闭优惠券抽屉
+        function closeCouponDrawer() {
+            document.getElementById('couponOverlay').style.display = 'none';
+        }
+
+        // 选择优惠券
+        function selectCoupon(element) {
+            // 移除所有选中状态
+            const options = document.querySelectorAll('.coupon-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+
+            // 添加选中状态
+            if (element) {
+                element.classList.add('selected');
+            }
+
+            // 关闭抽屉
+            setTimeout(() => {
+                closeCouponDrawer();
+            }, 100);
+        }
+
+        // 关闭优惠明细抽屉
+        function closeSplitDrawer() {
+            document.getElementById('splitOverlay').style.display = 'none';
+        }
+
+        // 点击遮罩层关闭抽屉
+        document.getElementById('couponOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCouponDrawer();
+            }
+        });
+
+        document.getElementById('splitOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSplitDrawer();
+            }
+        });
+
+        // 点击优惠券区域
+        document.querySelector('.coupon-section').addEventListener('click', function() {
+            document.getElementById('couponOverlay').style.display = 'flex';
+        });
+
+        // 点击合计金额
+        document.querySelector('.discount-hint').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('splitOverlay').style.display = 'flex';
+        });
+
+        // 提交订单
+        document.querySelector('.submit').addEventListener('click', function() {
+            if (this.classList.contains('disabled')) {
+                return;
+            }
+            openPaymentDrawer();
+        });
+
+        // 支付方式抽屉
+        function openPaymentDrawer() {
+            const drawer = document.getElementById('paymentDrawer');
+            const overlay = document.getElementById('paymentDrawerOverlay');
+            drawer.classList.add('show');
+            overlay.classList.add('show');
+
+            // 默认选中第一个支付方式
+            const firstOption = document.querySelector('.payment-option');
+            if (firstOption && !document.querySelector('.payment-option.selected')) {
+                const method = firstOption.dataset.method;
+                const fee = parseFloat(firstOption.dataset.fee);
+                firstOption.classList.add('selected');
+                updateFeeHint(calculateFee(fee));
+                updateFeeDisplay(method, fee);
+            }
+        }
+
+        function closePaymentDrawer() {
+            const drawer = document.getElementById('paymentDrawer');
+            const overlay = document.getElementById('paymentDrawerOverlay');
+            drawer.classList.remove('show');
+            overlay.classList.remove('show');
+        }
+
+        function selectPayment(method) {
+            // Remove previous selection
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            // Add selection to clicked option
+            event.target.closest('.payment-option').classList.add('selected');
+        }
+
+        function submitPayment() {
+            const selected = document.querySelector('.payment-option.selected');
+            if (!selected) {
+                alert('请选择支付方式');
+                return;
+            }
+            const method = selected.dataset.method;
+            alert('订单金额：¥1000.00\n支付方式：' + (method === 'wechat' ? '微信支付' : '支付宝') + '\n\n支付成功！');
+            closePaymentDrawer();
+        }
+    </script>
+    </div>
+
+    <!-- 浮动查看需求按钮（在demo区域外） -->
+    <div class="floating-requirement-btn" id="floatingRequirementBtn">
+        <span class="btn-text">查看需求</span>
+    </div>
+
+    <!-- 需求抽屉 -->
+    <div class="drawer-overlay" id="requirementDrawerOverlay"></div>
+    <div class="requirement-drawer" id="requirementDrawer">
+        <div class="drawer-header">
+            <h2 class="drawer-title">功能说明</h2>
+            <button class="drawer-close" id="requirementDrawerClose">&times;</button>
+        </div>
+        <div class="drawer-body">
+            <div class="note-section">
+                <h4>需求</h4>
+                <p>
+                    1、本页面需求：只需要对支付方式和支付手续费、支付手续费的计算结果做开发
+                </p>
+            </div>
+
+            <div class="note-section" style="margin-top: 24px;">
+                <h4>元素说明</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="120">元素</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>支付方式</strong></td>
+                                <td>
+                                    1、入驻店铺默认只显示平台后台"支付机构"中已经启用的支付方式<br>
+                                    2、每个客户默认显示此支付方式，平台后台-客户详情不支持关闭<br>
+                                    3、分账支付体系的支付方式不用进"平台后台"自营店铺的支付流水，进入驻店的支付流水列表显示
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>支付手续费</strong></td>
+                                <td>
+                                    1、支付方式中显示出平台后台对应店铺配置的手续费：例如需0.4%手续费；当配置0时显示"免手续费"<br>
+                                    2、选择了什么支付方式，支付金额的手续就按选择的支付方式手续费比例计算<br>
+                                    3、选择了支付方式后，订单金额下发显示出"（包含支付手续费6.66元）"，结果为0时显示"（免手续费）"
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>款项类型</strong></td>
+                                <td>
+                                    1、支付手续费(客户)：按支付时对应支付方式的手续费比例计算，=货款金额*支付费率<br>
+                                    2、支付手续费(商家)：平台后台-分账规则中配置的比例计算，=货款金额*支付费率<br>
+                                    3、类目服务费：按sku所属的类目取类目服务费费率，=SKU货款金额*类目服务费费率。若订单有多个SKU时需多个SKU的手续费费率相加
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // 需求抽屉控制
+        const floatingRequirementBtn = document.getElementById('floatingRequirementBtn');
+        const requirementDrawer = document.getElementById('requirementDrawer');
+        const requirementDrawerClose = document.getElementById('requirementDrawerClose');
+        const requirementDrawerOverlay = document.getElementById('requirementDrawerOverlay');
+
+        // 打开需求抽屉
+        floatingRequirementBtn.addEventListener('click', function() {
+            requirementDrawer.classList.add('show');
+            requirementDrawerOverlay.classList.add('show');
+        });
+
+        // 关闭需求抽屉
+        function closeRequirementDrawer() {
+            requirementDrawer.classList.remove('show');
+            requirementDrawerOverlay.classList.remove('show');
+        }
+
+        requirementDrawerClose.addEventListener('click', closeRequirementDrawer);
+
+        // 点击遮罩层关闭抽屉
+        requirementDrawerOverlay.addEventListener('click', function(e) {
+            if (e.target === requirementDrawerOverlay) {
+                closeRequirementDrawer();
+            }
+        });
+    </script>
+
+
+    <!-- 支付方式抽屉 -->
+    <div class="payment-drawer-overlay" id="paymentDrawerOverlay"></div>
+    <div class="payment-drawer" id="paymentDrawer">
+        <div class="payment-drawer-header">
+            <text class="payment-drawer-title">选择支付方式</text>
+            <button class="payment-drawer-close" id="paymentDrawerClose">&times;</button>
+        </div>
+        <div class="payment-drawer-body">
+            <div class="payment-amount-section">
+                <div class="payment-amount">¥1000.00</div>
+                <div class="payment-amount-hint" id="paymentAmountHint">（含支付手续费6.50元）</div>
+            </div>
+
+            <div class="payment-options">
+                <div class="payment-option" data-method="wechat" data-fee="0.65" onclick="selectPayment('wechat', 0.65)">
+                    <div class="payment-icon wechat">微</div>
+                    <div class="payment-info">
+                        <div class="payment-name">微信支付</div>
+                        <div class="payment-fee" id="wechatFee">需0.65%手续费</div>
+                    </div>
+                    <div class="payment-check"></div>
+                </div>
+
+                <div class="payment-option" data-method="alipay" data-fee="0.65" onclick="selectPayment('alipay', 0.65)">
+                    <div class="payment-icon alipay">支</div>
+                    <div class="payment-info">
+                        <div class="payment-name">支付宝支付</div>
+                        <div class="payment-fee" id="alipayFee">需0.65%手续费</div>
+                    </div>
+                    <div class="payment-check"></div>
+                </div>
+            </div><div class="payment-drawer-footer">
+            <button class="payment-submit-btn" onclick="submitPayment()">去支付</button>
+        </div>
+    </div>
+
+
+    <script>
+        // 支付方式抽屉控制
+        const paymentDrawer = document.getElementById('paymentDrawer');
+        const paymentDrawerClose = document.getElementById('paymentDrawerClose');
+        const paymentDrawerOverlay = document.getElementById('paymentDrawerOverlay');
+
+        // 关闭支付抽屉
+        function closePaymentDrawer() {
+            paymentDrawer.classList.remove('show');
+            paymentDrawerOverlay.classList.remove('show');
+        }
+
+        paymentDrawerClose.addEventListener('click', closePaymentDrawer);
+
+        // 点击遮罩层关闭抽屉
+        paymentDrawerOverlay.addEventListener('click', function(e) {
+            if (e.target === paymentDrawerOverlay) {
+                closePaymentDrawer();
+            }
+        });
+
+        // 支付金额（常量）
+        const PAYMENT_AMOUNT = 1000.00;
+
+        // 计算手续费
+        function calculateFee(percentage) {
+            return (PAYMENT_AMOUNT * percentage / 100).toFixed(2);
+        }
+
+        // 格式化金额显示
+        function formatAmount(amount) {
+            return '¥' + parseFloat(amount).toFixed(2);
+        }
+
+        // 更新手续费提示
+        function updateFeeHint(fee) {
+            const hintElement = document.getElementById('paymentAmountHint');
+            const feeValue = parseFloat(fee);
+
+            if (feeValue === 0) {
+                hintElement.textContent = '（免手续费）';
+            } else {
+                hintElement.textContent = '（包含支付手续费' + formatAmount(feeValue) + '元）';
+            }
+        }
+
+        // 更新手续费显示
+        function updateFeeDisplay(method, feePercentage) {
+            const feeElement = document.getElementById(method + 'Fee');
+            const feeValue = calculateFee(feePercentage);
+
+            if (parseFloat(feePercentage) === 0) {
+                feeElement.textContent = '免手续费';
+                feeElement.style.color = '#67c23a';
+            } else {
+                feeElement.textContent = '需' + feePercentage + '%手续费';
+                feeElement.style.color = '#999';
+            }
+        }
+
+        // 选择支付方式
+        function selectPayment(method, feePercentage) {
+            // Remove previous selection
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selection to clicked option
+            event.target.closest('.payment-option').classList.add('selected');
+
+            // Update fee calculation
+            const fee = calculateFee(feePercentage);
+            updateFeeHint(fee);
+            updateFeeDisplay(method, feePercentage);
+        }
+
+        // 提交支付
+        function submitPayment() {
+            const selected = document.querySelector('.payment-option.selected');
+            if (!selected) {
+                alert('请选择支付方式');
+                return;
+            }
+
+            const method = selected.dataset.method;
+            const feePercentage = parseFloat(selected.dataset.fee);
+            const fee = calculateFee(feePercentage);
+            const methodName = method === 'wechat' ? '微信支付' : '支付宝支付';
+
+            let message = '订单金额：' + formatAmount(PAYMENT_AMOUNT) + '\n';
+            message += '支付方式：' + methodName + '\n';
+
+            if (feePercentage === 0) {
+                message += '手续费：免手续费\n\n支付成功！';
+            } else {
+                message += '手续费：' + feePercentage + '% = ' + formatAmount(fee) + '\n\n支付成功！';
+            }
+
+            alert(message);
+            closePaymentDrawer();
+        }
+    </script>
+
+</body>
+</html>

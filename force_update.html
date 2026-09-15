@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>强制更新 - 清除缓存</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #667eea; }
+        .btn { padding: 12px 24px; margin: 10px 5px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; background: #667eea; color: white; }
+        .btn:hover { background: #5568d3; }
+        .info { background: #f0f4ff; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #667eea; }
+        pre { background: #f5f5f5; padding: 15px; overflow-x: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 强制更新配置</h1>
+
+        <div class="info">
+            <h3>当前问题</h3>
+            <p>左侧菜单没有显示所有 39 个页面</p>
+            <p>可能原因：浏览器缓存、localStorage 数据、JavaScript 未正确加载</p>
+        </div>
+
+        <h3>解决方案</h3>
+
+        <button class="btn" onclick="clearAllData()">1️⃣ 清除所有缓存数据</button>
+        <button class="btn" onclick="reloadConfig()">2️⃣ 重新加载配置</button>
+        <button class="btn" onclick="openMainPage()">3️⃣ 打开主页面试试</button>
+
+        <div id="result"></div>
+
+        <div class="info">
+            <h3>统计信息</h3>
+            <div id="stats"></div>
+        </div>
+    </div>
+
+    <script src="resources/scripts/jquery-3.2.1.min.js"></script>
+    <script>
+        function log(msg, isError) {
+            const color = isError ? 'red' : 'green';
+            $('#result').append(`<p style="color:${color}">${msg}</p>`);
+        }
+
+        function clearAllData() {
+            // 清除 localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // 清除 IndexedDB
+            if (window.indexedDB) {
+                indexedDB.databases().then(dbs => {
+                    dbs.forEach(db => indexedDB.deleteDatabase(db.name));
+                });
+            }
+
+            log('✓ 已清除 localStorage');
+            log('✓ 已清除 sessionStorage');
+            log('✓ 已清除 IndexedDB');
+            log('');
+            log('现在请点击"重新加载配置"按钮');
+        }
+
+        function reloadConfig() {
+            // 强制重新加载 framework.js
+            $.ajax({
+                url: 'resources/scripts/framework.js',
+                dataType: 'script',
+                cache: false,
+                success: function() {
+                    log('✓ framework.js 已重新加载');
+
+                    // 检查配置
+                    if (typeof defaultPageConfig !== 'undefined') {
+                        const versions = Object.keys(defaultPageConfig.versions);
+                        let totalPages = 0;
+                        let totalCategories = 0;
+
+                        versions.forEach(v => {
+                            const cats = Object.keys(defaultPageConfig.versions[v].categories);
+                            totalCategories += cats.length;
+                            cats.forEach(c => {
+                                totalPages += defaultPageConfig.versions[v].categories[c].pages.length;
+                            });
+                        });
+
+                        $('#stats').html(`
+                            <p><strong>版本数:</strong> ${versions.length}</p>
+                            <p><strong>分类数:</strong> ${totalCategories}</p>
+                            <p><strong>页面数:</strong> ${totalPages}</p>
+                            <p><strong>默认页面:</strong> ${defaultPageConfig.defaultPage}</p>
+                        `);
+
+                        log(`✓ 配置加载成功`);
+                        log(`  ${versions.length} 个版本`);
+                        log(`  ${totalCategories} 个分类`);
+                        log(`  ${totalPages} 个页面`);
+
+                        // 显示所有版本
+                        let html = '<h4>版本列表:</h4><ul>';
+                        versions.forEach(v => {
+                            html += `<li><strong>${v}</strong>`;
+                            const cats = Object.keys(defaultPageConfig.versions[v].categories);
+                            cats.forEach(c => {
+                                const pageCount = defaultPageConfig.versions[v].categories[c].pages.length;
+                                html += `<br>  └─ ${c} (${pageCount} 个页面)`;
+                            });
+                            html += '</li>';
+                        });
+                        html += '</ul>';
+
+                        $('#stats').append(html);
+
+                    } else {
+                        log('✗ defaultPageConfig 未定义', true);
+                    }
+                },
+                error: function() {
+                    log('✗ 无法加载 framework.js', true);
+                }
+            });
+        }
+
+        function openMainPage() {
+            window.location.href = 'index.html?v=' + Date.now();
+        }
+
+        $(document).ready(function() {
+            log('页面加载完成');
+            reloadConfig();
+        });
+    </script>
+</body>
+</html>
