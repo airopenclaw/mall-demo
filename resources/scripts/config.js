@@ -25,8 +25,8 @@ const defaultPageConfig = {
                             "file": "9月15日-支付版本/平台后台/0业务流程.html"
                         },
                         {
-                            "name": "3资金流水",
-                            "file": "9月15日-支付版本/平台后台/3资金流水.html"
+                            "name": "3交易流水",
+                            "file": "9月15日-支付版本/平台后台/3交易流水.html"
                         },
                         {
                             "name": "4分账明细",
@@ -101,8 +101,8 @@ const defaultPageConfig = {
                             "file": "分账版本/平台后台/2账户流水.html"
                         },
                         {
-                            "name": "3资金流水",
-                            "file": "分账版本/平台后台/3资金流水.html"
+                            "name": "3交易流水",
+                            "file": "分账版本/平台后台/3交易流水.html"
                         },
                         {
                             "name": "4分账明细",
