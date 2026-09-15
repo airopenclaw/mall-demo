@@ -1106,38 +1106,42 @@
         /* 状态机流转图样式 */
         .state-machine-section {
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 15px;
             background: #f9f9f9;
             border-radius: 8px;
         }
 
         .state-machine-section h4 {
-            margin: 0 0 20px 0;
-            font-size: 16px;
+            margin: 0 0 15px 0;
+            font-size: 14px;
             font-weight: 600;
             color: #333;
         }
 
         .state-machine-diagram {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: center;
             gap: 0;
+            overflow-x: auto;
         }
 
         .state-node {
             background: white;
             border: 2px solid #1890ff;
-            border-radius: 8px;
-            padding: 15px 20px;
-            min-width: 200px;
+            border-radius: 6px;
+            padding: 12px 15px;
+            min-width: 160px;
+            max-width: 180px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.15);
+            box-shadow: 0 2px 6px rgba(24, 144, 255, 0.15);
+            flex-shrink: 0;
         }
 
         .state-node.inactive-state {
             border-color: #ff4d4f;
-            box-shadow: 0 2px 8px rgba(255, 77, 79, 0.15);
+            box-shadow: 0 2px 6px rgba(255, 77, 79, 0.15);
         }
 
         .state-node.inactive-state .state-header {
@@ -1147,7 +1151,7 @@
 
         .state-node.active-state {
             border-color: #52c41a;
-            box-shadow: 0 2px 8px rgba(82, 196, 26, 0.15);
+            box-shadow: 0 2px 6px rgba(82, 196, 26, 0.15);
         }
 
         .state-node.active-state .state-header {
@@ -1158,15 +1162,16 @@
         .state-content {
             font-weight: 500;
             color: #1890ff;
-            line-height: 1.5;
+            line-height: 1.4;
+            font-size: 13px;
         }
 
         .state-header {
             font-weight: 600;
-            font-size: 14px;
-            padding: 4px 12px;
+            font-size: 13px;
+            padding: 3px 10px;
             border-radius: 4px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .state-body {
@@ -1174,27 +1179,30 @@
         }
 
         .state-field {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
-            line-height: 1.8;
-            padding-left: 8px;
+            line-height: 1.6;
+            padding-left: 6px;
         }
 
         .state-arrow {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 8px 0;
+            justify-content: center;
+            padding: 0 10px;
+            flex-shrink: 0;
         }
 
         .arrow-text {
-            font-size: 12px;
+            font-size: 11px;
             color: #999;
             margin-bottom: 4px;
+            white-space: nowrap;
         }
 
         .arrow-line {
-            font-size: 24px;
+            font-size: 20px;
             color: #1890ff;
             font-weight: bold;
             line-height: 1;
@@ -1572,19 +1580,19 @@
                         <div class="state-content">商户入驻<br>审核通过</div>
                         <div class="state-arrow">
                             <span class="arrow-text">初始化</span>
-                            <div class="arrow-line">↓</div>
+                            <div class="arrow-line">→</div>
                         </div>
                     </div>
 
                     <div class="state-node inactive-state" data-page-node-id="stateInactive">
                         <div class="state-header">未开通</div>
                         <div class="state-body">
-                            <div class="state-field">• 分账时点：发货日+11天</div>
-                            <div class="state-field">• 客户支付费率：初始化值</div>
+                            <div class="state-field">• 分账时点：<br>发货日+11天</div>
+                            <div class="state-field">• 客户支付费率：<br>初始化值</div>
                         </div>
                         <div class="state-arrow">
                             <span class="arrow-text">开户成功</span>
-                            <div class="arrow-line">↓</div>
+                            <div class="arrow-line">→</div>
                         </div>
                     </div>
 
