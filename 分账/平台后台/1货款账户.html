@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>支付退款流水</title>
+    <title>货款账户</title>
     <style>
         * {
             margin: 0;
@@ -281,14 +281,45 @@
             font-size: 13px;
         }
 
+        /* 确保表头和数据都左对齐 */
+        .table-container th,
+        .table-container td {
+            text-align: left !important;
+        }
+
         td {
             padding: 11px 16px;
             border-bottom: 1px solid #ebeef5;
             font-size: 13px;
         }
 
-        tbody tr:hover {
-            background: #f9f9f9;
+        /* 移除表格行悬浮效果 */
+
+        /* 操作列固定在右侧 */
+        .table-container table thead th:last-child,
+        .table-container table tbody tr td:last-child {
+            position: sticky;
+            right: 10px;
+            background: #fff;
+            z-index: 10;
+        }
+
+        .table-container table thead th:last-child {
+            background: #fafafa;
+            z-index: 11;
+        }
+
+        /* 查看流水按钮样式 */
+        .btn-view {
+            background: transparent;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .btn-view:hover {
+            color: #5568d3;
+            text-decoration: underline;
         }
 
         .form-section {
@@ -687,6 +718,16 @@
         .drawer-body .note-section + .table-container table td:last-child {
             width: 75%;
         }
+
+        /* 修正：需求抽屉内字段说明表格不应用主表格"操作列固定右侧"样式，
+           避免被钉住且超宽的"说明"列遮挡"元素"列 */
+        .drawer-body .note-section + .table-container table thead th:last-child,
+        .drawer-body .note-section + .table-container table tbody td:last-child {
+            position: static;
+            right: auto;
+            background: transparent;
+            z-index: auto;
+        }
     </style>
 </head>
 <body>
@@ -718,9 +759,10 @@
                 <div class="menu-level-1-header">商家管理</div>
                 <div class="menu-level-2">
                     <div class="menu-level-2-item">商家审核</div>
-                    <div class="menu-level-2-item">货款账户</div>
+                    <div class="menu-level-2-item active">货款账户</div>
                     <div class="menu-level-2-item">账户流水</div>
-                    <div class="menu-level-2-item active">支付退款流水</div>
+                    <div class="menu-level-2-item">资金流水</div>
+
                 </div>
             </div>
             <div class="menu-level-1">
@@ -746,51 +788,13 @@
                     <div class="search-area">
                         <div class="search-row">
                             <div class="search-item">
-                                <label>订单号</label>
-                                <input type="text" class="form-control" placeholder="请输入订单号">
+                                <label>商家信息</label>
+                                <input type="text" class="form-control" placeholder="名称/信用代码">
                             </div>
+                           
                             <div class="search-item">
-                                <label>售后单号</label>
-                                <input type="text" class="form-control" placeholder="请输入售后单号">
-                            </div>
-                            <div class="search-item">
-                                                            <div class="search-item">
-                                <label>客户信息</label>
-                                <input type="text" class="form-control" placeholder="请输入客户信息">
-                            </div>
-                            <label>商家名称</label>
-                                <input type="text" class="form-control" placeholder="请输入商家名称">
-                            </div>
-                            <div class="search-item">
-                                <label>信用代码</label>
-                                <input type="text" class="form-control" placeholder="请输入信用代码">
-                            </div>
-                            <div class="search-item">
-                                <label>店铺名称</label>
-                                <input type="text" class="form-control" placeholder="请输入店铺名称">
-                            </div>
-                                                        <div class="search-item">
-                                <label>支付机构</label>
-                                <select class="form-control">
-                                    <option value="">全部</option>
-                                    <option value="zhifu">智付支付</option>
-                                </select>
-                            </div>
-                            <div class="search-item">
-                                <label>支付方式</label>
-                                <select class="form-control">
-                                    <option value="">全部</option>
-                                    <option value="wechat">微信</option>
-                                    <option value="alipay">支付宝</option>
-                                </select>
-                            </div>
-                            <div class="search-item">
-                                <label>交易类型</label>
-                                <select class="form-control">
-                                    <option value="">全部</option>
-                                    <option value="order_pay">订单支付</option>
-                                    <option value="order_return">订单退货</option>
-                                </select>
+                                <label>商户号</label>
+                                <input type="text" class="form-control" placeholder="请输入商户号">
                             </div>
                             <div class="search-buttons">
                                 <button class="search-btn primary">搜索</button>
@@ -804,7 +808,7 @@
             <!-- 分账规则卡片 -->
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">支付退款流水</div>
+                    <div class="card-title">账户流水</div>
                 </div>
                 <div class="card-body">
                     <div class="table-container">
@@ -812,78 +816,58 @@
                     <thead>
                         <tr>
                             <th width="50">序号</th>
-                            <th>流水号</th>
-                            <th>订单号</th>
-                            <th>售后单号</th>
                             <th>商家名称</th>
                             <th>信用代码</th>
-                            <th>店铺名称</th>
-                            <th>订单金额</th>
-                            <th>支付手续费</th>
-                            <th>订单总额</th>
-                            <th>支付机构</th>
-                            <th>支付方式</th>
-                            <th>
-                                状态</th>
-                            <th>交易用户</th>
-                            <th>交易时间</th>
-                            <th>交易类型</th>
+                            <th>商户号</th>
+                            <th>账户余额</th>
+                            <th>充值余额</th>
+                            <th>冻结金额</th>
+                            <th>可结算余额</th>
+                            <th>账户状态</th>
+                            <th>最后更新时间</th>
+                            <th>操作</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>LS202309010001</td>
-                            <td>DD202309010001</td>
-                            <td>-</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
-                            <td>XX数码旗舰店</td>
-                            <td>1,280.00</td>
-                            <td>6.50</td>
-                            <td>1,286.50</td>
-                            <td>智付支付</td>
-                            <td>微信支付</td>
-                            <td>智付支付</td>
-                            <td>23211丨张三</td>
+                            <td>M202309001</td>
+                            <td>10,000.00</td>
+                            <td>2,000.00</td>
+                            <td>1,000.00</td>
+                            <td>9,000.00</td>
+                            <td>正常</td>
                             <td>2023-09-01 14:30:25</td>
-                            <td>订单支付</td>
+                            <td><a href="#" class="btn-view">查看流水</a></td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>LS202309010002</td>
-                            <td>DD202309010002</td>
-                            <td>SH202309010001</td>
                             <td>YY商贸有限公司</td>
                             <td>91110000MA09876543</td>
-                            <td>YY家居专营店</td>
-                            <td>580.00</td>
-                            <td>2.90</td>
-                            <td>582.90</td>
-                            <td>智付支付</td>
-                            <td>支付宝</td>
-                            <td>成功</td>
-                            <td>23312丨李四</td>
+                            <td>M202309002</td>
+                            <td>5,000.00</td>
+                            <td>1,000.00</td>
+                            <td>500.00</td>
+                            <td>4,500.00</td>
+                            <td>冻结</td>
                             <td>2023-09-01 15:20:10</td>
-                            <td>订单退货</td>
+                            <td><a href="#" class="btn-view">查看流水</a></td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>LS202309010003</td>
-                            <td>DD202309010003</td>
-                            <td>-</td>
                             <td>ZZ网络科技公司</td>
-                            <td>91110000MA05678912</td>
-                            <td>ZZ生鲜超市</td>
-                            <td>240.00</td>
-                            <td>2.90</td>
-                            <td>582.90</td>
-                            <td>智付支付</td>
-                            <td>微信支付</td>
-                            <td>成功</td>
-                            <td>23456丨王五</td>
+                           <td>91110000MA05678912</td>
+                            <td>M202309003</td>
+                            <td>2,000.00</td>
+                            <td>500.00</td>
+                            <td>500.00</td>
+                            <td>1,500.00</td>
+                            <td>冻结</td>
                             <td>2023-09-01 16:05:33</td>
-                            <td>订单支付</td>
+                            <td><a href="#" class="btn-view">查看流水</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -971,12 +955,11 @@
             <div class="note-section">
                 <h4>需求</h4>
                 <p>
-                    1、本功能主要提供查看各个入驻店铺的支付流水、退款流水<br>
-                    2、只展示交易成功的流水记录<br>
-                    3、交易用户字段展示格式：用户UID丨用户名称，如 23211丨李四<br>
-                    4、本页面为只读页面，不支持新增、编辑、删除操作<br>
-                    5、售后单号：只有订单退货类型才显示售后单号，订单支付类型显示"-"<br>
-                    6、支持按订单号、售后单号搜索
+                    1、本功能主要提供查看各个入驻店铺的货款账户信息<br>
+                    2、展示商家的货款账户余额、充值余额、冻结金额、可结算余额等信息<br>
+                    3、本页面为只读页面，不支持新增、编辑、删除操作<br>
+                    4、支持按商家名称、商户号、信用代码搜索<br>
+                    5、支持查看商家的支付流水明细
                 </p>
             </div>
 
@@ -997,31 +980,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>流水号</strong></td>
-                            <td>
-                                1、资金流水的唯一标识<br>
-                                2、格式示例：LS202309010001
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>订单号</strong></td>
-                            <td>
-                                1、支持按订单号精确搜索<br>
-                                2、订单号格式示例：DD202309010001
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>售后单号</strong></td>
-                            <td>
-                                1、只有订单退货类型才显示售后单号<br>
-                                2、订单支付类型显示"-"<br>
-                                3、售后单号格式示例：SH202309010001
-                            </td>
-                        </tr>
-                        <tr>
                             <td><strong>商家名称</strong></td>
                             <td>
                                 1、入驻企业的全称
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>商户号</strong></td>
+                            <td>
+                                1、商家在支付平台的唯一标识号<br>
+                                2、格式示例：M202309001
                             </td>
                         </tr>
                         <tr>
@@ -1032,59 +1000,55 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>店铺名称</strong></td>
+                            <td><strong>账户余额</strong></td>
                             <td>
-                                1、商家店铺的显示名称
+                                1、商家的货款账户总余额，取智付接口的merchantBalance<br>
+                                2、格式：保留两位小数，如 10,000.00
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>订单金额</strong></td>
+                            <td><strong>充值余额</strong></td>
                             <td>
-                                1、订单的实际支付金额<br>
-                                2、格式：保留两位小数，如 1,280.00
+                                1、商家充值的余额金额，取智付接口的rechargeBalance<br>
+                                2、格式：保留两位小数，如 5,000.00
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>支付机构</strong></td>
+                            <td><strong>冻结金额</strong></td>
                             <td>
-                                1、订单支付方式的支付机构<br>
-                                2、以后会接入其它支付机构
+                                1、被冻结的货款金额，暂不可提现，取智付接口的frozenBalance<br>
+                                2、格式：保留两位小数，如 1,000.00
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>支付方式</strong></td>
+                            <td><strong>可结算余额</strong></td>
                             <td>
-                                1、可选项为 当前选择的支付机构下的支付方式<br>
-                                2、包括微信、支付宝等
+                                1、可结算的货款金额，取智付接口的settlableBalance<br>
+                                2、计算公式：可结算余额 = 账户余额 - 冻结金额<br>
+                                3、格式：保留两位小数
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>支付状态</strong></td>
+                            <td><strong>账户状态</strong></td>
                             <td>
-                                1、本页面只展示支付成功的流水<br>
-                                2、包括支付成功、退款成功状态
+                                1、显示账户在智付的状态<br>
+                                2、取智付接口的accountStatus。<br>
+                                AVAILABLE：正常，FROZEN：冻结，FREEZE_DEBIT：冻结出帐，<br>
+                                FREEZE_CREDIT：冻结入账，CANCELLED：已注销
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>交易用户</strong></td>
+                            <td><strong>最后更新时间</strong></td>
                             <td>
-                                1、展示格式：用户UID丨用户名称<br>
-                                2、示例：23211丨李四
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>交易时间</strong></td>
-                            <td>
-                                1、记录支付或退款成功的精确时间<br>
+                                1、记录账户余额最后更新的时间<br>
                                 2、格式：YYYY-MM-DD HH:mm:ss
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>交易类型</strong></td>
+                            <td><strong>操作</strong></td>
                             <td>
-                                1、可选值固定为订单支付、订单退货<br>
-                                2、订单支付：正向订单的支付成功流水<br>
-                                3、订单退货：逆向订单的退款成功流水
+                                1、查看商家的支付流水明细<br>
+                                2、点击"查看流水"跳转到支付流水页面，并自动筛选对应商户号的流水
                             </td>
                         </tr>
                     </tbody>

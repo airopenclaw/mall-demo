@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-page-node-id="scs0bbBwaDUVweUHFkMPKo">
-<head data-page-node-id="YLes0aHxfo1nkv7qoKRUPN">
-    <meta charset="UTF-8" data-page-node-id="uXeBBowaZbk1gVQ54CsCAu">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="N4ZZ0GQmVrtwMgMOfH06Ch">
-    <title>账户流水</title>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资金流水</title>
     <style>
         * {
             margin: 0;
@@ -285,24 +285,10 @@
             padding: 11px 16px;
             border-bottom: 1px solid #ebeef5;
             font-size: 13px;
-            text-align: left;
         }
 
         tbody tr:hover {
             background: #f9f9f9;
-        }
-
-        /* 查看流水按钮样式 */
-        .btn-view {
-            background: transparent;
-            color: #667eea;
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .btn-view:hover {
-            color: #5568d3;
-            text-decoration: underline;
         }
 
         .form-section {
@@ -701,36 +687,26 @@
         .drawer-body .note-section + .table-container table td:last-child {
             width: 75%;
         }
-
-        /* 修正：需求抽屉内字段说明表格不应用主表格"操作列固定右侧"样式，
-           避免被钉住且超宽的"说明"列遮挡"元素"列 */
-        .drawer-body .note-section + .table-container table thead th:last-child,
-        .drawer-body .note-section + .table-container table tbody td:last-child {
-            position: static;
-            right: auto;
-            background: transparent;
-            z-index: auto;
-        }
     </style>
 </head>
-<body data-page-node-id="QmBUrrSgBdIHrvDKaBVRBm">
+<body>
     <!-- 顶部菜单栏 -->
-    <div class="top-menu" data-page-node-id="HtPB7caCBzvGRo8CMipNMc">
-        <div class="top-menu-title" data-page-node-id="c7wlLMvzxl3ZhRoOWx3vhM">平台后台</div>
-        <div class="top-menu-item" data-page-node-id="9zuyHJp93RHGmEQ6rBJiIX">运营</div>
-        <div class="top-menu-item" data-page-node-id="Yfag9mV8pB62Z8EYw5hLNe">商品</div>
-        <div class="top-menu-item" data-page-node-id="ZTIsIeWTfzwgQ9QbJv0sYG">订单</div>
-        <div class="top-menu-item" data-page-node-id="RO2woTwAloAqA6uCgG4SHP">客户</div>
-        <div class="top-menu-item" data-page-node-id="oj8QTYF8tR5n90xLpV3Z8w">plus客户</div>
-        <div class="top-menu-item" data-page-node-id="hAEivtI2BykkSxZf6PZ9Nz">营销</div>
-        <div class="top-menu-item" data-page-node-id="wZt9NfxNIIckOFLefLOh3y">装修</div>
-        <div class="top-menu-item" data-page-node-id="exTEThHVBnYEmD7I92IMWD">店铺</div>
-        <div class="top-menu-item" data-page-node-id="ICH9tHihAj1ZOxtOxHXT43">财务</div>
-        <div class="top-menu-item" data-page-node-id="vfhJYK4PJFZgWV7tdRfg20">风控</div>
-        <div class="top-menu-item active" data-page-node-id="7Ffbid1CptSi1PX45CgIEM">入驻</div>
-        <div class="top-menu-item" data-page-node-id="iEvJOZ8NvVjziVeuBaeioI">设置</div>
-        <div class="top-menu-right" data-page-node-id="TnTbNuWp8VAZdQ1f74lKbB">
-            <button class="btn-text" id="viewRequirementBtn" data-page-node-id="geF5Wb5uZREBcYuJmAu3Gp">查看需求</button>
+    <div class="top-menu">
+        <div class="top-menu-title">平台后台</div>
+        <div class="top-menu-item">运营</div>
+        <div class="top-menu-item">商品</div>
+        <div class="top-menu-item">订单</div>
+        <div class="top-menu-item">客户</div>
+        <div class="top-menu-item">plus客户</div>
+        <div class="top-menu-item">营销</div>
+        <div class="top-menu-item">装修</div>
+        <div class="top-menu-item">店铺</div>
+        <div class="top-menu-item">财务</div>
+        <div class="top-menu-item">风控</div>
+        <div class="top-menu-item active">入驻</div>
+        <div class="top-menu-item">设置</div>
+        <div class="top-menu-right">
+            <button class="btn-text" id="viewRequirementBtn">查看需求</button>
         </div>
     </div>
 
@@ -743,9 +719,8 @@
                 <div class="menu-level-2">
                     <div class="menu-level-2-item">商家审核</div>
                     <div class="menu-level-2-item">货款账户</div>
-                    <div class="menu-level-2-item active">账户流水</div>
-                    <div class="menu-level-2-item">支付退款流水</div>
-
+                    <div class="menu-level-2-item">账户流水</div>
+                    <div class="menu-level-2-item active">资金流水</div>
                 </div>
             </div>
             <div class="menu-level-1">
@@ -764,27 +739,58 @@
         </div>
 
         <!-- 右侧内容区 -->
-        <div class="content-area" data-page-node-id="K8WdcJEw2DFJDxN0sYwrdV">
+        <div class="content-area">
             <!-- 搜索卡片 -->
-            <div class="card" data-page-node-id="9yHxUNrG65CzQjKO5a0Q56">
-                <div class="card-body" data-page-node-id="ZbeUh1c4ROelKXw25NHBid">
-                    <div class="search-area" data-page-node-id="ewhHGncqdXMzncPKpxWY8m">
-                        <div class="search-row" data-page-node-id="A37KiYXiABrYXVI0zcZsfW">
-                            <div class="search-item" data-page-node-id="Rm3XW0Ipc1jGNiPKrmsXF2">
-                                <label data-page-node-id="D4NNwCvZAz21cHzs1QAvbG">商家名称</label>
-                                <input type="text" class="form-control" placeholder="请输入商家名称" data-page-node-id="tTao2JrQIs15lddAFJTOfk">
+            <div class="card">
+                <div class="card-body">
+                    <div class="search-area">
+                        <div class="search-row">
+                            <div class="search-item">
+                                <label>订单号</label>
+                                <input type="text" class="form-control" placeholder="请输入订单号">
                             </div>
-                                                        <div class="search-item" data-page-node-id="aYjgunmoI4HSA7jvNRyioM">
-                                <label data-page-node-id="lbUcget1aMcAqm7fPd2Bai">信用代码</label>
-                                <input type="text" class="form-control" placeholder="请输入信用代码" data-page-node-id="PsrLcrpmlkflSArmrBbEh7">
+                            <div class="search-item">
+                                <label>售后单号</label>
+                                <input type="text" class="form-control" placeholder="请输入售后单号">
                             </div>
-                            <div class="search-item" data-page-node-id="pH0EYECvUhMHuYMhPUnb1H">
-                                <label data-page-node-id="VwsKWHzk2tHpz5xgEOYqXC">商户号</label>
-                                <input type="text" class="form-control" placeholder="请输入商户号" data-page-node-id="2wyl1YzCtEQHzoNOoz7HjO">
+                            <div class="search-item">
+                                <label>客户信息</label>
+                                <input type="text" class="form-control" placeholder="请输入客户信息">
                             </div>
-                            <div class="search-buttons" data-page-node-id="gmCdCcnQaEJAA3FPw5BpPB">
-                                <button class="search-btn primary" data-page-node-id="BEeYIl99WelQyVnj0XKXVp">搜索</button>
-                                <button class="search-btn" data-page-node-id="u4jQFRo842BI7V1gi3fw7S">重置</button>
+                            <div class="search-item">
+                                <label>商家信息</label>
+                                <input type="text" class="form-control" placeholder="名称/信用代码">
+                            </div>
+                            <div class="search-item">
+                                <label>店铺名称</label>
+                                <input type="text" class="form-control" placeholder="请输入店铺名称">
+                            </div>
+                            <div class="search-item">
+                                <label>支付机构</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                    <option value="zhifu">智付支付</option>
+                                </select>
+                            </div>
+                            <div class="search-item">
+                                <label>支付方式</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                    <option value="wechat">微信</option>
+                                    <option value="alipay">支付宝</option>
+                                </select>
+                            </div>
+                            <div class="search-item">
+                                <label>交易类型</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                    <option value="order_pay">订单支付</option>
+                                    <option value="order_return">订单退货</option>
+                                </select>
+                            </div>
+                            <div class="search-buttons">
+                                <button class="search-btn primary">搜索</button>
+                                <button class="search-btn">重置</button>
                             </div>
                         </div>
                     </div>
@@ -792,136 +798,88 @@
             </div>
 
             <!-- 分账规则卡片 -->
-            <div class="card" data-page-node-id="roCQs0WpY8fbhi8g5kG4jL">
-                <div class="card-header" data-page-node-id="ZZdAj0IoVElIqtJtAApEbj">
-                    <div class="card-title" data-page-node-id="KU8KpHlVMVxFyotX2HnOoL">账户流水</div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">资金流水</div>
                 </div>
-                <div class="card-body" data-page-node-id="Dvq9fgawqHYccpLD2S9nW0">
-                    <div class="table-container" data-page-node-id="3QN9z5iUZmb3H07Gelylm5">
-                        <table data-page-node-id="UB2rBJoXB2zG15pMrH8bHT">
+                <div class="card-body">
+                    <div class="table-container">
+                        <table>
                     <thead>
                         <tr>
                             <th width="50">序号</th>
+                            <th>流水号</th>
+                            <th>订单号</th>
+                            <th>售后单号</th>
                             <th>商家名称</th>
                             <th>信用代码</th>
-                            <th>商户号</th>
-                            <th>变动类型</th>
-                            <th>变动金额</th>
-                            <th>可结算余额</th>
-                            <th>变动时间</th>
-                            <th>订单号/售后单号</th>
+                            <th>店铺名称</th>
+                            <th>订单金额</th>
+                            <th>支付手续费</th>
+                            <th>订单总额</th>
+                            <th>支付机构</th>
+                            <th>支付方式</th>
+                            <th>
+                                状态</th>
+                            <th>交易用户</th>
+                            <th>交易时间</th>
+                            <th>交易类型</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
+                            <td>LS202309010001</td>
+                            <td>DD202309010001</td>
+                            <td>-</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>货款分账</td>
-                            <td>10000</td>
-                            <td>9000</td>
+                            <td>XX数码旗舰店</td>
+                            <td>1,280.00</td>
+                            <td>6.50</td>
+                            <td>1,286.50</td>
+                            <td>智付支付</td>
+                            <td>微信支付</td>
+                            <td>智付支付</td>
+                            <td>23211丨张三</td>
                             <td>2023-09-01 14:30:25</td>
-                            <td>ORD202309010001</td>
+                            <td>订单支付</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>账户充值</td>
-                            <td>2000</td>
-                            <td>11000</td>
+                            <td>LS202309010002</td>
+                            <td>DD202309010002</td>
+                            <td>SH202309010001</td>
+                            <td>YY商贸有限公司</td>
+                            <td>91110000MA09876543</td>
+                            <td>YY家居专营店</td>
+                            <td>580.00</td>
+                            <td>2.90</td>
+                            <td>582.90</td>
+                            <td>智付支付</td>
+                            <td>支付宝</td>
+                            <td>成功</td>
+                            <td>23312丨李四</td>
                             <td>2023-09-01 15:20:10</td>
-                            <td>-</td>
+                            <td>订单退货</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>支付手续费分账</td>
-                            <td>-50</td>
-                            <td>10950</td>
-                            <td>2023-09-01 16:05:33</td>
-                            <td>ORD202309010001</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>类目服务费分账</td>
-                            <td>-30</td>
-                            <td>10920</td>
-                            <td>2023-09-02 09:15:00</td>
-                            <td>ORD202309010001</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>支付手续费分账</td>
-                            <td>-20</td>
-                            <td>10900</td>
-                            <td>2023-09-02 14:30:00</td>
-                            <td>ORD202309020002</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>货款退款</td>
-                            <td>-500</td>
-                            <td>10400</td>
-                            <td>2023-09-02 16:00:00</td>
-                            <td>REF202309020001</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>支付手续费退回</td>
-                            <td>10</td>
-                            <td>10410</td>
-                            <td>2023-09-02 16:00:00</td>
-                            <td>REF202309020001</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>类目服务费退回</td>
-                            <td>5</td>
-                            <td>10415</td>
-                            <td>2023-09-02 16:00:00</td>
-                            <td>REF202309020001</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>YY商贸有限公司</td>
-                            <td>91110000MA09876543</td>
-                            <td>M202309002</td>
-                            <td>货款分账</td>
-                            <td>5000</td>
-                            <td>5000</td>
-                            <td>2023-09-01 10:00:00</td>
-                            <td>ORD202309010003</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>YY商贸有限公司</td>
-                            <td>91110000MA09876543</td>
-                            <td>M202309002</td>
-                            <td>提现</td>
-                            <td>-1000</td>
-                            <td>4000</td>
-                            <td>2023-09-02 11:20:00</td>
+                            <td>LS202309010003</td>
+                            <td>DD202309010003</td>
                             <td>-</td>
+                            <td>ZZ网络科技公司</td>
+                            <td>91110000MA05678912</td>
+                            <td>ZZ生鲜超市</td>
+                            <td>240.00</td>
+                            <td>2.90</td>
+                            <td>582.90</td>
+                            <td>智付支付</td>
+                            <td>微信支付</td>
+                            <td>成功</td>
+                            <td>23456丨王五</td>
+                            <td>2023-09-01 16:05:33</td>
+                            <td>订单支付</td>
                         </tr>
                     </tbody>
                 </table>
@@ -932,99 +890,99 @@
     </div>
 
     <!-- 新增分账规则弹窗 -->
-    <div class="modal-overlay" id="addRuleModal" data-page-node-id="npF1SATc1EpqIcAazks5ve">
-        <div class="modal" data-page-node-id="X9HQWXzRcLWby7vcS8zZ9Z">
-            <div class="modal-header" data-page-node-id="8WkeLBe0nq1WpPVdMhBHLk">
-                <h2 class="modal-title" data-page-node-id="TaxqegGm42MVYxZU5C4DDX">新增分账规则</h2>
-                <button class="modal-close" id="closeModal" data-page-node-id="8adHew3vMTPaPATW8hrcAe">&times;</button>
+    <div class="modal-overlay" id="addRuleModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">新增分账规则</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
             </div>
-            <div class="modal-body" data-page-node-id="puKJY9wNPOoN9TI5NfVk1X">
-                <div class="form-row" data-page-node-id="HNcK5uUdKdJokJnibD6Sif">
-                    <div class="form-group" data-page-node-id="rNPXiuO1dWUZn3lqB5B0KJ">
-                        <label data-page-node-id="AmXqV8KbjdWrFrzZ9H8SrC">支付机构</label>
-                        <select class="form-control" data-page-node-id="DIQls1xEwHks6IFD3BGthg">
-                            <option data-page-node-id="HmVZq8OyuganaMDb9A7Car">智付支付</option>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>支付机构</label>
+                        <select class="form-control">
+                            <option>智付支付</option>
                         </select>
                     </div>
 
                     <div clas
-                    s="form-group" data-page-node-id="b0y814VFnAARkRN5EF9P0l">
-                        <label data-page-node-id="TwvIs5R1oAIF2XimWZtdMp">支付方式</label>
-                        <select class="form-control" data-page-node-id="eGb3ocdG6aBtGonjBPZRRN">
-                            <option data-page-node-id="ZGwRpyVWHymt7gaYva9kBh">微信</option>
-                            <option data-page-node-id="JjSSyh1hvM2m8Wd3PJKz5w">支付宝</option>
+                    s="form-group">
+                        <label>支付方式</label>
+                        <select class="form-control">
+                            <option>微信</option>
+                            <option>支付宝</option>
                         </select>
                     </div>
 
-                    <div class="form-group" data-page-node-id="IzRbiVnn6FKfkxkujqfMRf">
-                        <label data-page-node-id="3A8h95B882FCxC0iRAOXqV">分账款项</label>
-                        <select class="form-control" data-page-node-id="cnCpjFREZr3CXDkOvhBfQE">
-                            <option data-page-node-id="T3sDQgXH4xkBjtH8w62nbX">订单支付</option>
-                            <option data-page-node-id="vjvJJdYfU5UAEWAkz3A3B3">订单退货</option>
+                    <div class="form-group">
+                        <label>分账款项</label>
+                        <select class="form-control">
+                            <option>订单支付</option>
+                            <option>订单退货</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 分账规则表格 -->
-                <div class="sub-table" data-page-node-id="dXR1ua53eU0tzFVapmkw4C">
-                    <table data-page-node-id="jQ0gzGnOGloD8Df6Z5MWjq">
-                        <thead data-page-node-id="sydH2WX4fSyoroZAt8g6nQ">
-                            <tr data-page-node-id="CuclgdNXNtchvNq1kUhHRK">
-                                <th width="30%" data-page-node-id="N6uGaIDERNPR0tOf9Vu52D">款项类型</th>
-                                <th width="30%" data-page-node-id="sRNmfNNeY6nLP68ZsDGvy1">分账比例%</th>
-                                <th width="30%" data-page-node-id="d75SPgarqe9TO9HJMgkQNw">收款角色</th>
+                <div class="sub-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="30%">款项类型</th>
+                                <th width="30%">分账比例%</th>
+                                <th width="30%">收款角色</th>
                             </tr>
                         </thead>
-                        <tbody id="splitRulesTable" data-page-node-id="KN61NyfQRLkBzm4J6GAL1X">
-                            <tr data-page-node-id="nUtChqXJPqn9uH2MZ6eQJZ">
-                                <td data-page-node-id="OQ3jFWhBeXa3PLAO7fGb5B"></td>
-                                <td data-page-node-id="nEe1JZW4jEql1VLArzZwq9"><input type="text" class="form-control" placeholder="请输入" style="width: 120px;" data-page-node-id="VjVwBv75fB1EhDBEe3w6Lt"></td>
-                                <td data-page-node-id="5JInxL7R6Pjk4BklLCVEku">平台</td>
+                        <tbody id="splitRulesTable">
+                            <tr>
+                                <td>支付手续费</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" style="width: 120px;"></td>
+                                <td>平台</td>
                             </tr>
-                            <tr data-page-node-id="a9enFEwMC7YErKc9F0DjJM">
-                                <td data-page-node-id="FxR8UahH5rjrVXYF3lxMlw">类目服务费</td>
-                                <td data-page-node-id="0h61o5ZYGAUfnRmKz2ChUR">按类目</td>
-                                <td data-page-node-id="IPtYvpI4KT9AHK9yUgDXD6">平台</td>
+                            <tr>
+                                <td>类目服务费</td>
+                                <td>按类目</td>
+                                <td>平台</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="modal-footer" data-page-node-id="FLnH1EjLeWwQRiE4gbBSJk">
-                <button class="btn-secondary" id="cancelBtn" data-page-node-id="JX5QQ0xz7Vv7vwdKasN8Mh">取消</button>
-                <button class="btn-primary" data-page-node-id="EmdTvrmv2MrU1XazwJl0zJ">保存</button>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelBtn">取消</button>
+                <button class="btn-primary">保存</button>
             </div>
         </div>
     </div>
 
     <!-- 需求抽屉 -->
-    <div class="drawer-overlay" id="drawerOverlay" data-page-node-id="PKL3YENEUmQpwMmpvcZgxj"></div>
-    <div class="drawer" id="requirementDrawer" data-page-node-id="Tydc755vory6lEa03BGDHo">
-        <div class="drawer-header" data-page-node-id="sCh3rC7B6fTU5Ddth6znBi">
-            <h2 class="drawer-title" data-page-node-id="uyNOXHBjaotQEl6W5Iu3pV">功能说明</h2>
-            <button class="drawer-close" id="drawerClose" data-page-node-id="IUjiFqpwkHC0LhmOL5Kwhy">&times;</button>
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer" id="requirementDrawer">
+        <div class="drawer-header">
+            <h2 class="drawer-title">功能说明</h2>
+            <button class="drawer-close" id="drawerClose">&times;</button>
         </div>
-        <div class="drawer-body" data-page-node-id="kaPPPUsrFvPjL7yEu2d9f5">
+        <div class="drawer-body">
             <!-- 需求说明 -->
             <div class="note-section">
                 <h4>需求</h4>
                 <p>
-                    1、本功能主要提供查看各个入驻店铺的账户流水明细<br>
-                    2、展示商家的账户流水各类变动流水记录，包括正向收支和退款退回<br>
-                    3、本页面为只读页面，不支持新增、编辑、删除操作<br>
-                    4、支持按商家名称、商户号、信用代码搜索<br>
-                    5、货款分账、账户充值、支付手续费退回、客户手续费退回、类目服务费退回、账户提现为正数，支付手续费分账、类目服务费分账、货款退款为负数<br>
-                    6、退款类型的流水（货款退款、支付手续费退回、类目服务费退回）在订单已分账且售后完成时生成，退款成功后生成对应账户流水
+                    1、本功能主要提供查看各个入驻店铺的支付流水、退款流水<br>
+                    2、只展示交易成功的流水记录<br>
+                    3、交易用户字段展示格式：用户UID丨用户名称，如 23211丨李四<br>
+                    4、本页面为只读页面，不支持新增、编辑、删除操作<br>
+                    5、售后单号：只有订单退货类型才显示售后单号，订单支付类型显示"-"<br>
+                    6、支持按订单号、售后单号搜索
                 </p>
             </div>
 
             <!-- 字段说明表格 -->
-            <div class="table-container" data-page-node-id="wOEm6IVbzJGDV9FR0hSFFS">
-                <table data-page-node-id="9FyG6Skr5pF8uWwjDjWhOQ">
-                    <thead data-page-node-id="jEDGBs93qH3kIUlekhbV4z">
-                        <tr data-page-node-id="u58PzbcJchyr4SJiKUdtT9">
-                            <th data-page-node-id="zCqKQPw4Ki3acBRXZJcfeP">元素</th>
-                            <th data-page-node-id="UNEP332BDHqcV2kGd5sok5">说明</th>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>元素</th>
+                            <th>说明</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1032,6 +990,28 @@
                             <td><strong>序号</strong></td>
                             <td>
                                 1、自增序号，从1开始
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>流水号</strong></td>
+                            <td>
+                                1、资金流水的唯一标识<br>
+                                2、格式示例：LS202309010001
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>订单号</strong></td>
+                            <td>
+                                1、支持按订单号精确搜索<br>
+                                2、订单号格式示例：DD202309010001
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>售后单号</strong></td>
+                            <td>
+                                1、只有订单退货类型才显示售后单号<br>
+                                2、订单支付类型显示"-"<br>
+                                3、售后单号格式示例：SH202309010001
                             </td>
                         </tr>
                         <tr>
@@ -1048,59 +1028,59 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>商户号</strong></td>
+                            <td><strong>店铺名称</strong></td>
                             <td>
-                                1、商家在支付平台的唯一标识号<br>
-                                2、格式示例：M202309001
+                                1、商家店铺的显示名称
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>变动类型</strong></td>
+                            <td><strong>订单金额</strong></td>
                             <td>
-                                <strong>【分账相关】</strong><br>
-                                1、货款分账：为商户的收入，商家销售所得的正向货款，分账后生成<br>
-                                2、支付手续费分账：商户的支出，平台收取商家的支付手续费，分账后生成<br>
-                                3、类目服务费分账：商户的支出，平台收取的类目服务费，分账后生成<br>
-                                <strong>【退款退回相关】</strong><br>
-                                4、货款退款：商户的支出，金额为负数，当订单已分账且发生售后完成时需要原路退钱给客户，对应的退款单退款成功后生成账户流水，退款金额为订单退款处理时计算的实退金额<br>
-                                5、支付手续费退回：商户的收入，当订单已分账且发生售后完成时，按下单时的分账规则，从平台账户分账退回给商家账户，退回成功后生成账户流水<br>
-                                6、客户手续费退回：账户的收入，当订单已分账且发生售后完成时，按下单时的分账规则，从平台账户分账退回给商家账户，退回成功后生成账户流水<br>
-                                7、类目服务费退回：账户的收入，当订单已分账且发生售后完成时，按下单时的分账规则，从平台账户分账退回给商家账户，退回成功后生成账户流水<br>
-                                <strong>【其他】</strong><br>
-                                8、账户充值：商家充值账户的正向金额，见接口https://opendoc.dinpay.com/docs/2056657273998442498?tab=product_doc<br>
-                                9、账户提现：商户的收入，商家从平台账户提现的金额，提现成功后生成
+                                1、订单的实际支付金额<br>
+                                2、格式：保留两位小数，如 1,280.00
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>变动金额</strong></td>
+                            <td><strong>支付机构</strong></td>
                             <td>
-                                1、货款分账、账户充值、支付手续费退回、客户手续费退回、类目服务费退回、账户提现为正数（整数）<br>
-                                2、支付手续费分账、类目服务费分账、货款退款为负数<br>
-                                3、格式：整数（正数或负数）
+                                1、订单支付方式的支付机构<br>
+                                2、以后会接入其它支付机构
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>可结算余额</strong></td>
+                            <td><strong>支付方式</strong></td>
                             <td>
-                                1、商家当前可结算的金额<br>
-                                2、计算公式：可结算余额 = 账户余额 - 冻结金额<br>
-                                3、格式：保留两位小数
+                                1、可选项为 当前选择的支付机构下的支付方式<br>
+                                2、包括微信、支付宝等
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>变动时间</strong></td>
+                            <td><strong>支付状态</strong></td>
                             <td>
-                                1、记录账户变动的精确时间<br>
+                                1、本页面只展示支付成功的流水<br>
+                                2、包括支付成功、退款成功状态
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>交易用户</strong></td>
+                            <td>
+                                1、展示格式：用户UID丨用户名称<br>
+                                2、示例：23211丨李四
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>交易时间</strong></td>
+                            <td>
+                                1、记录支付或退款成功的精确时间<br>
                                 2、格式：YYYY-MM-DD HH:mm:ss
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>订单号/售后单号</strong></td>
+                            <td><strong>交易类型</strong></td>
                             <td>
-                                1、关联的订单号或售后单号<br>
-                                2、货款分账、支付手续费分账、类目服务费分账、货款退款、支付手续费退回、客户手续费退回、类目服务费退回显示订单号或售后单号<br>
-                                3、账户充值、账户提现显示"-"<br>
-                                4、格式示例：ORD202309010001
+                                1、可选值固定为订单支付、订单退货<br>
+                                2、订单支付：正向订单的支付成功流水<br>
+                                3、订单退货：逆向订单的退款成功流水
                             </td>
                         </tr>
                     </tbody>

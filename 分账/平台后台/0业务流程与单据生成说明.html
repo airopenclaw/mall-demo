@@ -442,7 +442,7 @@
                             <td>
                                 <div class="arrow">↓</div>
                                 <div class="node node-process">
-                                    <div class="node-title">显示资金流水</div>
+                                    <div class="node-title">显生成资金流水</div>
                                     <div class="node-desc">更新支付状态</div>
                                 </div>
                             </td>
@@ -450,15 +450,15 @@
                                 <div class="flow-step">
                                     <div class="step-circle">4</div>
                                     <div class="step-content">
-                                        <div class="step-title">更新支付流水状态</div>
+                                        <div class="step-title">更新资金流水状态</div>
                                         <div class="step-desc">将支付流水状态改为"已支付"</div>
                                     </div>
                                 </div>
                                 <div class="flow-step">
                                     <div class="step-circle">5</div>
                                     <div class="step-content">
-                                        <div class="step-title">生成订单</div>
-                                        <div class="step-desc">创建正式订单，记录订单基本信息</div>
+                                        <div class="step-title">记录订单分账规则</div>
+                                        <div class="step-desc">包括分账时点，用户手续费，商家支付手续费（正向，逆向），类目服务费（正向，逆向）</div>
                                     </div>
                                 </div>
                             </td>
@@ -469,17 +469,14 @@
                                         <span class="voucher-badge">必填</span>
                                     </div>
                                     <div class="voucher-fields">
-                                        <span>📋 订单号</span>
-                                        <span>🏪 店铺ID</span>
-                                        <span>👤 客户ID</span>
-                                        <span>💰 订单金额</span>
-                                        <span>💳 支付方式</span>
-                                        <span>📊 下单时的分账规则（用于支付分账明细、分账退回的生成）</span>
+                                        <span>📋 记录分账规则用于：分账时点，用户手续费，商家支付手续费（正向，逆向），类目服务费（正向，逆向）</span>
+            
+                                        <span>📊 用于支付分账明细、分账退回的生成</span>
                                     </div>
                                 </div>
                                 <div class="voucher">
                                     <div class="voucher-title">
-                                        支付退款流水表
+                                        资金流水表
                                         <span class="voucher-badge">必填</span>
                                     </div>
                                     <div class="voucher-fields">
@@ -545,12 +542,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="flow-step">
-                                    <div class="step-circle">8</div>
-                                    <div class="step-content">
-                                        <div class="step-title">定时任务检查</div>
-                                        <div class="step-desc">定时任务扫描待分账明细，到期的自动执行分账</div>
-                                    </div>
+                        
                                 </div>
                             </td>
                             <td>-</td>
@@ -938,7 +930,7 @@
                             <td>
                                 <div class="voucher">
                                     <div class="voucher-title">
-                                        支付退款流水表
+                                        资金流水表
                                         <span class="voucher-badge">必填</span>
                                     </div>
                                     <div class="voucher-fields">

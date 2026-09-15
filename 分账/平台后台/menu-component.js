@@ -46,7 +46,7 @@
                 { id: 'merchant-audit', text: '商家审核', href: '商家审核.html' },
                 { id: 'payment-account', text: '货款账户', href: '1货款账户.html' },
                 { id: 'account-flow', text: '账户流水', href: '账户流水.html' },
-                { id: 'payment-refund-flow', text: '支付退款流水', href: '支付退款流水.html' }
+                { id: 'payment-refund-flow', text: '资金流水', href: '资金流水.html' }
             ]
         },
         {
