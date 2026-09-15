@@ -538,6 +538,88 @@
             flex-shrink: 0;
         }
 
+        /* 状态Tab筛选样式 */
+        .search-tabs {
+            display: flex;
+            gap: 0;
+            padding-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .search-tab {
+            padding: 0 16px;
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #dcdfe6;
+            background: #fff;
+            color: #606266;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-right: none;
+        }
+
+        .search-tab:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-tab:last-child {
+            border-radius: 0 4px 4px 0;
+            border-right: 1px solid #dcdfe6;
+        }
+
+        .search-tab:hover {
+            color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .search-tab.active {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+
+        /* 状态tab筛选 */
+        .tab-filter {
+            display: flex;
+            gap: 20px;
+            padding: 14px 20px;
+            border-bottom: 1px solid #e4e7ed;
+            margin-bottom: 0;
+            margin-top: -20px;
+            padding-bottom: 16px;
+        }
+
+        .tab-item {
+            padding: 0;
+            cursor: pointer;
+            color: #606266;
+            font-size: 14px;
+            position: relative;
+            transition: all 0.2s ease;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .tab-item:hover {
+            color: #667eea;
+        }
+
+        .tab-item.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -13px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #667eea;
+        }
+
         /* 搜索按钮样式 */
         .search-btn {
             height: 32px;
@@ -1075,10 +1157,13 @@
 
             <!-- 列表卡片 -->
             <div class="card" data-page-node-id="JR6CAiNziLPe8o5FyFcFUI">
-                <div class="card-header" data-page-node-id="bqbhryM3WhOzMJkQT2xGrC">
-                    <div class="card-title" data-page-node-id="ZHqtNM0KMGC3YCHpI64iJl">店铺支付方式</div>
-                </div>
                 <div class="card-body" data-page-node-id="FoUVEjXxEKplUbXDrbDben">
+                    <!-- 状态tab筛选 -->
+                    <div class="tab-filter" data-page-node-id="tabFilter">
+                        <div class="tab-item active" data-status="" data-page-node-id="tabAll">全部</div>
+                        <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
+                        <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
+                    </div>
                     <div class="table-container" data-page-node-id="r0B6Vq8iM8IAMX8ZZHuiLg">
                         <table data-page-node-id="uF9mw1ifVqT3uwch4Vcbkt">
                     <thead data-page-node-id="YP78Lpq5yYYhMY15r1tPYq">
@@ -1504,6 +1589,45 @@
                 closeBatchEdit();
             }
         });
+
+        // 状态tab筛选功能
+        const tabItems = document.querySelectorAll('.tab-item');
+        let currentStatusFilter = '';
+
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有tab的active状态
+                tabItems.forEach(t => t.classList.remove('active'));
+                // 添加当前tab的active状态
+                this.classList.add('active');
+                // 保存当前筛选状态
+                currentStatusFilter = this.getAttribute('data-status');
+                // 执行筛选
+                filterTableByStatus(currentStatusFilter);
+            });
+        });
+
+        /**
+         * 根据状态筛选表格
+         * @param {string} status - 状态筛选值（''=全部, '已开通', '未开通'）
+         */
+        function filterTableByStatus(status) {
+            const tableBody = document.querySelector('table tbody');
+            if (!tableBody) return;
+
+            const rows = tableBody.querySelectorAll('tr');
+            rows.forEach(row => {
+                // 获取状态列的文本（第10列，索引9）
+                const statusCell = row.cells[9];
+                if (!statusCell) return;
+
+                const statusText = statusCell.textContent.trim();
+
+                // 判断是否显示
+                const shouldShow = !status || statusText === status;
+                row.style.display = shouldShow ? '' : 'none';
+            });
+        }
     </script>
 </body>
 </html>
