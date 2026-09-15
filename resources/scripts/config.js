@@ -1,19 +1,19 @@
-// 页面数据配置 - 自动生成于 2026/9/15 14:07:24
+// 页面数据配置 - 自动生成于 2026/9/15 14:31:12
 // 由 scan_html.js 生成，结构与 server.js /api/config 一致
 // 重新生成: node scan_html.js
 
 const defaultPageConfig = {
     "versions": {
-        "分账": {
+        "分账版本": {
             "icon": "📁",
-            "description": "分账 原型",
+            "description": "分账版本 原型",
             "categories": {
                 "其他页面": {
                     "icon": "📁",
                     "pages": [
                         {
                             "name": "需求背景",
-                            "file": "分账/需求背景.html"
+                            "file": "分账版本/需求背景.html"
                         }
                     ]
                 },
@@ -22,31 +22,31 @@ const defaultPageConfig = {
                     "pages": [
                         {
                             "name": "0业务流程与单据生成说明",
-                            "file": "分账/平台后台/0业务流程与单据生成说明.html"
+                            "file": "分账版本/平台后台/0业务流程与单据生成说明.html"
                         },
                         {
                             "name": "1货款账户",
-                            "file": "分账/平台后台/1货款账户.html"
+                            "file": "分账版本/平台后台/1货款账户.html"
                         },
                         {
                             "name": "2账户流水",
-                            "file": "分账/平台后台/2账户流水.html"
+                            "file": "分账版本/平台后台/2账户流水.html"
                         },
                         {
                             "name": "3资金流水",
-                            "file": "分账/平台后台/3资金流水.html"
+                            "file": "分账版本/平台后台/3资金流水.html"
                         },
                         {
                             "name": "4分账明细",
-                            "file": "分账/平台后台/4分账明细.html"
+                            "file": "分账版本/平台后台/4分账明细.html"
                         },
                         {
                             "name": "5店铺支付方式",
-                            "file": "分账/平台后台/5店铺支付方式.html"
+                            "file": "分账版本/平台后台/5店铺支付方式.html"
                         },
                         {
                             "name": "6其它说明",
-                            "file": "分账/平台后台/6其它说明.html"
+                            "file": "分账版本/平台后台/6其它说明.html"
                         }
                     ]
                 },
@@ -55,54 +55,45 @@ const defaultPageConfig = {
                     "pages": [
                         {
                             "name": "分账明细",
-                            "file": "分账/店铺后台（本期暂不做）/分账明细.html"
+                            "file": "分账版本/店铺后台（本期暂不做）/分账明细.html"
                         },
                         {
                             "name": "支付退款流水",
-                            "file": "分账/店铺后台（本期暂不做）/支付退款流水.html"
-                        }
-                    ]
-                },
-                "移动商城": {
-                    "icon": "📱",
-                    "pages": [
-                        {
-                            "name": "订单提交",
-                            "file": "分账/移动商城/订单提交.html"
+                            "file": "分账版本/店铺后台（本期暂不做）/支付退款流水.html"
                         }
                     ]
                 }
             }
         },
-        "设置": {
+        "设置版本": {
             "icon": "📁",
-            "description": "设置 原型",
+            "description": "设置版本 原型",
             "categories": {
                 "平台后台": {
                     "icon": "⚙️",
                     "pages": [
                         {
                             "name": "分账规则",
-                            "file": "设置/平台后台/分账规则.html"
+                            "file": "设置版本/平台后台/分账规则.html"
                         },
                         {
                             "name": "类目服务费",
-                            "file": "设置/平台后台/类目服务费.html"
+                            "file": "设置版本/平台后台/类目服务费.html"
                         }
                     ]
                 }
             }
         },
-        "支付": {
+        "支付版本": {
             "icon": "📁",
-            "description": "支付 原型",
+            "description": "支付版本 原型",
             "categories": {
                 "其他页面": {
                     "icon": "📁",
                     "pages": [
                         {
-                            "name": "需求背景",
-                            "file": "支付/需求背景.html"
+                            "name": "需求目标",
+                            "file": "支付版本/需求目标.html"
                         }
                     ]
                 },
@@ -110,20 +101,24 @@ const defaultPageConfig = {
                     "icon": "⚙️",
                     "pages": [
                         {
-                            "name": "0业务流程与单据生成说明",
-                            "file": "支付/平台后台/0业务流程与单据生成说明.html"
+                            "name": "0业务流程",
+                            "file": "支付版本/平台后台/0业务流程.html"
                         },
                         {
                             "name": "3资金流水",
-                            "file": "支付/平台后台/3资金流水.html"
+                            "file": "支付版本/平台后台/3资金流水.html"
+                        },
+                        {
+                            "name": "4分账明细",
+                            "file": "支付版本/平台后台/4分账明细.html"
                         },
                         {
                             "name": "5店铺支付方式",
-                            "file": "支付/平台后台/5店铺支付方式.html"
+                            "file": "支付版本/平台后台/5店铺支付方式.html"
                         },
                         {
                             "name": "6其它说明",
-                            "file": "支付/平台后台/6其它说明.html"
+                            "file": "支付版本/平台后台/6其它说明.html"
                         }
                     ]
                 },
@@ -132,12 +127,12 @@ const defaultPageConfig = {
                     "pages": [
                         {
                             "name": "订单提交",
-                            "file": "支付/移动商城/订单提交.html"
+                            "file": "支付版本/移动商城/订单提交.html"
                         }
                     ]
                 }
             }
         }
     },
-    "defaultPage": "分账/需求背景.html"
+    "defaultPage": "分账版本/需求背景.html"
 };
