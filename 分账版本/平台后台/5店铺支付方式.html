@@ -1584,37 +1584,50 @@
             </div>
 
             <!-- 状态机流转图 -->
+            <!-- 状态机流转图 -->
             <div class="state-machine-section" data-page-node-id="stateMachineSection">
                 <h4 data-page-node-id="stateMachineTitle">状态机流转</h4>
-                <div class="state-machine-diagram" data-page-node-id="stateMachineDiagram">
-                    <div class="state-node" data-page-node-id="stateInitial">
-                        <div class="state-content">商户入驻<br>审核通过</div>
-                        <div class="state-arrow">
-                            <div class="arrow-action" data-page-node-id="arrowAction1">初始化</div>
-                            <div class="arrow-line">→</div>
-                        </div>
+
+                <!-- 图例 -->
+                <div class="state-legend" data-page-node-id="stateLegend">
+                    <span class="legend-item" data-page-node-id="legendItem1">
+                        <i class="legend-dot dot-inactive" data-page-node-id="legendDot1"></i>
+                        未开通
+                    </span>
+                    <span class="legend-item" data-page-node-id="legendItem2">
+                        <i class="legend-dot dot-active" data-page-node-id="legendDot2"></i>
+                        已开通
+                    </span>
+                </div>
+
+                <!-- 状态流转 -->
+                <div class="flow-group" data-page-node-id="flowGroup1">
+                    <div class="flow-group-title" data-page-node-id="flowGroupTitle1">商户入驻状态流转</div>
+
+                    <div class="flow-row" data-page-node-id="flowRow1">
+                        <span class="flow-node node-start" data-page-node-id="nodeStart">商户入驻<br>审核通过</span>
+                        <span class="flow-arrow" data-page-node-id="flowArrow1">
+                            <span class="arrow-label" data-page-node-id="arrowLabel1">初始化</span>
+                            <span class="arrow-symbol" data-page-node-id="arrowSymbol1">→</span>
+                        </span>
+                        <span class="flow-node node-inactive" data-page-node-id="nodeInactive">未开通</span>
                     </div>
 
-                    <div class="state-node inactive-state" data-page-node-id="stateInactive">
-                        <div class="state-header">未开通</div>
-                        <div class="state-body">
-                            <div class="state-field">• 分账时点：<br>发货日+11天</div>
-                            <div class="state-field">• 客户支付费率：<br>初始化值</div>
-                        </div>
-                        <div class="state-arrow">
-                            <div class="arrow-action" data-page-node-id="arrowAction2">开户成功</div>
-                            <div class="arrow-line">→</div>
-                        </div>
+                    <div class="flow-row" data-page-node-id="flowRow2">
+                        <span class="flow-node node-inactive" data-page-node-id="nodeInactive2">未开通</span>
+                        <span class="flow-arrow" data-page-node-id="flowArrow2">
+                            <span class="arrow-label" data-page-node-id="arrowLabel2">开户成功</span>
+                            <span class="arrow-symbol" data-page-node-id="arrowSymbol2">→</span>
+                        </span>
+                        <span class="flow-node node-active" data-page-node-id="nodeActive">已开通</span>
                     </div>
+                </div>
 
-                    <div class="state-node active-state" data-page-node-id="stateActive">
-                        <div class="state-header">已开通</div>
-                        <div class="state-body">
-                            <div class="state-field">• 支持支付交易</div>
-                            <div class="state-field">• 可修改分账时点</div>
-                            <div class="state-field">• 可修改支付费率</div>
-                        </div>
-                    </div>
+                <!-- 说明 -->
+                <div class="state-tip" data-page-node-id="stateTip">
+                    <strong data-page-node-id="tipStrong">说明：</strong>
+                    ① 商户入驻审核通过后，初始化默认分账时点为发货日+11天，客户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
+                    ② 商户在支付机构开户成功后，状态更新为"已开通"，支持支付交易和修改配置。
                 </div>
             </div>
 
