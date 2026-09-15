@@ -1102,6 +1102,103 @@
                 border: 1px solid #ddd;
             }
         }
+
+        /* 状态机流转图样式 */
+        .state-machine-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .state-machine-section h4 {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .state-machine-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .state-node {
+            background: white;
+            border: 2px solid #1890ff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.15);
+        }
+
+        .state-node.inactive-state {
+            border-color: #ff4d4f;
+            box-shadow: 0 2px 8px rgba(255, 77, 79, 0.15);
+        }
+
+        .state-node.inactive-state .state-header {
+            color: #ff4d4f;
+            background: #fff1f0;
+        }
+
+        .state-node.active-state {
+            border-color: #52c41a;
+            box-shadow: 0 2px 8px rgba(82, 196, 26, 0.15);
+        }
+
+        .state-node.active-state .state-header {
+            color: #52c41a;
+            background: #f6ffed;
+        }
+
+        .state-content {
+            font-weight: 500;
+            color: #1890ff;
+            line-height: 1.5;
+        }
+
+        .state-header {
+            font-weight: 600;
+            font-size: 14px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .state-body {
+            text-align: left;
+        }
+
+        .state-field {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+            padding-left: 8px;
+        }
+
+        .state-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .arrow-text {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .arrow-line {
+            font-size: 24px;
+            color: #1890ff;
+            font-weight: bold;
+            line-height: 1;
+        }
     </style>
 </head>
 <body data-page-node-id="zw2lO88vn2tywJGkzcHc6f">
@@ -1465,6 +1562,41 @@
                     5、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置<br data-page-node-id=”z3wPL5FZkOxQW0aTCpMNZG”>
                     6、状态列显示商家在支付机构的扫码产品开通状态，包括已开通和未开通两种状态
                 </p>
+            </div>
+
+            <!-- 状态机流转图 -->
+            <div class="state-machine-section" data-page-node-id="stateMachineSection">
+                <h4 data-page-node-id="stateMachineTitle">状态机流转</h4>
+                <div class="state-machine-diagram" data-page-node-id="stateMachineDiagram">
+                    <div class="state-node" data-page-node-id="stateInitial">
+                        <div class="state-content">商户入驻<br>审核通过</div>
+                        <div class="state-arrow">
+                            <span class="arrow-text">初始化</span>
+                            <div class="arrow-line">↓</div>
+                        </div>
+                    </div>
+
+                    <div class="state-node inactive-state" data-page-node-id="stateInactive">
+                        <div class="state-header">未开通</div>
+                        <div class="state-body">
+                            <div class="state-field">• 分账时点：发货日+11天</div>
+                            <div class="state-field">• 客户支付费率：初始化值</div>
+                        </div>
+                        <div class="state-arrow">
+                            <span class="arrow-text">开户成功</span>
+                            <div class="arrow-line">↓</div>
+                        </div>
+                    </div>
+
+                    <div class="state-node active-state" data-page-node-id="stateActive">
+                        <div class="state-header">已开通</div>
+                        <div class="state-body">
+                            <div class="state-field">• 支持支付交易</div>
+                            <div class="state-field">• 可修改分账时点</div>
+                            <div class="state-field">• 可修改支付费率</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 字段说明表格 -->

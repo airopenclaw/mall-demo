@@ -507,6 +507,136 @@
             line-height: 1.8;
         }
 
+        /* ==================== 状态机流转 ==================== */
+        .state-machine {
+            background: #f8f9fc;
+            border: 1px solid #e8ecf5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .state-machine h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-left: 10px;
+            border-left: 3px solid #667eea;
+        }
+
+        .state-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #dde3ee;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-pending { background: #ffa726; }
+        .dot-success { background: #66bb6a; }
+        .dot-failed  { background: #ef5350; }
+        .dot-closed  { background: #90a4ae; }
+
+        .flow-group {
+            margin-bottom: 18px;
+        }
+
+        .flow-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .flow-group-title {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            background: #eef2ff;
+            padding: 3px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: #fff;
+            border: 1px solid #edf1f8;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+        }
+
+        .flow-node {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .node-pending { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+        .node-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .node-failed  { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+        .node-closed  { background: #eceff1; color: #546e7a; border: 1px solid #b0bec5; }
+        .node-start   { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+
+        .flow-arrow {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            min-width: 100px;
+        }
+
+        .arrow-label {
+            font-size: 11px;
+            color: #667eea;
+            white-space: nowrap;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        .arrow-symbol {
+            font-size: 14px;
+            color: #b0b8c8;
+            line-height: 1;
+        }
+
+        .state-tip {
+            margin-top: 16px;
+            padding: 10px 14px;
+            background: #f0f4ff;
+            border-left: 3px solid #667eea;
+            border-radius: 0 4px 4px 0;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .state-tip strong {
+            color: #667eea;
+        }
+
         /* 弹窗样式 */
         .modal-overlay {
             display: none;
@@ -791,18 +921,18 @@
                                 <input type="text" class="form-control" placeholder="请输入售后单号">
                             </div>
                             <div class="search-item">
-                                                            <div class="search-item">
                                 <label>客户信息</label>
                                 <input type="text" class="form-control" placeholder="请输入客户信息">
                             </div>
-                            <label>商家信息</label>
+                            <div class="search-item">
+                                <label>商家信息</label>
                                 <input type="text" class="form-control" placeholder="名称/信用代码">
                             </div>
                             <div class="search-item">
                                 <label>店铺名称</label>
                                 <input type="text" class="form-control" placeholder="请输入店铺名称">
                             </div>
-                                                        <div class="search-item">
+                            <div class="search-item">
                                 <label>支付机构</label>
                                 <select class="form-control">
                                     <option value="">全部</option>
@@ -856,104 +986,104 @@
                     </div>
                     <div class="table-container">
                         <table>
-                                        <thead>
-                        <tr>
-                            <th width="50">序号</th>
-                            <th>流水号</th>
-                            <th>订单号</th>
-                            <th>售后单号</th>
-                            <th>SKU规格编码</th>
-                            <th>后台类目</th>
-                            <th>分账比例</th>
-                            <th>商家名称</th>
-                            <th>信用代码</th>
-                            <th>店铺名称</th>
-                            <th>交易类型</th>
-                            <th>款项类型</th>
-                            <th>款项金额</th>
-                            <th>支付机构</th>
-                            <th>支付方式</th>
-                            <th>状态</th>
-                            <th>失败原因</th>
-                            <th>交易用户</th>
-                            <th>分账时间</th>
-                            <th width="80">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>LS202309010001</td>
-                            <td>DD202309010001</td>
-                            <td>-</td>
-                            <td>SKU001</td>
-                            <td>数码电器/手机/智能手机</td>
-                            <td>10%</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>XX数码旗舰店</td>
-                            <td>支付分账</td>
-                            <td>类目服务费</td>
-                            <td>1,280.00</td>
-                            <td>智付支付</td>
-                            <td>微信支付</td>
-                            <td>待分账</td>
-                            <td>-</td>
-                            <td>张三</td>
-                            <td>2023-09-01 14:30:25</td>
-                            <td class="action-column">-</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>LS202309010002</td>
-                            <td>DD202309010002</td>
-                            <td>SH202309010001</td>
-                            <td>SKU002</td>
-                            <td>家居生活/家具/沙发</td>
-                            <td>15%</td>
-                            <td>YY商贸有限公司</td>
-                            <td>91110000MA09876543</td>
-                            <td>YY家居专营店</td>
-                            <td>分账退回</td>
-                            <td>支付手续费(商家)</td>
-                            <td>580.00</td>
-                            <td>智付支付</td>
-                            <td>支付宝</td>
-                            <td>已分账</td>
-                            <td>-</td>
-                            <td>李四</td>
-                            <td>2023-09-01 15:20:10</td>
-                            <td class="action-column">-</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>LS202309010003</td>
-                            <td>DD202309010003</td>
-                            <td>-</td>
-                            <td>SKU003</td>
-                            <td>食品饮料/零食/坚果</td>
-                            <td>8%</td>
-                            <td>ZZ网络科技公司</td>
-                            <td>91110000MA05678912</td>
-                            <td>ZZ生鲜超市</td>
-                            <td>支付分账</td>
-                            <td>支付手续费(客户)</td>
-                            <td>240.00</td>
-                            <td>智付支付</td>
-                            <td>微信支付</td>
-                            <td>分账异常</td>
-                            <td>余额不足</td>
-                            <td>王五</td>
-                            <td>2023-09-01 16:05:33</td>
-                            <td class="action-column">
-                                <a href="javascript:void(0);" class="btn-link" data-split-id="LS202309010003">分账</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th width="50">序号</th>
+                                    <th>流水号</th>
+                                    <th>订单号</th>
+                                    <th>售后单号</th>
+                                    <th>SKU规格编码</th>
+                                    <th>后台类目</th>
+                                    <th>分账比例</th>
+                                    <th>商家名称</th>
+                                    <th>信用代码</th>
+                                    <th>店铺名称</th>
+                                    <th>交易类型</th>
+                                    <th>款项类型</th>
+                                    <th>款项金额</th>
+                                    <th>支付机构</th>
+                                    <th>支付方式</th>
+                                    <th>状态</th>
+                                    <th>失败原因</th>
+                                    <th>交易用户</th>
+                                    <th>分账时间</th>
+                                    <th width="80">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>LS202309010001</td>
+                                    <td>DD202309010001</td>
+                                    <td>-</td>
+                                    <td>SKU001</td>
+                                    <td>数码电器/手机/智能手机</td>
+                                    <td>10%</td>
+                                    <td>XX科技有限公司</td>
+                                    <td>91110000MA01234567</td>
+                                    <td>XX数码旗舰店</td>
+                                    <td>支付分账</td>
+                                    <td>类目服务费</td>
+                                    <td>1,280.00</td>
+                                    <td>智付支付</td>
+                                    <td>微信支付</td>
+                                    <td>待分账</td>
+                                    <td>-</td>
+                                    <td>张三</td>
+                                    <td>2023-09-01 14:30:25</td>
+                                    <td class="action-column">-</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>LS202309010002</td>
+                                    <td>DD202309010002</td>
+                                    <td>SH202309010001</td>
+                                    <td>SKU002</td>
+                                    <td>家居生活/家具/沙发</td>
+                                    <td>15%</td>
+                                    <td>YY商贸有限公司</td>
+                                    <td>91110000MA09876543</td>
+                                    <td>YY家居专营店</td>
+                                    <td>分账退回</td>
+                                    <td>支付手续费(商家)</td>
+                                    <td>580.00</td>
+                                    <td>智付支付</td>
+                                    <td>支付宝</td>
+                                    <td>已分账</td>
+                                    <td>-</td>
+                                    <td>李四</td>
+                                    <td>2023-09-01 15:20:10</td>
+                                    <td class="action-column">-</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>LS202309010003</td>
+                                    <td>DD202309010003</td>
+                                    <td>-</td>
+                                    <td>SKU003</td>
+                                    <td>食品饮料/零食/坚果</td>
+                                    <td>8%</td>
+                                    <td>ZZ网络科技公司</td>
+                                    <td>91110000MA05678912</td>
+                                    <td>ZZ生鲜超市</td>
+                                    <td>支付分账</td>
+                                    <td>支付手续费(客户)</td>
+                                    <td>240.00</td>
+                                    <td>智付支付</td>
+                                    <td>微信支付</td>
+                                    <td>分账异常</td>
+                                    <td>余额不足</td>
+                                    <td>王五</td>
+                                    <td>2023-09-01 16:05:33</td>
+                                    <td class="action-column">
+                                        <a href="javascript:void(0);" class="btn-link" data-split-id="LS202309010003">分账</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-       
         </div>
     </div>
 
@@ -969,6 +1099,8 @@
             <div class="note-section">
                 <h4>需求</h4>
                 <p>
+                   PS：第一期只做分账明细的生成，状态机流转等其它需求下一期再做
+
                     1、本功能主要提供查看各个入驻店铺的分账明细记录<br>
                     2、展示支付分账、分账退回相关的分账明细<br>
                     3、本页面为只读页面，不支持新增、编辑、删除操作<br>
@@ -983,9 +1115,162 @@
                     12、系统需要定时对分账异常、待分账的任务进行定时执行分账（是否可以分账需要满足条件）<br>
                     13、支付分账：分账条件为满足分账时点<br>
                     14：分账退回：分账条件为：1. 退款申请表.审核状态 = 申请通过2. 对应销售单的SKU分账明细表.支付分账状态 = 已分账
-
-
                 </p>
+            </div>
+
+            <!-- ==================== 状态机图一：支付分账 ==================== -->
+            <div class="state-machine">
+                <h4>图一：支付分账状态机</h4>
+
+                <!-- 图例 -->
+                <div class="state-legend">
+                    <span class="legend-item"><i class="legend-dot dot-pending"></i>待分账</span>
+                    <span class="legend-item"><i class="legend-dot dot-success"></i>已分账</span>
+                    <span class="legend-item"><i class="legend-dot dot-failed"></i>分账异常</span>
+                    <span class="legend-item"><i class="legend-dot dot-closed"></i>已关闭</span>
+                </div>
+
+                <!-- ① 正向流程 -->
+                <div class="flow-group">
+                    <div class="flow-group-title">① 正向流程</div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-start">开始</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">生成分账明细</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-pending">待分账</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-pending">待分账</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">满足分账时点<br>定时/手动分账成功</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-success">已分账</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-pending">待分账</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">分账执行失败</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-failed">分账异常</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-failed">分账异常</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">手动点击「分账」<br>重试成功</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-success">已分账</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-failed">分账异常</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">重试仍失败</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-failed">分账异常（保持）</span>
+                    </div>
+                </div>
+
+                <!-- ② 售后流程 -->
+                <div class="flow-group">
+                    <div class="flow-group-title">② 售后流程</div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-pending">待分账</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">SKU售后审核通过</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-closed">已关闭</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-failed">分账异常</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">SKU售后审核通过</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-closed">已关闭</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-closed">已关闭</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">存在未退数量<br>按未退数量重新生成</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-pending">待分账（新明细）</span>
+                    </div>
+                </div>
+
+                <!-- 补充说明 -->
+                <div class="state-tip">
+                    <strong>说明：</strong>
+                    ① 「已分账」为终态，分账完成后不再流转；<br>
+                    ② 「已关闭」仅针对售后审核通过且尚未完成分账的记录；<br>
+                    ③ 「已关闭」后如存在未退数量，系统自动按剩余未退数量重新生成「待分账」明细。<br>
+                    ④ 注意：套购订单不单：对应订单未分账时，所有商品都要关闭“分账明细”后按新的商品金额生成。非套购订单则只关闭售后商品本身的“分账明细”再按未退数量生成。
+                </div>
+            </div>
+
+            <!-- ==================== 状态机图二：分账退回 ==================== -->
+            <div class="state-machine">
+                <h4>图二：分账退回状态机</h4>
+
+                <!-- 图例 -->
+                <div class="state-legend">
+                    <span class="legend-item"><i class="legend-dot dot-pending"></i>待分账</span>
+                    <span class="legend-item"><i class="legend-dot dot-success"></i>已分账</span>
+                    <span class="legend-item"><i class="legend-dot dot-failed"></i>分账异常</span>
+                </div>
+
+                <!-- 逆向流程 -->
+                <div class="flow-group">
+                    <div class="flow-group-title">分账退回：单据生成</div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-success">开始</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">审核通过</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-pending">待分账</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-pending">待分账</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">分账退回成功</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-success">已分账</span>
+                    </div>
+
+                    <div class="flow-row">
+                        <span class="flow-node node-pending">待分账</span>
+                        <span class="flow-arrow">
+                            <span class="arrow-label">分账退回失败</span>
+                            <span class="arrow-symbol">→</span>
+                        </span>
+                        <span class="flow-node node-failed">分账异常</span>
+                    </div>
+                </div>
+
+                <!-- 补充说明 -->
+                <div class="state-tip">
+                    <strong>说明：</strong>
+                    ① 「分账退回」的分账比例按订单下单时的分账规则执行；<br>
+                    ② 仅当对应订单的 SKU 为「已分账」状态，才生成分账退回单据。
+                </div>
             </div>
 
             <!-- 字段说明表格 -->
@@ -1069,7 +1354,6 @@
                                 1、根据款项类型显示对应的金额<br>
                                 2、格式：带千分位的数字，如 1,280.00
                                 3、款项金额=货款金额*支付费率<br>
-
                             </td>
                         </tr>
                         <tr>
@@ -1135,7 +1419,6 @@
                     </tbody>
                 </table>
             </div>
-            
         </div>
     </div>
 

@@ -1049,6 +1049,103 @@
             cursor: pointer;
             vertical-align: middle;
         }
+
+        /* 状态机流转图样式 */
+        .state-machine-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .state-machine-section h4 {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .state-machine-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .state-node {
+            background: white;
+            border: 2px solid #1890ff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.15);
+        }
+
+        .state-node.inactive-state {
+            border-color: #ff4d4f;
+            box-shadow: 0 2px 8px rgba(255, 77, 79, 0.15);
+        }
+
+        .state-node.inactive-state .state-header {
+            color: #ff4d4f;
+            background: #fff1f0;
+        }
+
+        .state-node.active-state {
+            border-color: #52c41a;
+            box-shadow: 0 2px 8px rgba(82, 196, 26, 0.15);
+        }
+
+        .state-node.active-state .state-header {
+            color: #52c41a;
+            background: #f6ffed;
+        }
+
+        .state-content {
+            font-weight: 500;
+            color: #1890ff;
+            line-height: 1.5;
+        }
+
+        .state-header {
+            font-weight: 600;
+            font-size: 14px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .state-body {
+            text-align: left;
+        }
+
+        .state-field {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+            padding-left: 8px;
+        }
+
+        .state-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .arrow-text {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .arrow-line {
+            font-size: 24px;
+            color: #1890ff;
+            font-weight: bold;
+            line-height: 1;
+        }
     </style>
 </head>
 <body data-page-node-id="zw2lO88vn2tywJGkzcHc6f">
@@ -1058,8 +1155,8 @@
         <div class="top-menu-item" data-page-node-id="WouXpOQO8ItU3FPtFpX2Gn">运营</div>
         <div class="top-menu-item" data-page-node-id="6q2NjdEwqzuqWVoeHTHB1n">商品</div>
         <div class="top-menu-item" data-page-node-id="fknBnYBst3j60G2LxFZ72q">订单</div>
-        <div class="top-menu-item" data-page-node-id="Fe38rAouJ7h63QooWYg8Cj">客户</div>
-        <div class="top-menu-item" data-page-node-id="C7fv41vhI613eWappkYs3T">plus客户</div>
+        <div class="top-menu-item" data-page-node-id="Fe38rAouJ7h63QooWYg8Cj">用户</div>
+        <div class="top-menu-item" data-page-node-id="C7fv41vhI613eWappkYs3T">plus用户</div>
         <div class="top-menu-item" data-page-node-id="YJYVETKkMvJdyPiGYGfB5e">营销</div>
         <div class="top-menu-item" data-page-node-id="AB7qe7WaUaL4Hd1thkO9TC">装修</div>
         <div class="top-menu-item" data-page-node-id="uX2MTkYeRF4XpQ1p3SayXW">店铺</div>
@@ -1177,7 +1274,7 @@
                             <th data-page-node-id="u3ZHdCXpPtlqq5B2ACy3FF">店铺名称</th>
                             <th data-page-node-id="vKP7wSuo110vRpwrawjf2G">支付机构</th>
                             <th data-page-node-id="ZrTHmTtK1niIIaxCOSB8Bc">支付方式</th>
-                            <th data-page-node-id="2HnUN1bQWUt0Ptro9SoODN">客户支付费率</th>
+                            <th data-page-node-id="2HnUN1bQWUt0Ptro9SoODN">用户支付费率</th>
                             <th data-page-node-id="settlementTimeHeader">分账时点</th>
                             <th data-page-node-id="statusHeader">状态</th>
                             <th width="80" data-page-node-id="e0nnyxQ1fJE5LCj1eIZ6Tm">操作</th>
@@ -1332,7 +1429,7 @@
                         <input type="text" class="form-control" id="editStoreName" readonly data-page-node-id="J5meOAOUMVRWARAimFQ8qk">
                     </div>
                     <div class="form-group" style="width: 100%;" data-page-node-id="3MH56qSpTJ9nwEcMUK5VzY">
-                        <label data-page-node-id="GHRvOoOMbnp2U4sIpHTUM4">客户支付费率</label>
+                        <label data-page-node-id="GHRvOoOMbnp2U4sIpHTUM4">用户支付费率</label>
                         <input type="text" class="form-control" id="editPaymentRate" placeholder="请输入费率，如：0.60%" style="width: 200px;" data-page-node-id="lWXzuEjYJ8W0TQoQQJZ9XN">
                     </div>
                     <div class="form-group" style="width: 100%;" data-page-node-id="3MH56qSpTJ9nwEcMUK5VzY">
@@ -1366,7 +1463,7 @@
             <div class="modal-body" data-page-node-id="batchModalBody">
                 <div class="form-section" data-page-node-id="batchFormSection">
                     <div class="form-group" style="width: 100%; margin-bottom: 20px;">
-                        <label data-page-node-id="batchPaymentRateLabel">客户支付费率</label>
+                        <label data-page-node-id="batchPaymentRateLabel">用户支付费率</label>
                         <input type="text" class="form-control" id="batchPaymentRate" placeholder="请输入费率，如：0.60%，留空表示不修改" style="width: 300px;" data-page-node-id="batchPaymentRateInput">
                     </div>
                     <div class="form-group" style="width: 100%;">
@@ -1404,13 +1501,49 @@
                 <h4 data-page-node-id=”UhiMmVAmpD0ovQWzGR2PnY”>需求</h4>
                 <p data-page-node-id=”Ijz32x7IfK32Xs5cKMjDU1”>
                     1、本功能主要提供查看各个入驻店铺的分账时点<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
-                    2、初始化的默认分账时点为发货时间+11天
-                    2、已经支付的订单，按店铺+支付机构+支付方式定位分账时点，订单满足分账时点后，对订单的”待分账明细”进行划拨分账<br data-page-node-id=”GnyFaWfI1zt0vgknAC2a3Z”>
-                    3、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id=”El4U0juX7YBSDgqu4y0v9i”>
+                    2、商户入驻审核通过时：初始化的默认分账时点为发货时间+11天，“用户支付费率的初始化值为”平台后台-支付机构的支付方式中配置的"用户支付费率"，状态为“未开通”<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
+                    3、商户开户成功：更新对应支付方式的状态为“已开通”<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
+                    3、已经支付的订单，按店铺+支付机构+支付方式确定 分账时点，并记录在订单表上，以便生成分账明细<br data-page-node-id=”GnyFaWfI1zt0vgknAC2a3Z”>
+                    4、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id=”El4U0juX7YBSDgqu4y0v9i”>
                     4、支持按商家名称、信用代码、店铺名称、支付机构、支付方式、分账时点搜索<br data-page-node-id=”dYNGWoUTzsM89mB0sbPZWp”>
-                    5、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id=”z3wPL5FZkOxQW0aTCpMNZG”>
-                    6、状态列显示商家在支付机构的扫码产品开通状态，包括已开通和未开通两种状态
+                    6、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id=”z3wPL5FZkOxQW0aTCpMNZG”>
+                    7、状态列显示商家在支付机构的扫码产品开通状态，包括已开通和未开通两种状态
                 </p>
+            </div>
+
+            <!-- 状态机流转图 -->
+            <div class="state-machine-section" data-page-node-id="stateMachineSection">
+                <h4 data-page-node-id="stateMachineTitle">状态机流转</h4>
+                <div class="state-machine-diagram" data-page-node-id="stateMachineDiagram">
+                    <div class="state-node" data-page-node-id="stateInitial">
+                        <div class="state-content">商户入驻<br>审核通过</div>
+                        <div class="state-arrow">
+                            <span class="arrow-text">初始化</span>
+                            <div class="arrow-line">↓</div>
+                        </div>
+                    </div>
+
+                    <div class="state-node inactive-state" data-page-node-id="stateInactive">
+                        <div class="state-header">未开通</div>
+                        <div class="state-body">
+                            <div class="state-field">• 分账时点：发货时间+11天</div>
+                            <div class="state-field">• 用户支付费率：初始化值</div>
+                        </div>
+                        <div class="state-arrow">
+                            <span class="arrow-text">开户成功</span>
+                            <div class="arrow-line">↓</div>
+                        </div>
+                    </div>
+
+                    <div class="state-node active-state" data-page-node-id="stateActive">
+                        <div class="state-header">已开通</div>
+                        <div class="state-body">
+                            <div class="state-field">• 支持支付交易</div>
+                            <div class="state-field">• 可修改分账时点</div>
+                            <div class="state-field">• 可修改支付费率</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 字段说明表格 -->
@@ -1471,9 +1604,9 @@
                             </td>
                         </tr>
                         <tr data-page-node-id="whHxqgg88LMPvOUyQJS8Of">
-                            <td data-page-node-id="h158EuDXvFNuBqQHzGF2Fa"><strong data-page-node-id="nuH4nkp3TfM4ag4LNuX5AL">客户支付费率</strong></td>
+                            <td data-page-node-id="h158EuDXvFNuBqQHzGF2Fa"><strong data-page-node-id="nuH4nkp3TfM4ag4LNuX5AL">用户支付费率</strong></td>
                             <td data-page-node-id="ELuxll3Bo6BC2PAb6x2Zwa">
-                                1、初始化值为平台后台-支付机构的支付方式中配置的"客户支付费率"<br data-page-node-id="gNQzHHIQu01ki4CGeCC2DV">
+                                1、初始化值为平台后台-支付机构的支付方式中配置的"用户支付费率"<br data-page-node-id="gNQzHHIQu01ki4CGeCC2DV">
                                 2、可按店铺单独修改费率<br data-page-node-id="QGRyDH63qWbe0biot9HiIk">
                                 3、移动商城下单时，入驻店的支付方式费率按本表格配置的费率进行读取<br data-page-node-id="6m6NrSwr80l0QrCfDoQeTK">
                                 4、格式示例：0.60%
@@ -1608,7 +1741,7 @@
                 // 验证费率格式
                 const ratePattern = /^\d+\.?\d*%?$/;
                 if (!paymentRate) {
-                    alert('请输入客户支付费率');
+                    alert('请输入用户支付费率');
                     editPaymentRate.focus();
                     return;
                 }
@@ -1749,7 +1882,7 @@
                 if (row) {
                     const cells = row.querySelectorAll('td');
 
-                    // 更新客户支付费率
+                    // 更新用户支付费率
                     if (paymentRate) {
                         cells[6].textContent = paymentRate;
                     }
