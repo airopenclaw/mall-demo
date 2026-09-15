@@ -1014,6 +1014,35 @@
                 border: 1px solid #ddd;
             }
         }
+
+        /* 批量操作栏样式 */
+        .batch-action-bar {
+            background-color: #f5f5f5;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .batch-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        #selectedCount {
+            font-weight: bold;
+            color: #1890ff;
+        }
+
+        /* 表格复选框样式 */
+        .table-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body data-page-node-id="zw2lO88vn2tywJGkzcHc6f">
@@ -1123,10 +1152,18 @@
                         <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
                         <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
                     </div>
+                    <!-- 批量操作栏 -->
+                    <div class="batch-action-bar" data-page-node-id="batchActionBar">
+                        <span class="batch-info" data-page-node-id="batchInfo">已选择 <span id="selectedCount">0</span> 项</span>
+                        <button class="btn-primary" id="batchEditBtn" data-page-node-id="batchEditBtn">批量修改</button>
+                    </div>
                     <div class="table-container" data-page-node-id="r0B6Vq8iM8IAMX8ZZHuiLg">
                         <table data-page-node-id="uF9mw1ifVqT3uwch4Vcbkt">
                     <thead data-page-node-id="YP78Lpq5yYYhMY15r1tPYq">
                         <tr data-page-node-id="cHalrUftKK4mEXAOP5OAoj">
+                            <th width="50" data-page-node-id="checkboxHeader">
+                                <input type="checkbox" id="selectAll" data-page-node-id="selectAllCheckbox">
+                            </th>
                             <th width="50" data-page-node-id="peHhEqV3rpgHtf15oS7FFM">序号</th>
                             <th data-page-node-id="roKe7A6vNjSAD3Zf4UKk90">商家名称</th>
                             <th data-page-node-id="AEsYMMKKE5zuIzsc7W4ljS">信用代码</th>
@@ -1142,6 +1179,9 @@
                     </thead>
                     <tbody data-page-node-id="lV4HrJZsGeqLcSslIEmY42">
                         <tr data-page-node-id="p1lJ4IKxwIaeRXJzRy6Em9">
+                            <td data-page-node-id="checkbox1">
+                                <input type="checkbox" class="row-checkbox" data-row-id="1" data-page-node-id="checkboxRow1">
+                            </td>
                             <td data-page-node-id="RbPZPa8as1RkeCO3DzhPHz">1</td>
                             <td data-page-node-id="2y8iprFo3C7XhKF1iqH9MZ">XX科技有限公司</td>
                             <td data-page-node-id="DnfEuvyzCuXN6JBPmzE4QT">91110000MA01234567</td>
@@ -1155,6 +1195,9 @@
                             <td data-page-node-id="xpmVPyWrFAXLSlZL6luIHe"><button class="btn-edit" data-row="1" data-page-node-id="eJztZucsr9zUj5DcjNCEAC">修改</button></td>
                         </tr>
                         <tr data-page-node-id="4bluv6JueHRBJyLprwxMlC">
+                            <td data-page-node-id="checkbox2">
+                                <input type="checkbox" class="row-checkbox" data-row-id="2" data-page-node-id="checkboxRow2">
+                            </td>
                             <td data-page-node-id="DBb8Jlg3xmOPNWanRmDG0K">2</td>
                             <td data-page-node-id="kCByjcXla9AoIgf3nZJaAw">YY商贸有限公司</td>
                             <td data-page-node-id="anTEQaLEUYsijLFKzhP9NB">91110000MA09876543</td>
@@ -1168,6 +1211,9 @@
                             <td data-page-node-id="pEDnWn9QT3ZU0MRTCBurKn"><button class="btn-edit" data-row="2" data-page-node-id="aJeETKaHQLgqOVtUFMVPDa">修改</button></td>
                         </tr>
                         <tr data-page-node-id="8qrWaFjXUbY1ef9WUmDzpL">
+                            <td data-page-node-id="checkbox3">
+                                <input type="checkbox" class="row-checkbox" data-row-id="3" data-page-node-id="checkboxRow3">
+                            </td>
                             <td data-page-node-id="3VdSiIRQbLj7wMY9sIsyIC">3</td>
                             <td data-page-node-id="kX9R1QCKnW8yH5emERD5fC">ZZ网络科技公司</td>
                             <td data-page-node-id="4EivGTSW25rpr66yAFrOi8">91110000MA05678912</td>
@@ -1300,6 +1346,41 @@
             <div class="modal-footer" data-page-node-id="T5kLUYcIdWEDISqlfKPwsG">
                 <button class="btn-secondary" id="cancelBatchEdit" data-page-node-id="Y3Qw2lJpq26tpAmHamRWyd">取消</button>
                 <button class="btn-primary" id="saveBatchEdit" data-page-node-id="yXcBh9iZSUt49cbOoi1qLn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量修改弹窗 -->
+    <div class="modal-overlay" id="batchModal" data-page-node-id="batchModal">
+        <div class="modal" data-page-node-id="batchModalContent">
+            <div class="modal-header" data-page-node-id="batchModalHeader">
+                <h2 class="modal-title" data-page-node-id="batchModalTitle">批量修改</h2>
+                <button class="modal-close" id="closeBatchModal" data-page-node-id="closeBatchModal">&times;</button>
+            </div>
+            <div class="modal-body" data-page-node-id="batchModalBody">
+                <div class="form-section" data-page-node-id="batchFormSection">
+                    <div class="form-group" style="width: 100%; margin-bottom: 20px;">
+                        <label data-page-node-id="batchPaymentRateLabel">客户支付费率</label>
+                        <input type="text" class="form-control" id="batchPaymentRate" placeholder="请输入费率，如：0.60%，留空表示不修改" style="width: 300px;" data-page-node-id="batchPaymentRateInput">
+                    </div>
+                    <div class="form-group" style="width: 100%;">
+                        <label data-page-node-id="batchSettlementLabel">分账时点</label>
+                        <div class="form-row" style="display: inline-flex; align-items: center;" data-page-node-id="batchSettlementRow">
+                            <select class="form-control" id="batchSettlementType" style="flex: 0 0 auto; width: auto; margin: 0;" data-page-node-id="batchSettlementTypeSelect">
+                                <option value="">不修改</option>
+                                <option value="发货日" data-page-node-id="batchOptionDelivery">发货日</option>
+                                <option value="收货日" data-page-node-id="batchOptionReceive">收货日</option>
+                            </select>
+                            <span style="margin: 0 10px; color: #333;" data-page-node-id="batchPlusSign">+</span>
+                            <input type="text" class="form-control" id="batchSettlementDays" placeholder="请输入天数" style="flex: 0 0 auto; width: 120px; margin: 0;" data-page-node-id="batchSettlementDaysInput">
+                            <span style="margin-left: 10px; color: #333;" data-page-node-id="batchDaysUnit">天</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" data-page-node-id="batchModalFooter">
+                <button class="btn-secondary" id="cancelBatchModal" data-page-node-id="cancelBatchModal">取消</button>
+                <button class="btn-primary" id="confirmBatchModal" data-page-node-id="confirmBatchModal">确认修改</button>
             </div>
         </div>
     </div>
@@ -1547,6 +1628,153 @@
                 // 关闭弹窗
                 closeBatchEdit();
             }
+        });
+
+        // 批量修改功能
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+        const selectedCountSpan = document.getElementById('selectedCount');
+        const batchEditBtn = document.getElementById('batchEditBtn');
+        const batchModal = document.getElementById('batchModal');
+        const closeBatchModal = document.getElementById('closeBatchModal');
+        const cancelBatchModal = document.getElementById('cancelBatchModal');
+        const confirmBatchModal = document.getElementById('confirmBatchModal');
+
+        // 更新选中数量
+        function updateSelectedCount() {
+            const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+            const count = checkedBoxes.length;
+            selectedCountSpan.textContent = count;
+
+            // 更新全选框的状态
+            if (count === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (count === rowCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        // 全选/取消全选
+        selectAllCheckbox.addEventListener('change', function() {
+            const isChecked = this.checked;
+            rowCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            updateSelectedCount();
+        });
+
+        // 单个复选框变化
+        rowCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedCount);
+        });
+
+        // 打开批量修改弹窗
+        batchEditBtn.addEventListener('click', function() {
+            const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('请先选择要修改的店铺');
+                return;
+            }
+
+            // 清空表单
+            document.getElementById('batchPaymentRate').value = '';
+            document.getElementById('batchSettlementType').value = '';
+            document.getElementById('batchSettlementDays').value = '';
+
+            // 显示弹窗
+            batchModal.style.display = 'flex';
+        });
+
+        // 关闭批量修改弹窗
+        function closeBatchModalFunc() {
+            batchModal.style.display = 'none';
+        }
+
+        closeBatchModal.addEventListener('click', closeBatchModalFunc);
+        cancelBatchModal.addEventListener('click', closeBatchModalFunc);
+
+        // 点击遮罩关闭弹窗
+        batchModal.addEventListener('click', function(e) {
+            if (e.target === batchModal) {
+                closeBatchModalFunc();
+            }
+        });
+
+        // 确认批量修改
+        confirmBatchModal.addEventListener('click', function() {
+            const paymentRate = document.getElementById('batchPaymentRate').value.trim();
+            const settlementType = document.getElementById('batchSettlementType').value;
+            const settlementDays = document.getElementById('batchSettlementDays').value.trim();
+
+            // 验证至少有一个字段被填写
+            if (!paymentRate && !settlementType && !settlementDays) {
+                alert('请至少填写一个要修改的字段');
+                return;
+            }
+
+            // 验证费率格式
+            if (paymentRate) {
+                const ratePattern = /^\d+\.?\d*%?$/;
+                if (!ratePattern.test(paymentRate)) {
+                    alert('费率格式不正确，请输入如：0.60% 或 0.6');
+                    return;
+                }
+            }
+
+            // 验证天数
+            if (settlementDays) {
+                if (isNaN(settlementDays) || parseInt(settlementDays) <= 0) {
+                    alert('请输入有效的天数');
+                    return;
+                }
+            }
+
+            // 获取所有选中的行
+            const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+            let updateCount = 0;
+
+            checkedBoxes.forEach(checkbox => {
+                const row = checkbox.closest('tr');
+                if (row) {
+                    const cells = row.querySelectorAll('td');
+
+                    // 更新客户支付费率
+                    if (paymentRate) {
+                        cells[6].textContent = paymentRate;
+                    }
+
+                    // 更新分账时点
+                    if (settlementType && settlementDays) {
+                        const newSettlementTime = settlementType + '+' + settlementDays + '天';
+                        cells[7].textContent = newSettlementTime;
+                    } else if (settlementType) {
+                        // 如果只选了时点类型，保持原来的天数
+                        const currentSettlement = cells[7].textContent;
+                        const daysMatch = currentSettlement.match(/\+(\d+)天/);
+                        const currentDays = daysMatch ? daysMatch[1] : '0';
+                        const newSettlementTime = settlementType + '+' + currentDays + '天';
+                        cells[7].textContent = newSettlementTime;
+                    }
+
+                    updateCount++;
+                }
+            });
+
+            alert(`成功修改 ${updateCount} 条记录`);
+
+            // 关闭弹窗并重置选择
+            closeBatchModalFunc();
+            selectAllCheckbox.checked = false;
+            selectAllCheckbox.indeterminate = false;
+            rowCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateSelectedCount();
         });
 
         // 状态tab筛选功能
