@@ -1531,12 +1531,10 @@
                 <h4 data-page-node-id=”UhiMmVAmpD0ovQWzGR2PnY”>需求</h4>
                 <p data-page-node-id=”Ijz32x7IfK32Xs5cKMjDU1”>
                     1、本功能主要提供查看各个入驻店铺的分账时点<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
-                    2、商户入驻审核通过时：初始化的默认分账时点为发货时间+11天，“用户支付费率的初始化值为”平台后台-支付机构的支付方式中配置的"用户支付费率"，状态为“未开通”<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
-                    3、商户开户成功：更新对应支付方式的状态为“已开通”<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
-                    4、已经支付的订单，按店铺+支付机构+支付方式确定 分账时点，并记录在订单表上，以便生成分账明细<br data-page-node-id=”GnyFaWfI1zt0vgknAC2a3Z”>
-                    4、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id=”El4U0juX7YBSDgqu4y0v9i”>
-                    6、支持按商家名称、信用代码、店铺名称、支付机构、支付方式、分账时点搜索<br data-page-node-id=”dYNGWoUTzsM89mB0sbPZWp”>
-                    7、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id=”z3wPL5FZkOxQW0aTCpMNZG”>
+                    2、已经支付的订单，按店铺+支付机构+支付方式确定 分账时点，并记录在订单表上，以便生成分账明细<br data-page-node-id=”GnyFaWfI1zt0vgknAC2a3Z”>
+                    3、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id=”El4U0juX7YBSDgqu4y0v9i”>
+                    4、支持按商家名称、信用代码、店铺名称、支付机构、支付方式、分账时点搜索<br data-page-node-id=”dYNGWoUTzsM89mB0sbPZWp”>
+                    5、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id=”z3wPL5FZkOxQW0aTCpMNZG”>
                 </p>
             </div>
 
@@ -1572,7 +1570,7 @@
                     <div class="flow-row" data-page-node-id="flowRow2">
                         <span class="flow-node node-inactive" data-page-node-id="nodeInactive2">未开通</span>
                         <span class="flow-arrow" data-page-node-id="flowArrow2">
-                            <span class="arrow-label" data-page-node-id="arrowLabel2">开户成功</span>
+                            <span class="arrow-label" data-page-node-id="arrowLabel2">对应扫码产品开通成功</span>
                             <span class="arrow-symbol" data-page-node-id="arrowSymbol2">→</span>
                         </span>
                         <span class="flow-node node-active" data-page-node-id="nodeActive">已开通</span>
@@ -1581,7 +1579,7 @@
 
                 <!-- 说明 -->
                 <div class="state-tip" data-page-node-id="stateTip">
-                    <strong data-page-node-id="tipStrong">说明：</strong>
+                    <strong data-page-node-id="tipStrong">说明：</strong><br>
                     ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，用户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
                     ② 商户在支付机构开户成功后，状态更新为"已开通"，支持支付交易和修改配置。
                 </div>
