@@ -1019,11 +1019,17 @@
         .batch-action-bar {
             background-color: #f5f5f5;
             padding: 12px 20px;
-            margin-bottom: 15px;
             border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .tab-batch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
         .batch-info {
@@ -1146,16 +1152,17 @@
             <!-- 列表卡片 -->
             <div class="card" data-page-node-id="JR6CAiNziLPe8o5FyFcFUI">
                 <div class="card-body" data-page-node-id="FoUVEjXxEKplUbXDrbDben">
-                    <!-- 状态tab筛选 -->
-                    <div class="tab-filter" data-page-node-id="tabFilter">
-                        <div class="tab-item active" data-status="" data-page-node-id="tabAll">全部</div>
-                        <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
-                        <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
-                    </div>
-                    <!-- 批量操作栏 -->
-                    <div class="batch-action-bar" data-page-node-id="batchActionBar">
-                        <span class="batch-info" data-page-node-id="batchInfo">已选择 <span id="selectedCount">0</span> 项</span>
-                        <button class="btn-primary" id="batchEditBtn" data-page-node-id="batchEditBtn">批量修改</button>
+                    <!-- 状态tab筛选和批量操作栏 -->
+                    <div class="tab-batch-container" data-page-node-id="tabBatchContainer">
+                        <div class="tab-filter" data-page-node-id="tabFilter">
+                            <div class="tab-item active" data-status="" data-page-node-id="tabAll">全部</div>
+                            <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
+                            <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
+                        </div>
+                        <div class="batch-action-bar" data-page-node-id="batchActionBar">
+                            <span class="batch-info" data-page-node-id="batchInfo">已选择 <span id="selectedCount">0</span> 项</span>
+                            <button class="btn-primary" id="batchEditBtn" data-page-node-id="batchEditBtn">批量修改</button>
+                        </div>
                     </div>
                     <div class="table-container" data-page-node-id="r0B6Vq8iM8IAMX8ZZHuiLg">
                         <table data-page-node-id="uF9mw1ifVqT3uwch4Vcbkt">
