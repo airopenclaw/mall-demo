@@ -1,9 +1,48 @@
-// 页面数据配置 - 自动生成于 2026/9/15 15:08:15
+// 页面数据配置 - 自动生成于 2026/9/16 16:30:28
 // 由 scan_html.js 生成，结构与 server.js /api/config 一致
 // 重新生成: node scan_html.js
 
 const defaultPageConfig = {
     "versions": {
+        "支付分账": {
+            "icon": "📦",
+            "description": "万商优选原型",
+            "categories": {
+                "平台后台": {
+                    "icon": "⚙️",
+                    "pages": [
+                        {
+                            "name": "0业务流程与单据生成说明",
+                            "file": "支付分账/平台后台/0业务流程与单据生成说明.html"
+                        },
+                        {
+                            "name": "1货款账户",
+                            "file": "支付分账/平台后台/1货款账户.html"
+                        },
+                        {
+                            "name": "2账户流水",
+                            "file": "支付分账/平台后台/2账户流水.html"
+                        },
+                        {
+                            "name": "3资金流水",
+                            "file": "支付分账/平台后台/3资金流水.html"
+                        },
+                        {
+                            "name": "4分账明细",
+                            "file": "支付分账/平台后台/4分账明细.html"
+                        },
+                        {
+                            "name": "5店铺支付方式",
+                            "file": "支付分账/平台后台/5店铺支付方式.html"
+                        },
+                        {
+                            "name": "6其它说明",
+                            "file": "支付分账/平台后台/6其它说明.html"
+                        }
+                    ]
+                }
+            }
+        },
         "9月15日-支付版本": {
             "icon": "📁",
             "description": "9月15日-支付版本 原型",
@@ -101,8 +140,8 @@ const defaultPageConfig = {
                             "file": "分账版本/平台后台/2账户流水.html"
                         },
                         {
-                            "name": "3交易流水",
-                            "file": "分账版本/平台后台/3交易流水.html"
+                            "name": "3资金流水",
+                            "file": "分账版本/平台后台/3资金流水.html"
                         },
                         {
                             "name": "4分账明细",
@@ -132,7 +171,46 @@ const defaultPageConfig = {
                     ]
                 }
             }
+        },
+        "支付": {
+            "icon": "📁",
+            "description": "支付 原型",
+            "categories": {
+                "其他页面": {
+                    "icon": "📁",
+                    "pages": [
+                        {
+                            "name": "需求目标",
+                            "file": "支付/需求目标.html"
+                        }
+                    ]
+                },
+                "平台后台": {
+                    "icon": "⚙️",
+                    "pages": [
+                        {
+                            "name": "0业务流程",
+                            "file": "支付/平台后台/0业务流程.html"
+                        }
+                    ]
+                }
+            }
+        },
+        "支付版本": {
+            "icon": "📁",
+            "description": "支付版本 原型",
+            "categories": {
+                "其他页面": {
+                    "icon": "📁",
+                    "pages": [
+                        {
+                            "name": "需求目标",
+                            "file": "支付版本/需求目标.html"
+                        }
+                    ]
+                }
+            }
         }
     },
-    "defaultPage": "9月15日-支付版本/需求目标.html"
+    "defaultPage": "支付分账/平台后台/0业务流程与单据生成说明.html"
 };
