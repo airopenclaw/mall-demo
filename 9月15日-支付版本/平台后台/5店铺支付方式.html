@@ -297,6 +297,23 @@
             color: #999;
         }
 
+        /* 支付异常标签样式 */
+        .status-badge.exception {
+            background: #fef0f0;
+            color: #f56c6c;
+            border: 1px solid #fde2e2;
+        }
+
+        /* 异常原因文本样式 */
+        .exception-reason {
+            color: #f56c6c;
+            font-size: 12px;
+        }
+
+        .exception-reason.empty {
+            color: #999;
+        }
+
         /* 操作列固定在倒数第二列（倒数第一列是空或者预留） */
         .table-container table thead th:nth-last-child(2),
         .table-container table tbody tr td:nth-last-child(2) {
@@ -349,7 +366,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1200px;
+            min-width: 1400px;
         }
 
         thead {
@@ -1094,6 +1111,7 @@
 
         .dot-inactive { background: #ffa726; }
         .dot-active { background: #66bb6a; }
+        .dot-exception { background: #f56c6c; }
 
         .flow-group {
             margin-bottom: 18px;
@@ -1138,6 +1156,7 @@
         .node-inactive { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
         .node-active { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
         .node-start { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+        .node-exception { background: #fef0f0; color: #f56c6c; border: 1px solid #fde2e2; }
 
         .flow-arrow {
             display: inline-flex;
@@ -1285,6 +1304,7 @@
                             <div class="tab-item active" data-status="" data-page-node-id="tabAll">全部</div>
                             <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
                             <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
+                            <div class="tab-item" data-status="支付异常" data-page-node-id="tabException">支付异常</div>
                         </div>
                         <div class="batch-action-bar" data-page-node-id="batchActionBar">
                             <button class="btn-primary" id="batchEditBtn" data-page-node-id="batchEditBtn">批量修改</button>
@@ -1306,6 +1326,7 @@
                             <th data-page-node-id="ZrTHmTtK1niIIaxCOSB8Bc">支付方式</th>
                             <th data-page-node-id="2HnUN1bQWUt0Ptro9SoODN">用户支付费率</th>
                             <th data-page-node-id="settlementTimeHeader">分账时点</th>
+                            <th data-page-node-id="exceptionHeader">支付异常</th>
                             <th data-page-node-id="statusHeader">状态</th>
                             <th width="80" data-page-node-id="e0nnyxQ1fJE5LCj1eIZ6Tm">操作</th>
                         </tr>
@@ -1324,6 +1345,7 @@
                             <td data-page-node-id="mwhxFZKNxaFcaJfpuPAcii">微信支付</td>
                             <td data-page-node-id="YzEaIcisLVFsASoeYWkGK7">0.60%</td>
                             <td data-page-node-id="settlementTime1">发货时间+3天</td>
+                            <td data-page-node-id="exceptionReason1"><span class="exception-reason empty">—</span></td>
                             <td data-page-node-id="status1"><span class="status-badge active">已开通</span></td>
                             <td data-page-node-id="xpmVPyWrFAXLSlZL6luIHe"><button class="btn-edit" data-row="1" data-page-node-id="eJztZucsr9zUj5DcjNCEAC">修改</button></td>
                         </tr>
@@ -1340,7 +1362,8 @@
                             <td data-page-node-id="nG4odYN0BHFSC4Xo21yorG">支付宝</td>
                             <td data-page-node-id="XVILoFI4baAFNBaNuCqIfG">0.60%</td>
                             <td data-page-node-id="settlementTime2">收货时间+5天</td>
-                            <td data-page-node-id="status2"><span class="status-badge active">已开通</span></td>
+                            <td data-page-node-id="exceptionReason2"><span class="exception-reason">商户报备未成功,请联系服务商处理后重试</span></td>
+                            <td data-page-node-id="status2"><span class="status-badge exception">已开通</span></td>
                             <td data-page-node-id="pEDnWn9QT3ZU0MRTCBurKn"><button class="btn-edit" data-row="2" data-page-node-id="aJeETKaHQLgqOVtUFMVPDa">修改</button></td>
                         </tr>
                         <tr data-page-node-id="8qrWaFjXUbY1ef9WUmDzpL">
@@ -1356,6 +1379,7 @@
                             <td data-page-node-id="GMMg4WHZiyKDxM7jttVYxz">微信支付</td>
                             <td data-page-node-id="aBX4CM1oRe3zrIz5kf4M3q">0.60%</td>
                             <td data-page-node-id="settlementTime3">发货时间+7天</td>
+                            <td data-page-node-id="exceptionReason3"><span class="exception-reason empty">—</span></td>
                             <td data-page-node-id="status3"><span class="status-badge inactive">未开通</span></td>
                             <td data-page-node-id="sB04GBmZcM3I6J5xB9BTxs"><button class="btn-edit" data-row="3" data-page-node-id="EXpS9QEVZWpnH0Vf7drEU4">修改</button></td>
                         </tr>
@@ -1383,8 +1407,7 @@
                         </select>
                     </div>
 
-                    <div clas
-                    s="form-group" data-page-node-id="srNAAIrTP6T49KH6f08pcl">
+                    <div class="form-group" data-page-node-id="srNAAIrTP6T49KH6f08pcl">
                         <label data-page-node-id="GH6e91MHdhE8fJ4Mih1NNL">支付方式</label>
                         <select class="form-control" data-page-node-id="P04cYCrdlP6FRWZ8FZyyJs">
                             <option data-page-node-id="0BhjejPsT26wWGgDuJsCzU">微信</option>
@@ -1528,13 +1551,14 @@
         <div class="drawer-body" data-page-node-id="NHLAwpLJnQFyBahEannzNl">
             <!-- 需求说明 -->
             <div class="note-section" data-page-node-id="tgPH6e3dTSHy0jmiXnij6z">
-                <h4 data-page-node-id=”UhiMmVAmpD0ovQWzGR2PnY”>需求</h4>
-                <p data-page-node-id=”Ijz32x7IfK32Xs5cKMjDU1”>
-                    1、本功能主要提供查看各个入驻店铺的分账时点<br data-page-node-id=”HGp35k7wjO0z8GwoE2Lobu”>
-                    2、已经支付的订单，按店铺+支付机构+支付方式确定 分账时点，并记录在订单表上，以便生成分账明细<br data-page-node-id=”GnyFaWfI1zt0vgknAC2a3Z”>
-                    3、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id=”El4U0juX7YBSDgqu4y0v9i”>
-                    4、支持按商家名称、信用代码、店铺名称、支付机构、支付方式、分账时点搜索<br data-page-node-id=”dYNGWoUTzsM89mB0sbPZWp”>
-                    5、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id=”z3wPL5FZkOxQW0aTCpMNZG”>
+                <h4 data-page-node-id="UhiMmVAmpD0ovQWzGR2PnY">需求</h4>
+                <p data-page-node-id="Ijz32x7IfK32Xs5cKMjDU1">
+                    1、本功能主要提供查看各个入驻店铺的分账时点<br data-page-node-id="HGp35k7wjO0z8GwoE2Lobu">
+                    2、已经支付的订单，按店铺+支付机构+支付方式确定 分账时点，并记录在订单表上，以便生成分账明细<br data-page-node-id="GnyFaWfI1zt0vgknAC2a3Z">
+                    3、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id="El4U0juX7YBSDgqu4y0v9i">
+                    4、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id="z3wPL5FZkOxQW0aTCpMNZG">
+                    5、列表中增加「异常原因」列，用于显示接口返回的支付异常原因。同时列表状态tab增加「支付异常」筛选，点击后仅显示存在异常原因的支付方式行。<br data-page-node-id="exceptionRequirementDesc">
+                    6、支付异常不是状态机的状态，只是当支付失败时，对应店铺的支付方式会显示「异常原因」，。支付成功时判断到对应支付方式的异常原因不为空，则删除对应店铺支付方式的异常原因，原状态（已开通/未开通）不变。<br data-page-node-id="exceptionRequirementDesc2">
                 </p>
             </div>
 
@@ -1551,6 +1575,10 @@
                     <span class="legend-item" data-page-node-id="legendItem2">
                         <i class="legend-dot dot-active" data-page-node-id="legendDot2"></i>
                         已开通
+                    </span>
+                    <span class="legend-item" data-page-node-id="legendItem3">
+                        <i class="legend-dot dot-exception" data-page-node-id="legendDot3"></i>
+                        支付异常（非状态机状态，仅做支付失败标记）
                     </span>
                 </div>
 
@@ -1581,7 +1609,7 @@
                 <div class="state-tip" data-page-node-id="stateTip">
                     <strong data-page-node-id="tipStrong">说明：</strong><br>
                     ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，用户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
-                    ② 商户在支付机构开户成功+已法人实名认证成功+已签章成功，状态更新为"已开通"，支持支付交易和修改配置。
+                    ② 商户在支付机构开户成功+已法人实名认证成功+已签章成功，状态更新为"已开通"，支持支付交易和修改配置。<br>
                 </div>
             </div>
 
@@ -1660,13 +1688,22 @@
                                 4、搜索区支持按「发货时间」或「收货时间」下拉筛选
                             </td>
                         </tr>
+                        <tr data-page-node-id="exceptionReasonFieldDesc">
+                            <td data-page-node-id="exceptionReasonFieldName"><strong data-page-node-id="exceptionReasonFieldStrong">支付异常</strong></td>
+                            <td data-page-node-id="exceptionReasonFieldValue">
+                                1、显示支付接口返回的具体异常原因<br data-page-node-id="exceptionReasonLine1">
+                                2、支付失败时记录，支付成功后自动清除<br data-page-node-id="exceptionReasonLine2">
+                                3、筛选「支付异常」时仅展示有异常原因的行
+                            </td>
+                        </tr>
                         <tr data-page-node-id="4zXN2MGo3eAIQZ2qXREo1B">
                             <td data-page-node-id="nDcN5aEHqCV20GHLSF54Wh"><strong data-page-node-id="kfKr6nmhGnhhD5d35OEnlV">状态</strong></td>
                             <td data-page-node-id="S6ffoHhfTt2nMj0vyuNAEk">
                                 1、显示商家在支付机构的扫码产品开通状态<br data-page-node-id="g9FBRfsTkDUcz7JXrxHEvx">
                                 2、可选项：已开通、未开通<br data-page-node-id="4dPyqvkvSj06CV09rb67BK">
                                 3、已开通：商家已完成支付机构扫码产品的开通流程<br data-page-node-id="uFPPgdNSOGC7c2sAyctqUH">
-                                4、未开通：商家尚未完成支付机构扫码产品的开通
+                                4、未开通：商家尚未完成支付机构扫码产品的开通<br data-page-node-id="exceptionReasonLine3">
+                                5、当存在异常原因时，状态列显示为「支付异常」（标记态，非状态机正式状态）
                             </td>
                         </tr>
                         <tr data-page-node-id="4zXN2MGo3eAIQZ2qXREo1B">
@@ -1738,13 +1775,15 @@
                 const cells = row.querySelectorAll('td');
                 const merchantName = cells[1].textContent;
                 const creditCode = cells[2].textContent;
-                const storeName = cells[3].textContent;
-                const paymentRate = cells[6].textContent;
-                const settlementTime = cells[7].textContent;
+                const merchantNo = cells[3].textContent;
+                const storeName = cells[4].textContent;
+                const paymentRate = cells[7].textContent;
+                const settlementTime = cells[8].textContent;
 
                 // 填充表单
                 editMerchantName.value = merchantName;
                 editCreditCode.value = creditCode;
+                editMerchantNo.value = merchantNo;
                 editStoreName.value = storeName;
                 editPaymentRate.value = paymentRate;
 
@@ -1799,9 +1838,9 @@
 
                 // 更新表格数据
                 const cells = currentEditRow.querySelectorAll('td');
-                cells[6].textContent = paymentRate;
+                cells[7].textContent = paymentRate;
                 const newSettlementTime = editSettlementType.value + '+' + days + '天';
-                cells[7].textContent = newSettlementTime;
+                cells[8].textContent = newSettlementTime;
 
                 // 关闭弹窗
                 closeBatchEdit();
@@ -1822,7 +1861,7 @@
         function updateSelectedCount() {
             const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
             const count = checkedBoxes.length;
-            selectedCountSpan.textContent = count;
+            if (selectedCountSpan) selectedCountSpan.textContent = count;
 
             // 更新全选框的状态
             if (count === 0) {
@@ -1923,20 +1962,20 @@
 
                     // 更新用户支付费率
                     if (paymentRate) {
-                        cells[6].textContent = paymentRate;
+                        cells[7].textContent = paymentRate;
                     }
 
                     // 更新分账时点
                     if (settlementType && settlementDays) {
                         const newSettlementTime = settlementType + '+' + settlementDays + '天';
-                        cells[7].textContent = newSettlementTime;
+                        cells[8].textContent = newSettlementTime;
                     } else if (settlementType) {
                         // 如果只选了时点类型，保持原来的天数
-                        const currentSettlement = cells[7].textContent;
+                        const currentSettlement = cells[8].textContent;
                         const daysMatch = currentSettlement.match(/\+(\d+)天/);
                         const currentDays = daysMatch ? daysMatch[1] : '0';
                         const newSettlementTime = settlementType + '+' + currentDays + '天';
-                        cells[7].textContent = newSettlementTime;
+                        cells[8].textContent = newSettlementTime;
                     }
 
                     updateCount++;
@@ -1955,7 +1994,7 @@
             updateSelectedCount();
         });
 
-        // 状态tab筛选功能
+        // 状态tab筛选功能（增强：支持“支付异常”）
         const tabItems = document.querySelectorAll('.tab-item');
         let currentStatusFilter = '';
 
@@ -1974,7 +2013,8 @@
 
         /**
          * 根据状态筛选表格
-         * @param {string} status - 状态筛选值（''=全部, '已开通', '未开通'）
+         * @param {string} status - 筛选值（''=全部, '已开通', '未开通', '支付异常'）
+         * 支付异常筛选逻辑：查找异常原因列（索引10）不为空且不为“—”的行
          */
         function filterTableByStatus(status) {
             const tableBody = document.querySelector('table tbody');
@@ -1982,17 +2022,40 @@
 
             const rows = tableBody.querySelectorAll('tr');
             rows.forEach(row => {
-                // 获取状态列的文本（第10列，索引9）
-                const statusCell = row.cells[9];
-                if (!statusCell) return;
+                const cells = row.cells;
+                if (!cells) return;
 
-                const statusText = statusCell.textContent.trim();
+                // 获取状态列和异常原因列的文本
+                const statusCell = cells[11]; // 状态列索引（0开始：序号0? 注意列顺序）
+                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=用户支付费率,9=分账时点,10=异常原因,11=状态,12=操作
+                const statusText = statusCell ? statusCell.textContent.trim() : '';
 
-                // 判断是否显示
-                const shouldShow = !status || statusText === status;
+                const exceptionCell = cells[10];
+                const exceptionText = exceptionCell ? exceptionCell.textContent.trim() : '';
+
+                let shouldShow = false;
+
+                if (!status) {
+                    // 全部
+                    shouldShow = true;
+                } else if (status === '支付异常') {
+                    // 支付异常：异常原因不为空、不为破折号
+                    shouldShow = exceptionText && exceptionText !== '—' && exceptionText !== '';
+                } else {
+                    // 已开通/未开通：状态匹配
+                    shouldShow = statusText === status;
+                }
+
                 row.style.display = shouldShow ? '' : 'none';
             });
         }
+
+        // 初始化：确保表格状态（默认全部显示）
+        // 注意：为了确保“支付异常”标签行显示为“支付异常”，但这里已开通行状态是“已开通”，可正常筛选
+        // 对于支付异常行，状态已经是“支付异常”，但筛选“已开通”时不应显示它，符合预期。
+        // 但需要注意：如果状态列为“支付异常”，筛选“已开通”时不会显示。这符合需求（支付异常是独立筛选）。
+        // 初始化修正：确保操作列固定样式使用nth-last-child(2)，但由于增加了列，操作列现在是倒数第二列（最后一列是操作，但表格结构里操作列是最后一个th/td），因此原有样式仍然适用。
+        // 不需要额外调整。
     </script>
 </body>
 </html>
