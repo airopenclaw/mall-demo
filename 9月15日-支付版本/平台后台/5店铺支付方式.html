@@ -314,21 +314,21 @@
             color: #999;
         }
 
-        /* 操作列固定在倒数第二列（倒数第一列是空或者预留） */
-        .table-container table thead th:nth-last-child(2),
-        .table-container table tbody tr td:nth-last-child(2) {
+        /* 操作列固定在最后一列 */
+        .table-container table thead th:last-child,
+        .table-container table tbody tr td:last-child {
             position: sticky;
             right: 10px;
             background: #fff;
             z-index: 10;
         }
 
-        .table-container table thead th:nth-last-child(2) {
+        .table-container table thead th:last-child {
             background: #fafafa;
             z-index: 11;
         }
 
-        tbody tr:hover td:nth-last-child(2) {
+        tbody tr:hover td:last-child {
             background: #f9f9f9;
         }
 
@@ -1326,7 +1326,7 @@
                             <th data-page-node-id="ZrTHmTtK1niIIaxCOSB8Bc">支付方式</th>
                             <th data-page-node-id="2HnUN1bQWUt0Ptro9SoODN">用户支付费率</th>
                             <th data-page-node-id="settlementTimeHeader">分账时点</th>
-                            <th data-page-node-id="exceptionHeader">支付异常</th>
+                            <th data-page-node-id="exceptionHeader">异常原因</th>
                             <th data-page-node-id="statusHeader">状态</th>
                             <th width="80" data-page-node-id="e0nnyxQ1fJE5LCj1eIZ6Tm">操作</th>
                         </tr>
@@ -1362,8 +1362,8 @@
                             <td data-page-node-id="nG4odYN0BHFSC4Xo21yorG">支付宝</td>
                             <td data-page-node-id="XVILoFI4baAFNBaNuCqIfG">0.60%</td>
                             <td data-page-node-id="settlementTime2">收货时间+5天</td>
-                            <td data-page-node-id="exceptionReason2"><span class="exception-reason">商户报备未成功,请联系服务商处理后重试</span></td>
-                            <td data-page-node-id="status2"><span class="status-badge exception">已开通</span></td>
+                            <td data-page-node-id="exceptionReason2"><span class="exception-reason">支付接口超时，请重试</span></td>
+                            <td data-page-node-id="status2"><span class="status-badge exception">支付异常</span></td>
                             <td data-page-node-id="pEDnWn9QT3ZU0MRTCBurKn"><button class="btn-edit" data-row="2" data-page-node-id="aJeETKaHQLgqOVtUFMVPDa">修改</button></td>
                         </tr>
                         <tr data-page-node-id="8qrWaFjXUbY1ef9WUmDzpL">
@@ -1558,7 +1558,7 @@
                     3、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id="El4U0juX7YBSDgqu4y0v9i">
                     4、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id="z3wPL5FZkOxQW0aTCpMNZG">
                     5、列表中增加「异常原因」列，用于显示接口返回的支付异常原因。同时列表状态tab增加「支付异常」筛选，点击后仅显示存在异常原因的支付方式行。<br data-page-node-id="exceptionRequirementDesc">
-                    6、支付异常不是状态机的状态，只是当支付失败时，对应店铺的支付方式会显示「异常原因」，。支付成功时判断到对应支付方式的异常原因不为空，则删除对应店铺支付方式的异常原因，原状态（已开通/未开通）不变。<br data-page-node-id="exceptionRequirementDesc2">
+                    6、支付异常不是状态机的状态，只是当支付失败时，对应店铺的支付方式会显示「异常原因」，并且该行状态显示为「支付异常」。支付成功时判断到对应支付方式的异常原因不为空，则删除对应店铺支付方式的异常原因，状态恢复为原状态（已开通/未开通）。<br data-page-node-id="exceptionRequirementDesc2">
                 </p>
             </div>
 
@@ -1610,6 +1610,7 @@
                     <strong data-page-node-id="tipStrong">说明：</strong><br>
                     ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，用户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
                     ② 商户在支付机构开户成功+已法人实名认证成功+已签章成功，状态更新为"已开通"，支持支付交易和修改配置。<br>
+                    ③ 支付异常仅表示支付接口返回了错误，导致对应店铺的支付方式暂时不可用，当支付成功时系统会清除对应的异常原因，状态恢复为“已开通/未开通”的正常状态。
                 </div>
             </div>
 
@@ -1689,7 +1690,7 @@
                             </td>
                         </tr>
                         <tr data-page-node-id="exceptionReasonFieldDesc">
-                            <td data-page-node-id="exceptionReasonFieldName"><strong data-page-node-id="exceptionReasonFieldStrong">支付异常</strong></td>
+                            <td data-page-node-id="exceptionReasonFieldName"><strong data-page-node-id="exceptionReasonFieldStrong">异常原因</strong></td>
                             <td data-page-node-id="exceptionReasonFieldValue">
                                 1、显示支付接口返回的具体异常原因<br data-page-node-id="exceptionReasonLine1">
                                 2、支付失败时记录，支付成功后自动清除<br data-page-node-id="exceptionReasonLine2">
@@ -2054,7 +2055,7 @@
         // 注意：为了确保“支付异常”标签行显示为“支付异常”，但这里已开通行状态是“已开通”，可正常筛选
         // 对于支付异常行，状态已经是“支付异常”，但筛选“已开通”时不应显示它，符合预期。
         // 但需要注意：如果状态列为“支付异常”，筛选“已开通”时不会显示。这符合需求（支付异常是独立筛选）。
-        // 初始化修正：确保操作列固定样式使用nth-last-child(2)，但由于增加了列，操作列现在是倒数第二列（最后一列是操作，但表格结构里操作列是最后一个th/td），因此原有样式仍然适用。
+        // 初始化修正：确保操作列固定样式使用:last-child，操作列现在是最后一列
         // 不需要额外调整。
     </script>
 </body>
