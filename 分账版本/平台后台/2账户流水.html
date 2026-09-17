@@ -711,6 +711,68 @@
             background: transparent;
             z-index: auto;
         }
+
+        /* ===== 新增：场景与资金计算卡片样式 ===== */
+        .scene-section {
+            margin-bottom: 24px;
+        }
+        .scene-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+            line-height: 1.4;
+        }
+        .scene-card {
+            background: #f8faff;
+            border: 1px solid #e6ebf5;
+            border-radius: 6px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
+        }
+        .scene-card-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .scene-card-body {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.8;
+        }
+        .scene-card-label {
+            display: inline-block;
+            width: 100px;
+            color: #888;
+        }
+        .scene-card-positive {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .scene-card-negative {
+            color: #c62828;
+            font-weight: 500;
+        }
+        .scene-card-note {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #999;
+            background: #fff8e1;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+        .scene-summary {
+            margin-top: 16px;
+            padding: 10px 14px;
+            background: #f0f4ff;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+            font-size: 13px;
+            color: #555;
+        }
     </style>
 </head>
 <body data-page-node-id="QmBUrrSgBdIHrvDKaBVRBm">
@@ -1014,6 +1076,119 @@
                     6、退款类型的流水（货款退款、支付手续费退回、类目服务费退回）在订单已分账且售后完成时生成，退款成功后生成对应账户流水
                 </p>
             </div>
+
+            <!-- ===== 新增：场景与资金计算 ===== -->
+            <div class="scene-section">
+                <div class="scene-section-title">场景与资金计算</div>
+
+                <!-- 场景1：货款分账 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景1：支付分账-货款分账</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>货款分账</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（货款分账收入）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 订单SKU实付金额 − SKU用户支付手续费 − SKU商户支付手续费-类目服务费</div>
+                    </div>
+                </div>
+
+                <!-- 场景2：支付手续费分账 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景2：支付分账-商户支付手续费分账</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>支付手续费分账</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-negative">负数</span>（支出）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − (订单SKU实付金额 × 商户支付手续费率)</div>
+                        <div><span class="scene-card-label">备注：</span>商户支付手续费率是下单时订单按当时的分账规则记录的支付费率，变动金额=0时不生成，</div>
+                    </div>
+                </div>
+
+                <!-- 场景3：类目服务费分账 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景3：支付分账-类目服务费</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>类目服务费分账</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-negative">负数</span>（支出）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − (订单SKU实付金额 × SKU的对应类目的服务费率)</div>
+                        <div><span class="scene-card-label">备注：</span>类目服务费，是下单时订单按当时SKU对应类目记录的费率。变动金额=0时不生成</div>
+
+                    </div>
+                </div>
+
+                <!-- 场景4：货款退款 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景4：售后退款完成-货款退款</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>货款退款</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-negative">负数</span>（退款支出）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − 售后单退款实退金额（原路退回给客户）</div>
+                        <div><span class="scene-card-label">备注：</span>变动金额=0时不生成</div>
+
+                    </div>
+                </div>
+
+                <!-- 场景5：商户支付手续费退回 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景5：售后审核通过-商户支付手续费退回</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>支付手续费退回单</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（退回收入）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 分账退回商户支付手续费 × 售后单实际退款金额 </div>
+                        <div><span class="scene-card-label">备注：</span>变动金额=0时不生成，分账退回商户支付手续费是销售单支付成功时按当时分账退回规则记录的费率</div>
+
+                    </div>
+                </div>
+
+                <!-- 场景6：类目服务费退回 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景6：售后审核完成-类目服务费退回</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>类目服务费退回</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（退回收入）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 售后单SKU类目退回费率 × 售后单实际退款金额</div>
+                        <div><span class="scene-card-label">备注：</span>变动金额=0时不生成，SKU类目退回费率是下单时销售单记录的SKU类目的退回费率</div>
+
+                    </div>
+                </div>
+
+                <!-- 场景7：客户手续费退回 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景7：售后审核通过-客户手续费退回</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>客户手续费退回</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（退回收入）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 订单原客户手续费 × 售后单实退金额</div>
+                        <div class="scene-card-note">注：属于平台账户分账退回给商家账户，退回成功后生成流水，金额为0不生成</div>
+                    </div>
+                </div>
+
+                <!-- 场景8：账户充值 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景8：账户充值</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>账户充值</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（充值收入）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 实际充值到账金额（用户支付金额）</div>
+                        <div class="scene-card-note">注：接口查询充值成功时生成流水，为与需求描述“账户充值为正数”保持一致，流水变动金额记为正数，但实际充值金额减少。</div>
+                    </div>
+                </div>
+
+                <!-- 场景9：账户提现 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景9：账户提现</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">变动类型：</span>账户提现单</div>
+                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（提现成功，账户余额减少）</div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 提现金额（从可结算余额扣减）</div>
+                        <div class="scene-card-note">注：提现成功时生成流水，可结算余额相应减少。为与需求描述“账户提现为正数”保持一致，流水变动金额记为正数，但实际可结算余额减少。</div>
+                    </div>
+                </div>
+
+                <!-- 补充说明：可结算余额变化 -->
+                <div class="scene-summary">
+                    <strong style="color: #333;">可结算余额变化：</strong>每笔流水生成后，可结算余额 = 上一笔可结算余额 + 变动金额（正数增加，负数减少）。账户充值、货款分账、各类退回增加余额；支付手续费分账、类目服务费分账、货款退款、账户提现减少余额。
+                </div>
+            </div>
+            <!-- ===== 场景与资金计算结束 ===== -->
 
             <!-- 字段说明表格 -->
             <div class="table-container" data-page-node-id="wOEm6IVbzJGDV9FR0hSFFS">
