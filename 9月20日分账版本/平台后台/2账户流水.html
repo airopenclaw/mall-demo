@@ -264,7 +264,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1200px;
+            min-width: 1100px;
         }
 
         thead {
@@ -290,6 +290,78 @@
 
         tbody tr:hover {
             background: #f9f9f9;
+        }
+
+        /* 金额颜色 + 收支标签 */
+        .amount-cell {
+            white-space: nowrap;
+        }
+        .amount-tag {
+            display: inline-block;
+            padding: 0 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            line-height: 18px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .amount-tag-income {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        .amount-tag-expense {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        .amount-positive {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .amount-negative {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        /* ===== Tab 切换样式 ===== */
+        .tab-bar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tab-item {
+            position: relative;
+            padding: 6px 16px;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-item:hover {
+            color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .tab-item.active {
+            color: #667eea;
+            font-weight: 600;
+            background: #f0f4ff;
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: 16px;
+            right: 16px;
+            height: 2px;
+            background: #667eea;
+            border-radius: 1px;
         }
 
         /* 查看流水按钮样式 */
@@ -392,7 +464,7 @@
 
         .search-row {
             display: flex;
-            gap: 30px;
+            gap: 24px;
             margin-bottom: 0;
             align-items: center;
             flex-wrap: wrap;
@@ -427,6 +499,95 @@
         .search-item .form-control:focus {
             outline: none;
             border-color: #667eea;
+        }
+
+        /* ===== 可搜索下拉框 ===== */
+        .searchable-select {
+            position: relative;
+            width: 200px;
+        }
+
+        .searchable-select-input {
+            width: 100%;
+            height: 32px;
+            padding: 0 28px 0 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #606266;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .searchable-select-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .searchable-select-input::placeholder {
+            color: #c0c4cc;
+        }
+
+        .searchable-select-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: #c0c4cc;
+            pointer-events: none;
+            transition: transform 0.2s ease;
+        }
+
+        .searchable-select.open .searchable-select-arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .searchable-select-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+
+        .searchable-select.open .searchable-select-dropdown {
+            display: block;
+        }
+
+        .searchable-select-option {
+            padding: 8px 12px;
+            font-size: 13px;
+            color: #606266;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .searchable-select-option:hover {
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        .searchable-select-option.selected {
+            background: #f0f4ff;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .searchable-select-empty {
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #c0c4cc;
+            text-align: center;
         }
 
         .search-buttons {
@@ -836,11 +997,24 @@
                                 <label data-page-node-id="D4NNwCvZAz21cHzs1QAvbG">商家信息</label>
                                 <input type="text" class="form-control" placeholder="名称/信用代码" data-page-node-id="tTao2JrQIs15lddAFJTOfk">
                             </div>
-                           
+
                             <div class="search-item" data-page-node-id="pH0EYECvUhMHuYMhPUnb1H">
                                 <label data-page-node-id="VwsKWHzk2tHpz5xgEOYqXC">商户号</label>
                                 <input type="text" class="form-control" placeholder="请输入商户号" data-page-node-id="2wyl1YzCtEQHzoNOoz7HjO">
                             </div>
+
+                            <!-- 款项类型：可搜索下拉 -->
+                            <div class="search-item">
+                                <label>款项类型</label>
+                                <div class="searchable-select" id="typeSelect">
+                                    <input type="text" class="searchable-select-input" id="typeSelectInput" placeholder="全部" readonly>
+                                    <span class="searchable-select-arrow">▼</span>
+                                    <div class="searchable-select-dropdown" id="typeSelectDropdown">
+                                        <!-- 选项由 JS 渲染 -->
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="search-buttons" data-page-node-id="gmCdCcnQaEJAA3FPw5BpPB">
                                 <button class="search-btn primary" data-page-node-id="BEeYIl99WelQyVnj0XKXVp">搜索</button>
                                 <button class="search-btn" data-page-node-id="u4jQFRo842BI7V1gi3fw7S">重置</button>
@@ -850,10 +1024,15 @@
                 </div>
             </div>
 
-            <!-- 分账规则卡片 -->
+            <!-- 账户流水卡片 -->
             <div class="card" data-page-node-id="roCQs0WpY8fbhi8g5kG4jL">
                 <div class="card-header" data-page-node-id="ZZdAj0IoVElIqtJtAApEbj">
-                    <div class="card-title" data-page-node-id="KU8KpHlVMVxFyotX2HnOoL">账户流水</div>
+                    <!-- Tab 切换 -->
+                    <div class="tab-bar" id="flowTabs">
+                        <div class="tab-item active" data-tab="all">全部</div>
+                        <div class="tab-item" data-tab="income">收入</div>
+                        <div class="tab-item" data-tab="expense">支出</div>
+                    </div>
                 </div>
                 <div class="card-body" data-page-node-id="Dvq9fgawqHYccpLD2S9nW0">
                     <div class="table-container" data-page-node-id="3QN9z5iUZmb3H07Gelylm5">
@@ -864,120 +1043,120 @@
                             <th>商家名称</th>
                             <th>信用代码</th>
                             <th>商户号</th>
-                            <th>变动类型</th>
+                            <th>款项类型</th>
                             <th>变动金额</th>
                             <th>可结算余额</th>
                             <th>变动时间</th>
                             <th>订单号/售后单号</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="flowTableBody">
+                        <tr data-flow-type="income" data-payment-type="货款分账">
                             <td>1</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>货款分账</td>
-                            <td>10000</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+10000</span></td>
                             <td>9000</td>
                             <td>2023-09-01 14:30:25</td>
                             <td>ORD202309010001</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="income" data-payment-type="账户充值">
                             <td>2</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>账户充值</td>
-                            <td>2000</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+2000</span></td>
                             <td>11000</td>
                             <td>2023-09-01 15:20:10</td>
                             <td>-</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="expense" data-payment-type="客户支付手续费分账">
                             <td>3</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
-                            <td>支付手续费分账</td>
-                            <td>-50</td>
+                            <td>客户支付手续费分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-50</span></td>
                             <td>10950</td>
                             <td>2023-09-01 16:05:33</td>
                             <td>ORD202309010001</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="expense" data-payment-type="类目服务费分账">
                             <td>4</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>类目服务费分账</td>
-                            <td>-30</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-30</span></td>
                             <td>10920</td>
                             <td>2023-09-02 09:15:00</td>
                             <td>ORD202309010001</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="expense" data-payment-type="商户支付手续费分账">
                             <td>5</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
-                            <td>支付手续费分账</td>
-                            <td>-20</td>
+                            <td>商户支付手续费分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-20</span></td>
                             <td>10900</td>
                             <td>2023-09-02 14:30:00</td>
                             <td>ORD202309020002</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="expense" data-payment-type="货款退款">
                             <td>6</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>货款退款</td>
-                            <td>-500</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-500</span></td>
                             <td>10400</td>
                             <td>2023-09-02 16:00:00</td>
                             <td>REF202309020001</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="income" data-payment-type="商户支付手续费退回">
                             <td>7</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
-                            <td>支付手续费退回</td>
-                            <td>10</td>
+                            <td>商户支付手续费退回</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+10</span></td>
                             <td>10410</td>
                             <td>2023-09-02 16:00:00</td>
                             <td>REF202309020001</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="income" data-payment-type="类目服务费退回">
                             <td>8</td>
                             <td>XX科技有限公司</td>
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>类目服务费退回</td>
-                            <td>5</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5</span></td>
                             <td>10415</td>
                             <td>2023-09-02 16:00:00</td>
                             <td>REF202309020001</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="income" data-payment-type="货款分账">
                             <td>9</td>
                             <td>YY商贸有限公司</td>
                             <td>91110000MA09876543</td>
                             <td>M202309002</td>
                             <td>货款分账</td>
-                            <td>5000</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5000</span></td>
                             <td>5000</td>
                             <td>2023-09-01 10:00:00</td>
                             <td>ORD202309010003</td>
                         </tr>
-                        <tr>
+                        <tr data-flow-type="expense" data-payment-type="账户提现">
                             <td>10</td>
                             <td>YY商贸有限公司</td>
                             <td>91110000MA09876543</td>
                             <td>M202309002</td>
-                            <td>提现</td>
-                            <td>-1000</td>
+                            <td>账户提现</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1000</span></td>
                             <td>4000</td>
                             <td>2023-09-02 11:20:00</td>
                             <td>-</td>
@@ -1071,115 +1250,115 @@
                     1、本功能主要提供查看各个入驻店铺的账户流水明细<br>
                     2、展示商家的账户流水各类变动流水记录，包括正向收支和退款退回<br>
                     3、本页面为只读页面，不支持新增、编辑、删除操作<br>
-                    4、支持按商家名称、商户号、信用代码搜索<br>
-                    5、货款分账、账户充值、支付手续费退回、客户手续费退回、类目服务费退回、账户提现为正数，支付手续费分账、类目服务费分账、货款退款为负数<br>
-                    6、退款类型的流水（货款退款、支付手续费退回、类目服务费退回）在订单已分账且售后完成时生成，退款成功后生成对应账户流水
+                    4、支持按商家名称、商户号、信用代码、款项类型搜索<br>
+                    5、列表上方支持按“全部 / 收入 / 支出”Tab切换筛选<br>
+                    6、款项类型包括：货款分账、货款退款、账户充值、账户提现、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回
                 </p>
             </div>
 
-            <!-- ===== 新增：场景与资金计算 ===== -->
+            <!-- ===== 场景与资金计算 ===== -->
             <div class="scene-section">
                 <div class="scene-section-title">场景与资金计算</div>
 
-                <!-- 场景1：货款分账 -->
+                <!-- 场景1：货款 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景1：支付分账-货款分账</div>
+                    <div class="scene-card-title">场景1：支付分账成功-货款分账</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>货款分账</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（货款分账收入）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 订单SKU实付金额 − SKU用户支付手续费 − SKU商户支付手续费-类目服务费</div>
+                        <div><span class="scene-card-label">款项类型：</span>货款分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 订单实付金额 − 支付手续费 − 类目服务费（若有）</div>
                     </div>
                 </div>
 
-                <!-- 场景2：支付手续费分账 -->
+                <!-- 场景2：商户支付手续费 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景2：支付分账-商户支付手续费分账</div>
+                    <div class="scene-card-title">场景2：支付分账成功-商户支付手续费分账</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>支付手续费分账</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-negative">负数</span>（支出）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − (订单SKU实付金额 × 商户支付手续费率)</div>
-                        <div><span class="scene-card-label">备注：</span>商户支付手续费率是下单时订单按当时的分账规则记录的支付费率，变动金额=0时不生成，</div>
+                        <div><span class="scene-card-label">款项类型：</span>商户支付手续费分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − (订单实付金额 × 支付手续费率)</div>
                     </div>
                 </div>
 
-                <!-- 场景3：类目服务费分账 -->
+                <!-- 场景3：客户支付手续费 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景3：支付分账-类目服务费</div>
+                    <div class="scene-card-title">场景3：支付分账成功-客户支付手续费分账</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>类目服务费分账</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-negative">负数</span>（支出）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − (订单SKU实付金额 × SKU的对应类目的服务费率)</div>
-                        <div><span class="scene-card-label">备注：</span>类目服务费，是下单时订单按当时SKU对应类目记录的费率。变动金额=0时不生成</div>
-
+                        <div><span class="scene-card-label">款项类型：</span>客户支付手续费分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = − (订单实付金额 × 支付手续费率)</div>
                     </div>
                 </div>
 
-                <!-- 场景4：货款退款 -->
+                <!-- 场景4：类目服务费 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景4：售后退款完成-货款退款</div>
+                    <div class="scene-card-title">场景4：支付分账成功-类目服务费分账</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>货款退款</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-negative">负数</span>（退款支出）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − 售后单退款实退金额（原路退回给客户）</div>
-                        <div><span class="scene-card-label">备注：</span>变动金额=0时不生成</div>
-
+                        <div><span class="scene-card-label">款项类型：</span>类目服务费分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = − (订单实付金额 × 类目服务费率)</div>
                     </div>
                 </div>
 
-                <!-- 场景5：商户支付手续费退回 -->
+                <!-- 场景5：货款退款 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景5：售后审核通过-商户支付手续费退回</div>
+                    <div class="scene-card-title">场景5：售后退款完成-货款退款</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>支付手续费退回单</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（退回收入）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 分账退回商户支付手续费 × 售后单实际退款金额 </div>
-                        <div><span class="scene-card-label">备注：</span>变动金额=0时不生成，分账退回商户支付手续费是销售单支付成功时按当时分账退回规则记录的费率</div>
-
+                        <div><span class="scene-card-label">款项类型：</span>货款退款</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按售后订单的实退金额即可。变动金额 = − 退款实退金额（原路退回给客户）</div>
                     </div>
                 </div>
 
-                <!-- 场景6：类目服务费退回 -->
+                <!-- 场景6：商户支付手续费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景6：售后审核完成-类目服务费退回</div>
+                    <div class="scene-card-title">场景6：分账退回成功-商户支付手续费退回</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>类目服务费退回</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（退回收入）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 售后单SKU类目退回费率 × 售后单实际退款金额</div>
-                        <div><span class="scene-card-label">备注：</span>变动金额=0时不生成，SKU类目退回费率是下单时销售单记录的SKU类目的退回费率</div>
-
+                        <div><span class="scene-card-label">款项类型：</span>商户支付手续费退回</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = 订单原支付手续费 × (退款金额 / 订单实付金额)</div>
                     </div>
                 </div>
 
-                <!-- 场景7：客户手续费退回 -->
+                <!-- 场景7：类目服务费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景7：售后审核通过-客户手续费退回</div>
+                    <div class="scene-card-title">场景7：分账退回成功-类目服务费退回</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>客户手续费退回</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（退回收入）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 订单原客户手续费 × 售后单实退金额</div>
-                        <div class="scene-card-note">注：属于平台账户分账退回给商家账户，退回成功后生成流水，金额为0不生成</div>
+                        <div><span class="scene-card-label">款项类型：</span>类目服务费退回</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = 订单原类目服务费 × (退款金额 / 订单实付金额)</div>
                     </div>
                 </div>
 
-                <!-- 场景8：账户充值 -->
+                <!-- 场景8：客户手续费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景8：账户充值</div>
+                    <div class="scene-card-title">场景8：分账退回成功-客户手续费退回</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>账户充值</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（充值收入）</div>
+                        <div><span class="scene-card-label">款项类型：</span>客户支付手续费分账（退回）</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = 订单原客户手续费 × (退款金额 / 订单实付金额)</div>
+                        <div class="scene-card-note">注：客户手续费退回为平台账户分账退回给商家账户，退回成功后生成流水</div>
+                    </div>
+                </div>
+
+                <!-- 场景9：账户充值 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景9：账户充值</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>账户充值</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
                         <div><span class="scene-card-label">计算公式：</span>变动金额 = 实际充值到账金额（用户支付金额）</div>
-                        <div class="scene-card-note">注：接口查询充值成功时生成流水，为与需求描述“账户充值为正数”保持一致，流水变动金额记为正数，但实际充值金额减少。</div>
                     </div>
                 </div>
 
-                <!-- 场景9：账户提现 -->
+                <!-- 场景10：账户提现 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景9：账户提现</div>
+                    <div class="scene-card-title">场景10：账户提现</div>
                     <div class="scene-card-body">
-                        <div><span class="scene-card-label">变动类型：</span>账户提现单</div>
-                        <div><span class="scene-card-label">变动金额：</span><span class="scene-card-positive">正数</span>（提现成功，账户余额减少）</div>
-                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 提现金额（从可结算余额扣减）</div>
-                        <div class="scene-card-note">注：提现成功时生成流水，可结算余额相应减少。为与需求描述“账户提现为正数”保持一致，流水变动金额记为正数，但实际可结算余额减少。</div>
+                        <div><span class="scene-card-label">款项类型：</span>账户提现</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − 提现金额（从可结算余额扣减）</div>
+                        <div class="scene-card-note">注：提现成功时生成流水，可结算余额相应减少。</div>
                     </div>
                 </div>
 
@@ -1227,27 +1406,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>变动类型</strong></td>
+                            <td><strong>款项类型</strong></td>
                             <td>
-                                <strong>【分账相关】</strong><br>
                                 1、货款分账：为商户的收入，商家销售所得的正向货款，分账后生成<br>
-                                2、支付手续费分账：商户的支出，平台收取商家的支付手续费，分账后生成<br>
-                                3、类目服务费分账：商户的支出，平台收取的类目服务费，分账后生成<br>
-                                <strong>【退款退回相关】</strong><br>
-                                4、货款退款：商户的支出，金额为负数，当订单已分账且发生售后完成时需要原路退钱给客户，对应的退款单退款成功后生成账户流水，退款金额为订单退款处理时计算的实退金额<br>
-                                5、支付手续费退回：商户的收入，当订单已分账且发生售后完成时，按下单时的分账规则，从平台账户分账退回给商家账户，退回成功后生成账户流水<br>
-                                6、客户手续费退回：账户的收入，当订单已分账且发生售后完成时，按下单时的分账规则，从平台账户分账退回给商家账户，退回成功后生成账户流水<br>
-                                7、类目服务费退回：账户的收入，当订单已分账且发生售后完成时，按下单时的分账规则，从平台账户分账退回给商家账户，退回成功后生成账户流水<br>
-                                <strong>【其他】</strong><br>
-                                8、账户充值：商家充值账户的正向金额，见接口https://opendoc.dinpay.com/docs/2056657273998442498?tab=product_doc<br>
-                                9、账户提现：商户的收入，商家从平台账户提现的金额，提现成功后生成
+                                2、货款退款：商户的支出，金额为负数，当订单已分账且发生售后完成时原路退钱给客户，退款成功后生成<br>
+                                3、账户充值：商家充值账户的正向金额，见接口https://opendoc.dinpay.com/docs/2056657273998442498?tab=product_doc<br>
+                                4、账户提现：商户的支出，商家从平台账户提现的金额，提现成功后生成<br>
+                                5、客户支付手续费分账：商户的支出，平台收取客户的支付手续费，分账后生成<br>
+                                6、商户支付手续费分账：商户的支出，平台收取商家的支付手续费，分账后生成<br>
+                                7、商户支付手续费退回：商户的收入，发生售后退款完成时按分账规则退回给商家账户<br>
+                                8、类目服务费分账：商户的支出，平台收取的类目服务费，分账后生成<br>
+                                9、类目服务费退回：商户的收入，发生售后退款完成时按分账规则退回给商家账户
                             </td>
                         </tr>
                         <tr>
                             <td><strong>变动金额</strong></td>
                             <td>
-                                1、货款分账、账户充值、支付手续费退回、客户手续费退回、类目服务费退回、账户提现为正数（整数）<br>
-                                2、支付手续费分账、类目服务费分账、货款退款为负数<br>
+                                1、收入类款项为正数（整数），支出类款项为负数<br>
+                                2、金额前带“收/支”标签，分别表示收入与支出<br>
                                 3、格式：整数（正数或负数）
                             </td>
                         </tr>
@@ -1270,7 +1446,7 @@
                             <td><strong>订单号/售后单号</strong></td>
                             <td>
                                 1、关联的订单号或售后单号<br>
-                                2、货款分账、支付手续费分账、类目服务费分账、货款退款、支付手续费退回、客户手续费退回、类目服务费退回显示订单号或售后单号<br>
+                                2、货款分账、货款退款、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回显示订单号或售后单号<br>
                                 3、账户充值、账户提现显示"-"<br>
                                 4、格式示例：ORD202309010001
                             </td>
@@ -1306,6 +1482,168 @@
         drawerOverlay.addEventListener('click', function(e) {
             if (e.target === drawerOverlay) {
                 closeDrawerFunc();
+            }
+        });
+
+        /* ===== 筛选状态 ===== */
+        let currentTabType = 'all';       // all / income / expense
+        let selectedPaymentType = '全部';  // 款项类型筛选
+
+        const flowTabs = document.getElementById('flowTabs');
+        const flowTableBody = document.getElementById('flowTableBody');
+        const flowRows = Array.from(flowTableBody.querySelectorAll('tr'));
+
+        /* ===== 统一应用筛选 ===== */
+        function applyFilters() {
+            flowRows.forEach(function(row) {
+                const rowFlowType = row.getAttribute('data-flow-type');       // income / expense
+                const rowPaymentType = row.getAttribute('data-payment-type'); // 款项类型
+
+                // Tab 筛选
+                let tabMatch = true;
+                if (currentTabType !== 'all') {
+                    tabMatch = (rowFlowType === currentTabType);
+                }
+
+                // 款项类型筛选
+                let paymentMatch = true;
+                if (selectedPaymentType && selectedPaymentType !== '全部') {
+                    paymentMatch = (rowPaymentType === selectedPaymentType);
+                }
+
+                row.style.display = (tabMatch && paymentMatch) ? '' : 'none';
+            });
+        }
+
+        /* ===== Tab 切换 ===== */
+        flowTabs.addEventListener('click', function(e) {
+            const tab = e.target.closest('.tab-item');
+            if (!tab) return;
+
+            flowTabs.querySelectorAll('.tab-item').forEach(function(item) {
+                item.classList.remove('active');
+            });
+            tab.classList.add('active');
+
+            currentTabType = tab.getAttribute('data-tab');
+            applyFilters();
+        });
+
+        /* ===== 通用：可搜索下拉 ===== */
+        function createSearchableSelect(config) {
+            const root = document.getElementById(config.rootId);
+            const input = document.getElementById(config.inputId);
+            const dropdown = document.getElementById(config.dropdownId);
+            let selectedValue = config.defaultValue || '全部';
+            let filterKeyword = '';
+
+            function renderOptions(keyword) {
+                const kw = (keyword || '').trim().toLowerCase();
+                const filtered = config.options.filter(function(opt) {
+                    return opt.toLowerCase().indexOf(kw) !== -1;
+                });
+
+                if (filtered.length === 0) {
+                    dropdown.innerHTML = '<div class="searchable-select-empty">无匹配选项</div>';
+                    return;
+                }
+
+                dropdown.innerHTML = filtered.map(function(opt) {
+                    return '<div class="searchable-select-option' + (opt === selectedValue ? ' selected' : '') + '" data-value="' + opt + '">' + opt + '</div>';
+                }).join('');
+            }
+
+            function open() {
+                root.classList.add('open');
+                input.removeAttribute('readonly');
+                input.value = filterKeyword;
+                input.focus();
+                renderOptions(filterKeyword);
+            }
+
+            function close() {
+                root.classList.remove('open');
+                input.setAttribute('readonly', 'readonly');
+                if (selectedValue === '全部') {
+                    input.value = '';
+                    input.placeholder = '全部';
+                } else {
+                    input.value = selectedValue;
+                    input.placeholder = selectedValue;
+                }
+                filterKeyword = '';
+            }
+
+            input.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (root.classList.contains('open')) {
+                    close();
+                } else {
+                    open();
+                }
+            });
+
+            input.addEventListener('input', function() {
+                filterKeyword = input.value;
+                renderOptions(filterKeyword);
+            });
+
+            dropdown.addEventListener('click', function(e) {
+                const option = e.target.closest('.searchable-select-option');
+                if (!option) return;
+                selectedValue = option.getAttribute('data-value');
+                filterKeyword = '';
+                close();
+                if (config.onChange) config.onChange(selectedValue);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!root.contains(e.target)) {
+                    if (root.classList.contains('open')) {
+                        close();
+                    }
+                }
+            });
+
+            // 初始化显示
+            input.placeholder = '全部';
+
+            return {
+                getValue: function() { return selectedValue; },
+                setValue: function(val) {
+                    selectedValue = val;
+                    if (val === '全部') {
+                        input.value = '';
+                        input.placeholder = '全部';
+                    } else {
+                        input.value = val;
+                        input.placeholder = val;
+                    }
+                }
+            };
+        }
+
+        /* ===== 款项类型下拉 ===== */
+        createSearchableSelect({
+            rootId: 'typeSelect',
+            inputId: 'typeSelectInput',
+            dropdownId: 'typeSelectDropdown',
+            defaultValue: '全部',
+            options: [
+                '全部',
+                '货款分账',
+                '货款退款',
+                '账户充值',
+                '账户提现',
+                '客户支付手续费分账',
+                '商户支付手续费分账',
+                '商户支付手续费退回',
+                '类目服务费分账',
+                '类目服务费退回'
+            ],
+            onChange: function(val) {
+                selectedPaymentType = val;
+                applyFilters();
             }
         });
     </script>

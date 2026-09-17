@@ -364,7 +364,7 @@
             <table class="info-table">
                 <tr>
                     <th>需求名称</th>
-                    <td>支付分账</td>
+                    <td>支付分账-微信与支付宝支付</td>
                 </tr>
                 <tr>
                     <th>所属项目</th>
@@ -393,72 +393,7 @@
             </table>
         </div>
 
-        <!-- 需求简介 -->
-        <div class="section-content">
-            <h2 class="section-title">
-                需求简介
-                <a href="#section1" class="anchor-link">#</a>
-            </h2>
-            <div class="timeline" id="section1">
-                <div class="timeline-item">
-                    <div class="timeline-title">功能背景</div>
-                    <div class="timeline-desc">
-                        建立完善的支付分账体系，支持多支付机构、多支付方式的店铺级配置
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-title">业务价值</div>
-                    <div class="timeline-desc">
-                        实现自动化分账，降低人工操作成本，提升资金清算效率
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-title">适用范围</div>
-                    <div class="timeline-desc">
-                        所有入驻平台的商家店铺
-                    </div>
-                </div>
-            </div>
-            <div class="divider"></div>
-            <p>
-                本系统旨在为平台提供一个灵活、高效的支付分账解决方案。通过支持多支付机构（如智付支付等）和多支付方式（如微信、支付宝等），
-                平台可以根据不同店铺的需求定制分账策略。
-            </p>
-        </div>
-
-        <!-- 需求背景 -->
-        <div class="section-content">
-            <h2 class="section-title">
-                需求背景
-                <a href="#section2" class="anchor-link">#</a>
-            </h2>
-            <div id="section2">
-                <div class="step-indicator">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <div class="step-title">业务痛点</div>
-                        <div class="step-desc">传统手工分账方式效率低下，容易出现差错</div>
-                    </div>
-                </div>
-
-                <div class="step-indicator">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <div class="step-title">市场趋势</div>
-                        <div class="step-desc">电商平台对资金管理的自动化和透明化需求日益增长</div>
-                    </div>
-                </div>
-
-                <div class="step-indicator">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <div class="step-title">监管要求</div>
-                        <div class="step-desc">需要符合监管要求，确保资金流向可追溯、可审计</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+     
         <!-- 需求目标 -->
         <div class="section-content">
             <h2 class="section-title">
@@ -467,12 +402,10 @@
             </h2>
             <div id="section3">
                 <ul class="requirement-list">
-                    <li>建立统一的分账规则配置系统，支持按店铺、支付机构、支付方式进行灵活配置</li>
-                    <li>实现自动化分账处理，订单满足分账条件后自动触发分账流程</li>
-                    <li>提供清晰的分账明细查询功能，支持多维度筛选和导出</li>
-                    <li>支持类目服务费的差异化设置，满足不同品类的分账需求</li>
-                    <li>提供完整的支付流水和交易流水追踪能力</li>
-                    <li>确保分账操作的合规性和安全性，支持操作日志审计</li>
+                    <li>支持按店铺、支付机构、支付方式进行灵活配置分账时点、用户支付手续费</li>
+                    <li>对接智付支付体系的支付宝、微信支付，实现订单支付</li>
+                    <li>支持查看支付成功的交易流水</li>
+                    <li>支持查看支付成功后生成的待分账明细</li>
                 </ul>
             </div>
         </div>
@@ -486,11 +419,9 @@
             </h2>
             <div id="section5">
                 <ul class="requirement-list">
-                    <li>分账时点一经配置，将在所有新订单中生效</li>
+                    <li>分账时点一经配置，只在所有新订单中生效</li>
                     <li>修改支付费率将影响后续订单，已生成的订单不受影响</li>
                     <li>请确保支付机构已完成扫码产品的开通流程</li>
-                    <li>分账操作一旦发起，将无法撤销，请谨慎操作</li>
-                    <li>建议定期核对分账明细与银行流水</li>
                 </ul>
             </div>
         </div>

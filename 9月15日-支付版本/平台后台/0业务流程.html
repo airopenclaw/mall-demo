@@ -552,4 +552,237 @@
             </div>
         </div>
 
-       
+     
+
+        
+<!-- 场景4: 订单取消流程（订单未支付，未涉及资金） -->
+        <div class="flow-section">
+            <h2 class="section-title">
+                <span class="icon">❌</span>
+                场景五：订单取消流程（订单未支付，未涉及资金）
+            </h2>
+
+            <div class="flow-chart">
+                <table class="flow-table">
+                    <thead>
+                        <tr>
+                            <th>流程节点</th>
+                            <th>操作说明</th>
+                            <th>生成单据</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="node node-start">
+                                    <div class="node-title">开始</div>
+                                    <div class="node-desc">客户取消订单</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">订单取消申请</div>
+                                        <div class="step-desc">客户主动取消订单或系统自动取消</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-process">
+                                    <div class="node-title">订单取消</div>
+                                    <div class="node-desc">直接作废订单</div>
+                                </div>
+                            </td>
+                            <td>
+                          
+                                </div>
+                                <div class="flow-step">
+                                    <div class="step-circle">3</div>
+                                    <div class="step-content">
+                                        <div class="step-title">关闭订单</div>
+                                        <div class="step-desc">将订单状态改为"已取消"</div>
+                                    </div>
+                                </div>
+                                <div class="flow-step">
+                                    <div class="step-circle">4</div>
+                                    <div class="step-content">
+                                        <div class="step-title">关闭支付机构支付单</div>
+                                        <div class="step-desc">调用支付机构关单接口https://opendoc.dinpay.com/docs/2054497211720802305?tab=product_doc</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                 
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-end">
+                                    <div class="node-title">结束</div>
+                                    <div class="node-desc">取消流程完成</div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            <td>-</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 场景5: 支付超时流程 -->
+        <div class="flow-section">
+            <h2 class="section-title">
+                <span class="icon">⏰</span>
+                场景六：支付超时流程
+            </h2>
+
+            <div class="flow-chart">
+                <table class="flow-table">
+                    <thead>
+                        <tr>
+                            <th>流程节点</th>
+                            <th>操作说明</th>
+                            <th>生成单据</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="node node-start">
+                                    <div class="node-title">客户住得支付</div>
+                                    <div class="node-desc">支付发起成功</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">请求支付机构支付</div>
+                                        <div class="step-desc">客户请求支付，开始计时</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-process">
+                                    <div class="node-title">等待支付机构支付状态返回</div>
+                                    <div class="node-desc">等待返回（30分钟）</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">2</div>
+                                    <div class="step-content">
+                                        <div class="step-title">倒计时开始</div>
+                                        <div class="step-desc">订单支付倒计时30分钟</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-decision">
+                                    <div class="node-title">超时?</div>
+                                    <div class="node-desc">判断是否超时</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">3</div>
+                                    <div class="step-content">
+                                        <div class="step-title">超时检查</div>
+                                        <div class="step-desc">检查订单支付状态</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓ 否</div>
+                                <div class="node node-process">
+                                    <div class="node-title">生成交易流水</div>
+                                    <div class="node-desc">正常订单流程</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">3'</div>
+                                    <div class="step-content">
+                                        <div class="step-title">继续正常流程</div>
+                                        <div class="step-desc">进入场景一：订单支付流程</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓ 是（超时未支付）</div>
+                                <div class="node node-process" style="border-color: #f56c6c; background: #fef0f0;">
+                                    <div class="node-title">订单超时</div>
+                                    <div class="node-desc">关闭超时订单</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">4</div>
+                                    <div class="step-content">
+                                        <div class="step-title">关闭订单</div>
+                                        <div class="step-desc">将订单状态改为"已取消"</div>
+                                    </div>
+                                </div>
+                                <div class="flow-step">
+                                    <div class="step-circle">5</div>
+                                    <div class="step-content">
+                                        <div class="step-title">调用支付机构支付超时接口</div>
+                                        <div class="step-desc">支付超时此接口仅适用于处理中或完成的当日条码支付订单。如果用户支付失败，订单将被撤销；若支付成功，资金将退还给用户。只有在支付系统超时或结果未知时才能撤销订单。</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                    
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-end">
+                                    <div class="node-title">结束</div>
+                                    <div class="node-desc">超时流程完成</div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            <td>-</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+   
