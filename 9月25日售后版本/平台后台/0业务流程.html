@@ -362,12 +362,229 @@
         </div>
 
 
-        <!-- 场景2: 分账执行流程 -->
+
+        <!-- 场景3: 退款流程 -->
         <div class="flow-section">
             <h2 class="section-title">
-                <span class="icon">💰</span>
-                场景二：支付分账执行流程
+                <span class="icon">↩️</span>
+                场景一：退款流程（包括仅退款、退货退款）
             </h2>
+
+            <div class="flow-chart">
+                <table class="flow-table">
+                    <thead>
+                        <tr>
+                            <th>流程节点</th>
+                            <th>操作说明</th>
+                            <th>生成单据</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="node node-start">
+                                    <div class="node-title">开始</div>
+                                    <div class="node-desc">客户申请退款</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">退款申请</div>
+                                        <div class="step-desc">客户提交退款申请，说明退款原因</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-decision">
+                                    <div class="node-title">审核通过?</div>
+                                    <div class="node-desc">平台/店铺审核退款申请</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">2</div>
+                                    <div class="step-content">
+                                        <div class="step-title">退款审核</div>
+                                        <div class="step-desc">平台或店铺审核退款申请</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-end">
+                                    <div class="node-title">退款审核通过</div>
+                                    <div class="node-desc">生成退款单和分账退回明细</div>
+                                </div>
+                            </td>
+                            <td>
+           
+                                </div>
+                                <div class="flow-step">
+                                    <div class="step-circle">1.0</div>
+                                    <div class="step-content">
+                                        <div class="step-title">一、重新生成分账明细</div>
+                                        <div class="step-desc">
+                                            若订单支付分账<span style="color: #f44336; font-weight: 600;">未分账</span>：<span style="color: #f44336; font-weight: 600;">不生成"分账退回"分账单据</span><br>
+                                            &nbsp;&nbsp;- 非套购订单：若SKU<span style="color: #4caf50; font-weight: 600;">申请售后通过</span>且分账状态为<span style="color: #ff9800; font-weight: 600;">分账异常或待分账</span>：关闭对应分账明细；还有未退数量时按未退数量生成"支付分账"单据<br>
+                                            &nbsp;&nbsp;- 套购订单：除了以上逻辑外，如本次回收了未退商品的套购优惠，被回收的商品未分账成功，也需要关闭其支付分账单，按回收后的SKU金额重新生成支付分账单<br>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+                                <div class="flow-step">
+                                    <div class="step-circle">3.1.1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">二、生成"分账退回"分账明细</div>
+                                        <div class="step-desc">当订单是已分账状态时，按下单时的分账规则，生成交易类型为"分账退回"的分账明细：<br>
+                                            • 商户支付手续费(商家) - 按下单时记录的分账退回费率<br>
+                                            • 客户支付手续费(客户) - 按下单时客户支付费率计算<br>
+                                            • 商户类目服务费 - 按下单时记录的类目分账退回费率</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+               
+                                <div class="voucher">
+                                    <div class="voucher-title">
+                                        分账明细表
+                                        <span class="voucher-badge">必填</span>
+                                    </div>
+                                    <div class="voucher-fields">
+                                        <span>📋 明细ID</span>
+                                        <span>📋 退款单号</span>
+                                        <span>📋 原订单号</span>
+                                        <span>🏪 店铺ID</span>
+                                        <span>💰 退回金额</span>
+                                        <span>📊 退回类型（分账退回）</span>
+                                        <span>📝 退回明细</span>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-process">
+                                    <div class="node-title">调用退款接口</div>
+                                    <div class="node-desc">向支付机构发起退款</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">4</div>
+                                    <div class="step-content">
+                                        <div class="step-title">执行退款</div>
+                                        <div class="step-desc">调用支付机构退款接口，原路退回</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-decision">
+                                    <div class="node-title">退款成功?</div>
+                                    <div class="node-desc">判断退款结果</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flow-step">
+                                    <div class="step-circle">5</div>
+                                    <div class="step-content">
+                                        <div class="step-title">接收退款结果</div>
+                                        <div class="step-desc">获取支付机构退款回调</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓ 是</div>
+                                <div class="node node-process">
+                                    <div class="node-title">生成退款交易流水</div>
+                                    <div class="node-desc">更新退款状态</div>
+                                </div>
+                            </td>
+                            <td>
+                           
+                                </div>
+                                <div class="flow-step">
+                                    <div class="step-circle">6</div>
+                                    <div class="step-content">
+                                        <div class="step-title">生成退款交易流水</div>
+                                        <div class="step-desc">记录退款交易流水</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="voucher">
+                                    <div class="voucher-title">
+                                        交易流水表
+                                        <span class="voucher-badge">必填</span>
+                                    </div>
+                                    <div class="voucher-fields">
+                                        <span>📋 流水号</span>
+                                        <span>📋 退款单号</span>
+                                        <span>📋 原订单号</span>
+                                        <span>👤 客户ID</span>
+                                        <span>💰 退款金额</span>
+                                        <span>💳 退款方式</span>
+                                        <span>⏰ 退款时间</span>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="arrow">↓</div>
+                                <div class="node node-end">
+                                    <div class="node-title">结束</div>
+                                    <div class="node-desc">退款流程完成</div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                            <td>-</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- 场景6: 分账退回执行流程 -->
+        <div class="flow-section">
+            <h2 class="section-title">
+                <span class="icon">💸↩️</span>
+                场景二：分账退回执行流程
+            </h2>
+
+            <div class="info-box">
+                <div class="info-box-title">⚠️ 特殊说明</div>
+                <div class="info-box-content">
+                    <strong>适用场景：</strong>订单退款成功后，且原订单已完成分账的情况下，执行分账退回<br>
+                    <strong>触发方式：</strong>定时任务扫描符合条件的"分账退回"单据<br>
+                    <strong>资金流向：</strong>从平台账户向商家账户划拨退回费用（支付手续费+类目服务费）
+                </div>
+            </div>
 
             <div class="flow-chart">
                 <table class="flow-table">
@@ -391,7 +608,10 @@
                                     <div class="step-circle">1</div>
                                     <div class="step-content">
                                         <div class="step-title">定时扫描</div>
-                                        <div class="step-desc">系统定时扫描待分账、分账异常的类型是“支付分账”的明细</div>
+                                        <div class="step-desc">系统定时扫描满足以下条件的记录：<br>
+                                    
+                                            • 分账类型 = 分账退回<br>
+                                            • 分账退回状态 = 待分账或分账异常</div>
                                     </div>
                                 </div>
                             </td>
@@ -402,8 +622,8 @@
                             <td>
                                 <div class="arrow">↓</div>
                                 <div class="node node-decision">
-                                    <div class="node-title">满足分账条件?</div>
-                                    <div class="node-desc">检查订单是否满足分账条件</div>
+                                    <div class="node-title">满足退回条件?</div>
+                                    <div class="node-desc">检查是否同时满足条件</div>
                                 </div>
                             </td>
                             <td>
@@ -411,7 +631,9 @@
                                     <div class="step-circle">2</div>
                                     <div class="step-content">
                                         <div class="step-title">条件判断</div>
-                                        <div class="step-desc">检查发货/收货时间是否满足分账时点要求</div>
+                                        <div class="step-desc">验证2个条件：<br>
+                                            1. 退款申请表.审核状态 = 申请通过<br>
+                                            2. 分账明细表.支付分账状态 = 已分账<br>
                                     </div>
                                 </div>
                             </td>
@@ -422,24 +644,30 @@
                             <td>
                                 <div class="arrow">↓ 是</div>
                                 <div class="node node-process">
-                                    <div class="node-title">调用分账接口</div>
-                                    <div class="node-desc">调用支付机构分账接口</div>
+                                    <div class="node-title">调用分账退回接口</div>
+                                    <div class="node-desc">从平台账户向商家账户划拨退回费用</div>
                                 </div>
                             </td>
                             <td>
                                 <div class="flow-step">
                                     <div class="step-circle">3</div>
                                     <div class="step-content">
-                                        <div class="step-title">请求分账</div>
-                                        <div class="step-desc">向支付机构发起分账请求</div>
+                                        <div class="step-title">请求分账退回</div>
+                                        <div class="step-desc">向支付机构发起分账退回请求</div>
                                     </div>
                                 </div>
-                           
+                                <div class="flow-step">
+                                    <div class="step-circle">3.1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">生成账户流水</div>
+                                        <div class="step-desc"></div>
+                                    </div>
                                 </div>
                             </td>
                             <td>
-                        
-             
+                                </div>
+
+                                </div>
                             </td>
                             
                         </tr>
@@ -447,16 +675,16 @@
                             <td>
                                 <div class="arrow">↓</div>
                                 <div class="node node-decision">
-                                    <div class="node-title">分账成功?</div>
-                                    <div class="node-desc">判断分账结果</div>
+                                    <div class="node-title">退回成功?</div>
+                                    <div class="node-desc">判断分账退回执行结果</div>
                                 </div>
                             </td>
                             <td>
                                 <div class="flow-step">
                                     <div class="step-circle">4</div>
                                     <div class="step-content">
-                                        <div class="step-title">接收分账结果</div>
-                                        <div class="step-desc">获取支付机构分账执行结果</div>
+                                        <div class="step-title">接收退回结果</div>
+                                        <div class="step-desc">获取支付机构退回执行结果</div>
                                     </div>
                                 </div>
                             </td>
@@ -467,30 +695,31 @@
                             <td>
                                 <div class="arrow">↓ 是</div>
                                 <div class="node node-process">
-                                    <div class="node-title">分账成功</div>
-                                    <div class="node-desc">更新分账状态</div>
+                                    <div class="node-title">退回成功</div>
+                                    <div class="node-desc">更新退回状态</div>
                                 </div>
                             </td>
                             <td>
                                 <div class="flow-step">
                                     <div class="step-circle">5</div>
                                     <div class="step-content">
-                                        <div class="step-title">更新分账状态</div>
-                                        <div class="step-desc">按接口结果分账明细状态改为"已完成"</div>
+                                        <div class="step-title">更新退回明细状态</div>
+                                        <div class="step-desc">将分账退回明细状态从"待分账"改为"已分账"</div>
                                     </div>
                                 </div>
-                           
+                                <div class="flow-step">
                                 </div>
                                 <div class="flow-step">
                                     <div class="step-circle">7</div>
                                     <div class="step-content">
                                         <div class="step-title">生成账户流水</div>
-                                        <div class="step-desc">分账成功后，记录各账户资金变动（平台账户、商家账户的分账金额）</div>
+                                        <div class="step-desc">退回成功后，记录各账户资金变动（平台账户支出、商家账户收入）</div>
                                     </div>
                                 </div>
                             </td>
                             <td>
-                    
+                       
+                                </div>
                                 <div class="voucher">
                                     <div class="voucher-title">
                                         账户流水表
@@ -514,7 +743,7 @@
                             <td>
                                 <div class="arrow">↓ 否</div>
                                 <div class="node node-process" style="border-color: #f56c6c; background: #fef0f0;">
-                                    <div class="node-title">分账异常</div>
+                                    <div class="node-title">退回失败</div>
                                     <div class="node-desc">记录失败原因，触发告警</div>
                                 </div>
                             </td>
@@ -523,13 +752,12 @@
                                     <div class="step-circle">5'</div>
                                     <div class="step-content">
                                         <div class="step-title">更新分账状态</div>
-                                        <div class="step-desc">更新分账状态为“分账异常”记录分账异常原因</div>
+                                        <div class="step-desc">更新状态为分账异常，记录分账退回失败原因</div>
                                     </div>
                                 </div>
                             </td>
                             <td>
-             
-                                </div>
+            
                             </td>
                             
                         </tr>
@@ -538,7 +766,7 @@
                                 <div class="arrow">↓</div>
                                 <div class="node node-end">
                                     <div class="node-title">结束</div>
-                                    <div class="node-desc">分账流程完成</div>
+                                    <div class="node-desc">分账退回流程完成</div>
                                 </div>
                             </td>
                             <td>-</td>
@@ -550,4 +778,4 @@
             </div>
         </div>
 
-       
+

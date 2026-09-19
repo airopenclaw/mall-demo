@@ -1294,7 +1294,7 @@
 
             <!-- ===== 场景与资金计算 ===== -->
             <div class="scene-section">
-                <div class="scene-section-title">分账明细生成（本期不涉及分账明细生成，只做支付分账动作）</div>
+                <div class="scene-section-title">分账明细生成（本期涉及：场景4、场景5、场景6、场景7、场景8、场景9）</div>
 
                 <!-- 场景1：支付手续费分账 -->
                 <div class="scene-card">
@@ -1331,7 +1331,7 @@
 
                 <!-- 场景5：商户支付手续费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景4：售后审核通过-商户支付手续费退回生成</div>
+                    <div class="scene-card-title">场景4：售后审核通过+售后sku商户手续费已分账：商户支付手续费退回生成</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>商户支付手续费退回单</div>
@@ -1342,7 +1342,7 @@
 
                 <!-- 场景6：类目服务费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景5：售后审核完成-类目服务费退回生成</div>
+                    <div class="scene-card-title">场景5：售后审核通过+售后sku类目服务费已分账：类目服务费退回生成</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费退回</div>
@@ -1353,7 +1353,7 @@
 
                 <!-- 场景7：客户手续费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景6：售后审核通过-客户手续费退回生成</div>
+                    <div class="scene-card-title">场景6：售后审核通过+售后sku客户手续费已分账：客户手续费退回生成</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>客户手续费退回</div>
@@ -1365,7 +1365,7 @@
 
                 <!-- 场景1：支付手续费分账 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景7：售后审核通过（套购订单）-商户支付手续费生成</div>
+                    <div class="scene-card-title">场景7：售后审核通过+订单是套购订单+订单非本次售后的SKU的客户手续费未分账+本次回收了套购优惠：关闭原商户手续费分账单重新生成商户支付手续费分账单</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>商户支付手续费</div>
@@ -1376,7 +1376,7 @@
 
                 <!-- 场景3：类目服务费分账 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景8：售后审核通过（套购订单）-类目服务费生成</div>
+                    <div class="scene-card-title">场景8：售后审核通过+订单是套购订单+订单非本次售后的SKU的客户手续费未分账+本次回收了套购优惠：关闭原类目服务费分账单重新生成类目服务费分账单</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费</div>
@@ -1387,7 +1387,7 @@
 
                     <!-- 场景3：类目服务费分账 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景9：售后审核通过（套购订单）-客户支付手续费生成</div>
+                    <div class="scene-card-title">场景9：售后审核通过+订单是套购订单+订单非本次售后的SKU的客户手续费未分账+本次回收了套购优惠：关闭原客户手续费分账单重新生成客户支付手续费分账单</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>客户支付手续费</div>
@@ -1398,7 +1398,7 @@
 
             <!-- ==================== 状态机说明（新增） ==================== -->
             <div class="state-machine">
-                <h4>图一：支付分账状态机（本期只做正向流程）</h4>
+                <h4>图一：支付分账状态机（上期已做正向，本期做逆向）</h4>
 
                 <!-- 图例 -->
                 <div class="state-legend">
