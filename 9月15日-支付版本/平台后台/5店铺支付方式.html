@@ -304,6 +304,17 @@
             border: 1px solid #fde2e2;
         }
 
+        /* 是否启用标签样式 */
+        .status-badge.enabled {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-badge.disabled {
+            background: #f5f5f5;
+            color: #999;
+        }
+
         /* 异常原因文本样式 */
         .exception-reason {
             color: #f56c6c;
@@ -366,7 +377,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1800px;
+            min-width: 1900px;
         }
 
         thead {
@@ -693,8 +704,10 @@
             width: 90%;
             max-width: 800px;
             max-height: 90vh;
-            overflow-y: auto;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .modal-header {
@@ -703,6 +716,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
+            background: #fff;
         }
 
         .modal-title {
@@ -730,8 +745,12 @@
             color: #333;
         }
 
+        /* 内容区独立滚动 */
         .modal-body {
             padding: 20px;
+            overflow-y: auto;
+            flex: 1 1 auto;
+            min-height: 0;
         }
 
         .modal-footer {
@@ -740,6 +759,8 @@
             display: flex;
             justify-content: flex-end;
             gap: 10px;
+            flex-shrink: 0;
+            background: #fff;
         }
 
         /* 抽屉样式 */
@@ -1129,6 +1150,8 @@
         .dot-inactive { background: #ffa726; }
         .dot-active { background: #66bb6a; }
         .dot-exception { background: #f56c6c; }
+        .dot-enabled { background: #2e7d32; }
+        .dot-disabled { background: #9e9e9e; }
 
         .flow-group {
             margin-bottom: 18px;
@@ -1174,6 +1197,8 @@
         .node-active { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
         .node-start { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
         .node-exception { background: #fef0f0; color: #f56c6c; border: 1px solid #fde2e2; }
+        .node-enabled { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .node-disabled { background: #f5f5f5; color: #999; border: 1px solid #e0e0e0; }
 
         .flow-arrow {
             display: inline-flex;
@@ -1211,6 +1236,50 @@
         .state-tip strong {
             color: #333;
             font-weight: 600;
+        }
+
+        /* 弹窗按钮样式 - 参考 search-btn / search-btn.primary */
+        .modal-btn {
+            height: 32px;
+            padding: 0 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dcdfe6;
+            background: #fff;
+            color: #606266;
+        }
+
+        .modal-btn:hover {
+            color: #667eea;
+            border-color: #667eea;
+        }
+
+        .modal-btn.primary {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+
+        .modal-btn.primary:hover {
+            background: #5568d3;
+            border-color: #5568d3;
+        }
+
+        /* 需求说明中新增的校验说明样式 */
+        .validate-rule-list {
+            margin-top: 8px;
+            padding-left: 18px;
+        }
+
+        .validate-rule-list li {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
         }
     </style>
 </head>
@@ -1300,6 +1369,14 @@
                                     <option value="收货时间" data-page-node-id="UxkCHBgbw1ecv70Do2i3uf">收货时间</option>
                                 </select>
                             </div>
+                            <div class="search-item" data-page-node-id="enabledSearchItem">
+                                <label data-page-node-id="enabledSearchLabel">是否启用</label>
+                                <select class="form-control" id="enabledSearchSelect" data-page-node-id="enabledSearchSelect">
+                                    <option value="" data-page-node-id="enabledAll">全部</option>
+                                    <option value="是" data-page-node-id="enabledYes">是</option>
+                                    <option value="否" data-page-node-id="enabledNo">否</option>
+                                </select>
+                            </div>
                             <div class="search-buttons" data-page-node-id="2W90ULb8jVlGAzjjf2fmGI">
                                 <button class="search-btn primary" data-page-node-id="Y6olZaydcuj1rQpJq7CeUC">搜索</button>
                                 <button class="search-btn" data-page-node-id="VMNfFB86bPptJUhzRtuYH5">重置</button>
@@ -1319,6 +1396,7 @@
                             <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
                             <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
                             <div class="tab-item" data-status="异常" data-page-node-id="tabException">异常</div>
+                            <div class="tab-item" data-status="启用" data-page-node-id="tabEnabled">启用</div>
                         </div>
                    
                     </div>
@@ -1341,7 +1419,8 @@
                             <th data-page-node-id="merchantRefundRateHeader">商户支付退回费率</th>
                             <th data-page-node-id="settlementTimeHeader">分账时点</th>
                             <th data-page-node-id="exceptionHeader">异常原因</th>
-                            <th data-page-node-id="statusHeader">状态</th>
+                            <th data-page-node-id="statusHeader">开通状态</th>
+                            <th data-page-node-id="enabledHeader">是否启用</th>
                             <th width="80" data-page-node-id="e0nnyxQ1fJE5LCj1eIZ6Tm">操作</th>
                         </tr>
                     </thead>
@@ -1363,6 +1442,7 @@
                             <td data-page-node-id="settlementTime1">发货时间+3天</td>
                             <td data-page-node-id="exceptionReason1"><span class="exception-reason empty">—</span></td>
                             <td data-page-node-id="status1"><span class="status-badge active">已开通</span></td>
+                            <td data-page-node-id="enabled1"><span class="status-badge enabled">是</span></td>
                             <td data-page-node-id="xpmVPyWrFAXLSlZL6luIHe"><button class="btn-edit" data-row="1" data-page-node-id="eJztZucsr9zUj5DcjNCEAC">修改</button></td>
                         </tr>
                         <tr data-page-node-id="4bluv6JueHRBJyLprwxMlC">
@@ -1381,7 +1461,8 @@
                             <td data-page-node-id="merchantRefundRate2">0.30%</td>
                             <td data-page-node-id="settlementTime2">收货时间+5天</td>
                             <td data-page-node-id="exceptionReason2"><span class="exception-reason">支付接口超时，请重试</span></td>
-                            <td data-page-node-id="status1"><span class="status-badge active">已开通</span></td>
+                            <td data-page-node-id="status2"><span class="status-badge active">已开通</span></td>
+                            <td data-page-node-id="enabled2"><span class="status-badge enabled">是</span></td>
                             <td data-page-node-id="pEDnWn9QT3ZU0MRTCBurKn"><button class="btn-edit" data-row="2" data-page-node-id="aJeETKaHQLgqOVtUFMVPDa">修改</button></td>
                         </tr>
                         <tr data-page-node-id="8qrWaFjXUbY1ef9WUmDzpL">
@@ -1401,6 +1482,7 @@
                             <td data-page-node-id="settlementTime3">发货时间+7天</td>
                             <td data-page-node-id="exceptionReason3"><span class="exception-reason empty">—</span></td>
                             <td data-page-node-id="status3"><span class="status-badge inactive">未开通</span></td>
+                            <td data-page-node-id="enabled3"><span class="status-badge disabled">否</span></td>
                             <td data-page-node-id="sB04GBmZcM3I6J5xB9BTxs"><button class="btn-edit" data-row="3" data-page-node-id="EXpS9QEVZWpnH0Vf7drEU4">修改</button></td>
                         </tr>
                     </tbody>
@@ -1476,7 +1558,7 @@
         </div>
     </div>
 
-    <!-- 修改分账时点弹窗 -->
+    <!-- 修改分账时点弹窗（含是否启用） - 头部和底部固定，仅内容区滚动 -->
     <div class="modal-overlay" id="batchEditModal" data-page-node-id="5UtgM3GuRE1OeqA0AWFOPD">
         <div class="modal" data-page-node-id="tbQYUkGIooswcEz39UZeS4">
             <div class="modal-header" data-page-node-id="M0aEzOn6I4MsdoFofJJF6L">
@@ -1529,11 +1611,19 @@
                             <span style="margin-left: 10px; color: #333;" data-page-node-id="QSthjlHQ0VulAfjPZ8YRCO">天</span>
                         </div>
                     </div>
+                    <!-- 新增：是否启用 -->
+                    <div class="form-group" style="width: 100%; margin-top: 5px;" data-page-node-id="editEnabledGroup">
+                        <label data-page-node-id="editEnabledLabel">是否启用</label>
+                        <select class="form-control" id="editEnabled" style="width: 200px;" data-page-node-id="editEnabledSelect">
+                            <option value="是" data-page-node-id="editEnabledYes">是</option>
+                            <option value="否" data-page-node-id="editEnabledNo">否</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer" data-page-node-id="T5kLUYcIdWEDISqlfKPwsG">
-                <button class="btn-secondary" id="cancelBatchEdit" data-page-node-id="Y3Qw2lJpq26tpAmHamRWyd">取消</button>
-                <button class="btn-primary" id="saveBatchEdit" data-page-node-id="yXcBh9iZSUt49cbOoi1qLn">保存</button>
+                <button class="modal-btn" id="cancelBatchEdit" data-page-node-id="Y3Qw2lJpq26tpAmHamRWyd">取消</button>
+                <button class="modal-btn primary" id="saveBatchEdit" data-page-node-id="yXcBh9iZSUt49cbOoi1qLn">保存</button>
             </div>
         </div>
     </div>
@@ -1572,6 +1662,15 @@
                             <span style="margin-left: 10px; color: #333;" data-page-node-id="batchDaysUnit">天</span>
                         </div>
                     </div>
+                    <!-- 新增：是否启用（批量） -->
+                    <div class="form-group" style="width: 100%; margin-top: 20px;">
+                        <label data-page-node-id="batchEnabledLabel">是否启用</label>
+                        <select class="form-control" id="batchEnabled" style="width: 200px;" data-page-node-id="batchEnabledSelect">
+                            <option value="">不修改</option>
+                            <option value="是" data-page-node-id="batchEnabledYes">是</option>
+                            <option value="否" data-page-node-id="batchEnabledNo">否</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer" data-page-node-id="batchModalFooter">
@@ -1600,6 +1699,34 @@
                     5、列表中增加「异常原因」列，用于显示接口返回的异常原因。同时列表状态tab增加「异常」筛选，点击后仅显示存在异常原因的支付方式行。<br data-page-node-id="exceptionRequirementDesc">
                     6、异常不是状态机的状态，只是当支付失败时，对应店铺的支付方式会显示「异常原因」，并且该行状态显示为「异常」。支付成功时判断到对应支付方式的异常原因不为空，则删除对应店铺支付方式的异常原因，状态恢复为原状态（已开通/未开通）。<br data-page-node-id="exceptionRequirementDesc2">
                     7、列表增加「商户支付费率」「商户支付退回费率」两列，用于配置商户侧手续费费率与退回费率，修改弹窗与批量修改弹窗均支持修改，留空表示不修改。<br data-page-node-id="merchantRateRequirementDesc">
+                    8、列表表头「开通状态」替代原「状态」，「是否启用」列默认“启用”，筛选tab增加「启用」筛选项，搜索区增加「是否启用」下拉筛选，修改弹窗与批量修改弹窗均支持修改是否启用。
+                </p>
+            </div>
+
+            <!-- 修改分账时点 功能需求说明（新增） -->
+            <div class="note-section" style="background: #f0f7ff; border-left-color: #667eea;" data-page-node-id="editSettlementRequirement">
+                <h4 style="color: #667eea;" data-page-node-id="editSettlementReqTitle">修改分账时点 - 功能需求</h4>
+                <p style="font-size: 13px; color: #555; line-height: 1.8;">
+                    点击列表「修改」按钮，弹出修改分账时点弹窗，支持修改当前行的以下配置：
+                </p>
+                <ul class="validate-rule-list">
+                    <li><strong>客户支付费率：</strong>必填，格式如 0.60% 或 0.6，留空不允许保存。</li>
+                    <li><strong>商户支付费率：</strong>必填，格式如 0.50% 或 0.5。</li>
+                    <li><strong>商户支付退回费率：</strong>必填，格式如 0.30% 或 0.3。</li>
+                    <li><strong>分账时点：</strong>下拉选择「发货时间」或「收货时间」，并填写天数（正整数）。</li>
+                    <li><strong>是否启用：</strong>下拉选择「是」或「否」，默认取当前行的启用状态。</li>
+                </ul>
+                <p style="font-size: 13px; color: #555; line-height: 1.8; margin-top: 10px;">
+                    <strong style="color: #f56c6c;">关键校验规则（前端必须拦截）：</strong>
+                </p>
+                <ul class="validate-rule-list">
+                    <li><strong style="color: #f56c6c;">商户支付退回费率 不能大于 商户支付费率。</strong>若用户填写的退回费率大于支付费率，需弹出提示“商户支付退回费率不能大于商户支付费率”，并阻止保存。</li>
+                    <li>客户支付费率、商户支付费率、商户支付退回费率均需符合费率格式（数字，可带%），否则提示格式错误。</li>
+                    <li>分账天数必须为正整数，否则提示“请输入有效的天数”。</li>
+                    <li>所有校验通过后，点击「保存」更新当前行数据；点击「取消」或右上角关闭按钮关闭弹窗且不保存。</li>
+                </ul>
+                <p style="font-size: 13px; color: #555; line-height: 1.8; margin-top: 10px;">
+                    <strong>批量修改弹窗中的相同字段同样适用以上校验规则</strong>，尤其是“商户支付退回费率不能大于商户支付费率”的校验。
                 </p>
             </div>
 
@@ -1649,13 +1776,13 @@
                 <!-- 说明 -->
                 <div class="state-tip" data-page-node-id="stateTip">
                     <strong data-page-node-id="tipStrong">说明：</strong><br>
-                    ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，客户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
+                    ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，客户支付费率初始化为平台配置的费率值，状态为"未开通"，是否启用默认为“启用”；<br>
                     ② 商户在支付机构开户成功+已法人实名认证成功+已签章成功，状态更新为"已开通"，支持支付交易和修改配置。<br>
                     ③ 异常仅表示支付接口返回了错误，导致对应店铺的支付方式暂时不可用，当支付成功时系统会清除对应的异常原因，状态恢复为“已开通/未开通”的正常状态。
                 </div>
             </div>
 
-            <!-- 字段说明表格 -->
+            <!-- 字段说明表格（增加是否启用说明） -->
             <div class="table-container" data-page-node-id="xV8z5d1MieWLFgc8nhVxD7">
                 <table data-page-node-id="yyPR7mtF0cIYgpWrEzQ1OT">
                     <thead data-page-node-id="JwuYus1jDpiPy1DRO03oHW">
@@ -1734,7 +1861,8 @@
                             <td data-page-node-id="merchantRefundRateFieldValue">
                                 1、商户侧在支付退回（退款）时承担的手续费费率<br data-page-node-id="merchantRefundRateLine1">
                                 2、初始化值为平台分账规则对应支付机构-支付方式的“分账退回”规则设置商户支付费率；可按店铺单独修改<br data-page-node-id="merchantRefundRateLine2">
-                                3、格式示例：0.30%
+                                3、格式示例：0.30%<br data-page-node-id="merchantRefundRateLine3">
+                                4、<strong style="color:#f56c6c;">商户支付退回费率不能大于商户支付费率</strong>
                             </td>
                         </tr>
                         <tr data-page-node-id="whHxqgg88LMPvOUyQJS8Of">
@@ -1755,13 +1883,21 @@
                             </td>
                         </tr>
                         <tr data-page-node-id="4zXN2MGo3eAIQZ2qXREo1B">
-                            <td data-page-node-id="nDcN5aEHqCV20GHLSF54Wh"><strong data-page-node-id="kfKr6nmhGnhhD5d35OEnlV">状态</strong></td>
+                            <td data-page-node-id="nDcN5aEHqCV20GHLSF54Wh"><strong data-page-node-id="kfKr6nmhGnhhD5d35OEnlV">开通状态</strong></td>
                             <td data-page-node-id="S6ffoHhfTt2nMj0vyuNAEk">
                                 1、显示商家在支付机构的扫码产品开通状态<br data-page-node-id="g9FBRfsTkDUcz7JXrxHEvx">
                                 2、可选项：已开通、未开通<br data-page-node-id="4dPyqvkvSj06CV09rb67BK">
                                 3、已开通：商家已完成支付机构扫码产品的开通流程<br data-page-node-id="uFPPgdNSOGC7c2sAyctqUH">
                                 4、未开通：商家尚未完成支付机构扫码产品的开通<br data-page-node-id="exceptionReasonLine3">
                                 5、当存在异常原因时，状态列显示为「异常」（标记态，非状态机正式状态）
+                            </td>
+                        </tr>
+                        <tr data-page-node-id="enabledFieldDesc">
+                            <td data-page-node-id="enabledFieldName"><strong data-page-node-id="enabledFieldStrong">是否启用</strong></td>
+                            <td data-page-node-id="enabledFieldValue">
+                                1、初始值默认为“启用”（是）<br data-page-node-id="enabledLine1">
+                                2、修改时可通过修改弹窗或批量修改弹窗将状态改为“否”<br data-page-node-id="enabledLine2">
+                                3、筛选tab支持「启用」筛选，搜索区支持按是否启用筛选
                             </td>
                         </tr>
                         <tr data-page-node-id="4zXN2MGo3eAIQZ2qXREo1B">
@@ -1807,7 +1943,7 @@
             }
         });
 
-        // 批量修改分账时点
+        // 批量修改分账时点（单个修改）
         const batchEditModal = document.getElementById('batchEditModal');
         const closeBatchEditModal = document.getElementById('closeBatchEditModal');
         const cancelBatchEdit = document.getElementById('cancelBatchEdit');
@@ -1822,9 +1958,17 @@
         const editMerchantRefundRate = document.getElementById('editMerchantRefundRate');
         const editSettlementType = document.getElementById('editSettlementType');
         const editSettlementDays = document.getElementById('editSettlementDays');
+        const editEnabled = document.getElementById('editEnabled');
 
         // 当前编辑的行索引
         let currentEditRow = null;
+
+        // 费率解析辅助函数：将 "0.60%" 转为数字 0.6
+        function parseRate(rateStr) {
+            if (!rateStr) return null;
+            // 去掉百分号并转为浮点数
+            return parseFloat(rateStr.replace('%', '').trim());
+        }
 
         // 编辑按钮点击事件
         document.querySelectorAll('.btn-edit').forEach(btn => {
@@ -1833,7 +1977,7 @@
                 currentEditRow = row;
 
                 // 获取当前行数据（按最新列顺序）
-                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=客户支付费率,9=商户支付费率,10=商户支付退回费率,11=分账时点,12=异常原因,13=状态,14=操作
+                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=客户支付费率,9=商户支付费率,10=商户支付退回费率,11=分账时点,12=异常原因,13=开通状态,14=是否启用,15=操作
                 const cells = row.querySelectorAll('td');
                 const merchantName = cells[2].textContent;
                 const creditCode = cells[3].textContent;
@@ -1844,6 +1988,7 @@
                 const merchantPayRate = cells[9].textContent;
                 const merchantRefundRate = cells[10].textContent;
                 const settlementTime = cells[11].textContent;
+                const enabledText = cells[14].textContent.trim(); // "是" 或 "否"
 
                 // 填充表单
                 editMerchantName.value = merchantName;
@@ -1863,6 +2008,9 @@
                     editSettlementType.value = '收货时间';
                     editSettlementDays.value = settlementTime.replace('收货时间+', '').replace('天', '');
                 }
+
+                // 设置是否启用
+                editEnabled.value = enabledText === '是' ? '是' : '否';
 
                 // 显示弹窗
                 batchEditModal.classList.add('show');
@@ -1885,6 +2033,7 @@
                 const merchantPayRate = editMerchantPayRate.value.trim();
                 const merchantRefundRate = editMerchantRefundRate.value.trim();
                 const days = editSettlementDays.value.trim();
+                const enabledValue = editEnabled.value;
 
                 // 验证费率格式
                 const ratePattern = /^\d+\.?\d*%?$/;
@@ -1912,6 +2061,15 @@
                     return;
                 }
 
+                // 校验：商户支付退回费率不能大于商户支付费率
+                const payRateNum = parseRate(merchantPayRate);
+                const refundRateNum = parseRate(merchantRefundRate);
+                if (payRateNum !== null && refundRateNum !== null && refundRateNum > payRateNum) {
+                    alert('商户支付退回费率不能大于商户支付费率');
+                    editMerchantRefundRate.focus();
+                    return;
+                }
+
                 if (!days || isNaN(days) || parseInt(days) <= 0) {
                     alert('请输入有效的天数');
                     editSettlementDays.focus();
@@ -1925,6 +2083,9 @@
                 cells[10].textContent = merchantRefundRate;
                 const newSettlementTime = editSettlementType.value + '+' + days + '天';
                 cells[11].textContent = newSettlementTime;
+                // 更新是否启用
+                const enabledCell = cells[14];
+                enabledCell.innerHTML = '<span class="status-badge ' + (enabledValue === '是' ? 'enabled' : 'disabled') + '">' + enabledValue + '</span>';
 
                 // 关闭弹窗
                 closeBatchEdit();
@@ -1988,6 +2149,7 @@
             document.getElementById('batchMerchantRefundRate').value = '';
             document.getElementById('batchSettlementType').value = '';
             document.getElementById('batchSettlementDays').value = '';
+            document.getElementById('batchEnabled').value = '';
 
             // 显示弹窗
             batchModal.style.display = 'flex';
@@ -2015,9 +2177,10 @@
             const merchantRefundRate = document.getElementById('batchMerchantRefundRate').value.trim();
             const settlementType = document.getElementById('batchSettlementType').value;
             const settlementDays = document.getElementById('batchSettlementDays').value.trim();
+            const batchEnabledVal = document.getElementById('batchEnabled').value;
 
             // 验证至少有一个字段被填写
-            if (!paymentRate && !merchantPayRate && !merchantRefundRate && !settlementType && !settlementDays) {
+            if (!paymentRate && !merchantPayRate && !merchantRefundRate && !settlementType && !settlementDays && !batchEnabledVal) {
                 alert('请至少填写一个要修改的字段');
                 return;
             }
@@ -2037,6 +2200,17 @@
             if (merchantRefundRate && !ratePattern.test(merchantRefundRate)) {
                 alert('商户支付退回费率格式不正确，请输入如：0.30% 或 0.3');
                 return;
+            }
+
+            // 校验：商户支付退回费率不能大于商户支付费率（批量）
+            // 仅当同时填写了商户支付费率和商户支付退回费率时才校验
+            if (merchantPayRate && merchantRefundRate) {
+                const payRateNum = parseRate(merchantPayRate);
+                const refundRateNum = parseRate(merchantRefundRate);
+                if (payRateNum !== null && refundRateNum !== null && refundRateNum > payRateNum) {
+                    alert('商户支付退回费率不能大于商户支付费率');
+                    return;
+                }
             }
 
             // 验证天数
@@ -2084,6 +2258,12 @@
                         cells[11].textContent = newSettlementTime;
                     }
 
+                    // 更新是否启用
+                    if (batchEnabledVal) {
+                        const enabledCell = cells[14];
+                        enabledCell.innerHTML = '<span class="status-badge ' + (batchEnabledVal === '是' ? 'enabled' : 'disabled') + '">' + batchEnabledVal + '</span>';
+                    }
+
                     updateCount++;
                 }
             });
@@ -2100,7 +2280,7 @@
             updateSelectedCount();
         });
 
-        // 状态tab筛选功能（增强：支持“异常”）
+        // 状态tab筛选功能（增强：支持“异常”、“启用”）
         const tabItems = document.querySelectorAll('.tab-item');
         let currentStatusFilter = '';
 
@@ -2119,8 +2299,9 @@
 
         /**
          * 根据状态筛选表格
-         * @param {string} status - 筛选值（''=全部, '已开通', '未开通', '异常'）
+         * @param {string} status - 筛选值（''=全部, '已开通', '未开通', '异常', '启用'）
          * 异常筛选逻辑：查找异常原因列（索引12）不为空且不为“—”的行
+         * 启用筛选逻辑：查找是否启用列（索引14）文本为“是”的行
          */
         function filterTableByStatus(status) {
             const tableBody = document.querySelector('table tbody');
@@ -2131,12 +2312,15 @@
                 const cells = row.cells;
                 if (!cells) return;
 
-                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=客户支付费率,9=商户支付费率,10=商户支付退回费率,11=分账时点,12=异常原因,13=状态,14=操作
+                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=客户支付费率,9=商户支付费率,10=商户支付退回费率,11=分账时点,12=异常原因,13=开通状态,14=是否启用,15=操作
                 const statusCell = cells[13];
                 const statusText = statusCell ? statusCell.textContent.trim() : '';
 
                 const exceptionCell = cells[12];
                 const exceptionText = exceptionCell ? exceptionCell.textContent.trim() : '';
+
+                const enabledCell = cells[14];
+                const enabledText = enabledCell ? enabledCell.textContent.trim() : '';
 
                 let shouldShow = false;
 
@@ -2146,8 +2330,11 @@
                 } else if (status === '异常') {
                     // 异常：异常原因不为空、不为破折号
                     shouldShow = exceptionText && exceptionText !== '—' && exceptionText !== '';
+                } else if (status === '启用') {
+                    // 启用：是否启用为“是”
+                    shouldShow = enabledText === '是';
                 } else {
-                    // 已开通/未开通：状态匹配
+                    // 已开通/未开通：开通状态匹配
                     shouldShow = statusText === status;
                 }
 
