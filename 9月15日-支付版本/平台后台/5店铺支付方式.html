@@ -297,7 +297,7 @@
             color: #999;
         }
 
-        /* 支付异常标签样式 */
+        /* 异常标签样式 */
         .status-badge.exception {
             background: #fef0f0;
             color: #f56c6c;
@@ -366,7 +366,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1400px;
+            min-width: 1800px;
         }
 
         thead {
@@ -816,14 +816,20 @@
             padding: 20px;
         }
 
-        /* 需求抽屉中的表格样式 */
-        .drawer-body .note-section + .table-container table {
+        /* 需求抽屉中的表格样式 - 修复“元素”列不显示的问题 */
+        .drawer-body .table-container {
+            overflow: visible;
+            padding: 0;
+        }
+
+        .drawer-body .table-container table {
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            min-width: 0;
         }
 
-        .drawer-body .note-section + .table-container thead th {
+        .drawer-body .table-container thead th {
             padding: 12px 16px;
             text-align: left;
             font-weight: 600;
@@ -831,37 +837,48 @@
             border-bottom: 1px solid #e4e7ed;
             font-size: 13px;
             background: #fafafa;
+            position: static;
+            white-space: normal;
         }
 
-        .drawer-body .note-section + .table-container tbody td {
+        .drawer-body .table-container tbody td {
             padding: 11px 16px;
             border-bottom: 1px solid #ebeef5;
             font-size: 13px;
+            position: static;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            max-width: none;
         }
 
-        .drawer-body .note-section + .table-container table th:first-child,
-        .drawer-body .note-section + .table-container table td:first-child {
+        .drawer-body .table-container table th:first-child,
+        .drawer-body .table-container table td:first-child {
             width: 25%;
             font-weight: 600;
+            white-space: normal;
+            overflow: visible;
         }
 
-        .drawer-body .note-section + .table-container table th:last-child,
-        .drawer-body .note-section + .table-container table td:last-child {
+        .drawer-body .table-container table th:last-child,
+        .drawer-body .table-container table td:last-child {
             width: 75%;
+            white-space: normal;
+            overflow: visible;
         }
 
-        /* 修正：需求抽屉内字段说明表格不应用主表格"操作列固定右侧"样式，
-           避免被钉住且超宽的"说明"列遮挡"元素"列 */
-        .drawer-body .note-section + .table-container table thead th:last-child,
-        .drawer-body .note-section + .table-container table tbody td:last-child {
+        /* 覆盖全局 sticky 与截断样式，确保抽屉内表格完全正常显示 */
+        .drawer-body .table-container table thead th:last-child,
+        .drawer-body .table-container table tbody td:last-child {
             position: static;
             right: auto;
             background: transparent;
             z-index: auto;
+            box-shadow: none;
         }
 
         /* 清除排序图标干扰 */
-        .drawer-body .note-section + .table-container table {
+        .drawer-body .table-container table {
             border: none;
         }
 
@@ -917,8 +934,8 @@
             color: #999;
         }
 
-        /* 表格单元格文字截断 */
-        td {
+        /* 表格单元格文字截断（仅主表格生效） */
+        .table-container > table td {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -926,7 +943,7 @@
         }
 
         /* 操作列不截断 */
-        td:last-child {
+        .table-container > table td:last-child {
             max-width: none;
             white-space: normal;
         }
@@ -1301,11 +1318,9 @@
                             <div class="tab-item active" data-status="" data-page-node-id="tabAll">全部</div>
                             <div class="tab-item" data-status="已开通" data-page-node-id="tabActive">已开通</div>
                             <div class="tab-item" data-status="未开通" data-page-node-id="tabInactive">未开通</div>
-                            <div class="tab-item" data-status="支付异常" data-page-node-id="tabException">支付异常</div>
+                            <div class="tab-item" data-status="异常" data-page-node-id="tabException">异常</div>
                         </div>
-                        <div class="batch-action-bar" data-page-node-id="batchActionBar">
-                            <button class="btn-primary" id="batchEditBtn" data-page-node-id="batchEditBtn">批量修改</button>
-                        </div>
+                   
                     </div>
                     <div class="table-container" data-page-node-id="r0B6Vq8iM8IAMX8ZZHuiLg">
                         <table data-page-node-id="uF9mw1ifVqT3uwch4Vcbkt">
@@ -1321,7 +1336,9 @@
                             <th data-page-node-id="u3ZHdCXpPtlqq5B2ACy3FF">店铺名称</th>
                             <th data-page-node-id="vKP7wSuo110vRpwrawjf2G">支付机构</th>
                             <th data-page-node-id="ZrTHmTtK1niIIaxCOSB8Bc">支付方式</th>
-                            <th data-page-node-id="2HnUN1bQWUt0Ptro9SoODN">用户支付费率</th>
+                            <th data-page-node-id="2HnUN1bQWUt0Ptro9SoODN">客户支付费率</th>
+                            <th data-page-node-id="merchantPayRateHeader">商户支付费率</th>
+                            <th data-page-node-id="merchantRefundRateHeader">商户支付退回费率</th>
                             <th data-page-node-id="settlementTimeHeader">分账时点</th>
                             <th data-page-node-id="exceptionHeader">异常原因</th>
                             <th data-page-node-id="statusHeader">状态</th>
@@ -1341,6 +1358,8 @@
                             <td data-page-node-id="EOhHFMJbIfi2eW7nAhsmTC">智付支付</td>
                             <td data-page-node-id="mwhxFZKNxaFcaJfpuPAcii">微信支付</td>
                             <td data-page-node-id="YzEaIcisLVFsASoeYWkGK7">0.60%</td>
+                            <td data-page-node-id="merchantPayRate1">0.50%</td>
+                            <td data-page-node-id="merchantRefundRate1">0.30%</td>
                             <td data-page-node-id="settlementTime1">发货时间+3天</td>
                             <td data-page-node-id="exceptionReason1"><span class="exception-reason empty">—</span></td>
                             <td data-page-node-id="status1"><span class="status-badge active">已开通</span></td>
@@ -1358,6 +1377,8 @@
                             <td data-page-node-id="nqbq8dfEoY54WFm9bF7MqV">智付支付</td>
                             <td data-page-node-id="nG4odYN0BHFSC4Xo21yorG">支付宝</td>
                             <td data-page-node-id="XVILoFI4baAFNBaNuCqIfG">0.60%</td>
+                            <td data-page-node-id="merchantPayRate2">0.50%</td>
+                            <td data-page-node-id="merchantRefundRate2">0.30%</td>
                             <td data-page-node-id="settlementTime2">收货时间+5天</td>
                             <td data-page-node-id="exceptionReason2"><span class="exception-reason">支付接口超时，请重试</span></td>
                             <td data-page-node-id="status1"><span class="status-badge active">已开通</span></td>
@@ -1375,6 +1396,8 @@
                             <td data-page-node-id="71SrHfneQc4q8EQ46LAQnq">智付支付</td>
                             <td data-page-node-id="GMMg4WHZiyKDxM7jttVYxz">微信支付</td>
                             <td data-page-node-id="aBX4CM1oRe3zrIz5kf4M3q">0.60%</td>
+                            <td data-page-node-id="merchantPayRate3">0.50%</td>
+                            <td data-page-node-id="merchantRefundRate3">0.30%</td>
                             <td data-page-node-id="settlementTime3">发货时间+7天</td>
                             <td data-page-node-id="exceptionReason3"><span class="exception-reason empty">—</span></td>
                             <td data-page-node-id="status3"><span class="status-badge inactive">未开通</span></td>
@@ -1478,9 +1501,21 @@
                         <label data-page-node-id="JWYad0N1sM1RBnOzNPPrKs">店铺名称</label>
                         <input type="text" class="form-control" id="editStoreName" readonly data-page-node-id="J5meOAOUMVRWARAimFQ8qk">
                     </div>
+                    <div class="form-group" data-page-node-id="editPayMethodGroup">
+                        <label data-page-node-id="editPayMethodLabel">支付方式</label>
+                        <input type="text" class="form-control" id="editPayMethod" readonly data-page-node-id="editPayMethodInput">
+                    </div>
                     <div class="form-group" style="width: 100%;" data-page-node-id="3MH56qSpTJ9nwEcMUK5VzY">
-                        <label data-page-node-id="GHRvOoOMbnp2U4sIpHTUM4">用户支付费率</label>
+                        <label data-page-node-id="GHRvOoOMbnp2U4sIpHTUM4">客户支付费率</label>
                         <input type="text" class="form-control" id="editPaymentRate" placeholder="请输入费率，如：0.60%" style="width: 200px;" data-page-node-id="lWXzuEjYJ8W0TQoQQJZ9XN">
+                    </div>
+                    <div class="form-group" style="width: 100%;" data-page-node-id="editMerchantPayRateGroup">
+                        <label data-page-node-id="editMerchantPayRateLabel">商户支付费率</label>
+                        <input type="text" class="form-control" id="editMerchantPayRate" placeholder="请输入费率，如：0.50%" style="width: 200px;" data-page-node-id="editMerchantPayRateInput">
+                    </div>
+                    <div class="form-group" style="width: 100%;" data-page-node-id="editMerchantRefundRateGroup">
+                        <label data-page-node-id="editMerchantRefundRateLabel">商户支付退回费率</label>
+                        <input type="text" class="form-control" id="editMerchantRefundRate" placeholder="请输入费率，如：0.30%" style="width: 200px;" data-page-node-id="editMerchantRefundRateInput">
                     </div>
                     <div class="form-group" style="width: 100%;" data-page-node-id="3MH56qSpTJ9nwEcMUK5VzY">
                         <label data-page-node-id="GHRvOoOMbnp2U4sIpHTUM4">分账时点</label>
@@ -1513,8 +1548,16 @@
             <div class="modal-body" data-page-node-id="batchModalBody">
                 <div class="form-section" data-page-node-id="batchFormSection">
                     <div class="form-group" style="width: 100%; margin-bottom: 20px;">
-                        <label data-page-node-id="batchPaymentRateLabel">用户支付费率</label>
+                        <label data-page-node-id="batchPaymentRateLabel">客户支付费率</label>
                         <input type="text" class="form-control" id="batchPaymentRate" placeholder="请输入费率，如：0.60%，留空表示不修改" style="width: 300px;" data-page-node-id="batchPaymentRateInput">
+                    </div>
+                    <div class="form-group" style="width: 100%; margin-bottom: 20px;">
+                        <label data-page-node-id="batchMerchantPayRateLabel">商户支付费率</label>
+                        <input type="text" class="form-control" id="batchMerchantPayRate" placeholder="请输入费率，如：0.50%，留空表示不修改" style="width: 300px;" data-page-node-id="batchMerchantPayRateInput">
+                    </div>
+                    <div class="form-group" style="width: 100%; margin-bottom: 20px;">
+                        <label data-page-node-id="batchMerchantRefundRateLabel">商户支付退回费率</label>
+                        <input type="text" class="form-control" id="batchMerchantRefundRate" placeholder="请输入费率，如：0.30%，留空表示不修改" style="width: 300px;" data-page-node-id="batchMerchantRefundRateInput">
                     </div>
                     <div class="form-group" style="width: 100%;">
                         <label data-page-node-id="batchSettlementLabel">分账时点</label>
@@ -1554,8 +1597,9 @@
                     2、已经支付的订单，按店铺+支付机构+支付方式确定 分账时点，并记录在订单表上，以便生成分账明细<br data-page-node-id="GnyFaWfI1zt0vgknAC2a3Z">
                     3、本页面读取已入驻的店铺，按支付机构+支付方式为店铺生成列表，不支持手工新增<br data-page-node-id="El4U0juX7YBSDgqu4y0v9i">
                     4、提供批量修改分账时点功能，点击操作列的「修改」按钮可修改当前行的分账时点配置，支付费率留空代表不修改。分账时点选择“不修改”代表不修改<br data-page-node-id="z3wPL5FZkOxQW0aTCpMNZG">
-                    5、列表中增加「异常原因」列，用于显示接口返回的支付异常原因。同时列表状态tab增加「支付异常」筛选，点击后仅显示存在异常原因的支付方式行。<br data-page-node-id="exceptionRequirementDesc">
-                    6、支付异常不是状态机的状态，只是当支付失败时，对应店铺的支付方式会显示「异常原因」，并且该行状态显示为「支付异常」。支付成功时判断到对应支付方式的异常原因不为空，则删除对应店铺支付方式的异常原因，状态恢复为原状态（已开通/未开通）。<br data-page-node-id="exceptionRequirementDesc2">
+                    5、列表中增加「异常原因」列，用于显示接口返回的异常原因。同时列表状态tab增加「异常」筛选，点击后仅显示存在异常原因的支付方式行。<br data-page-node-id="exceptionRequirementDesc">
+                    6、异常不是状态机的状态，只是当支付失败时，对应店铺的支付方式会显示「异常原因」，并且该行状态显示为「异常」。支付成功时判断到对应支付方式的异常原因不为空，则删除对应店铺支付方式的异常原因，状态恢复为原状态（已开通/未开通）。<br data-page-node-id="exceptionRequirementDesc2">
+                    7、列表增加「商户支付费率」「商户支付退回费率」两列，用于配置商户侧手续费费率与退回费率，修改弹窗与批量修改弹窗均支持修改，留空表示不修改。<br data-page-node-id="merchantRateRequirementDesc">
                 </p>
             </div>
 
@@ -1575,7 +1619,7 @@
                     </span>
                     <span class="legend-item" data-page-node-id="legendItem3">
                         <i class="legend-dot dot-exception" data-page-node-id="legendDot3"></i>
-                        支付异常（非状态机状态，仅做支付失败标记）
+                        异常（非状态机状态，仅做支付失败标记）
                     </span>
                 </div>
 
@@ -1605,9 +1649,9 @@
                 <!-- 说明 -->
                 <div class="state-tip" data-page-node-id="stateTip">
                     <strong data-page-node-id="tipStrong">说明：</strong><br>
-                    ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，用户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
+                    ① 商户入驻审核通过后，初始化默认分账时点为发货时间+11天，客户支付费率初始化为平台配置的费率值，状态为"未开通"；<br>
                     ② 商户在支付机构开户成功+已法人实名认证成功+已签章成功，状态更新为"已开通"，支持支付交易和修改配置。<br>
-                    ③ 支付异常仅表示支付接口返回了错误，导致对应店铺的支付方式暂时不可用，当支付成功时系统会清除对应的异常原因，状态恢复为“已开通/未开通”的正常状态。
+                    ③ 异常仅表示支付接口返回了错误，导致对应店铺的支付方式暂时不可用，当支付成功时系统会清除对应的异常原因，状态恢复为“已开通/未开通”的正常状态。
                 </div>
             </div>
 
@@ -1669,12 +1713,28 @@
                             </td>
                         </tr>
                         <tr data-page-node-id="whHxqgg88LMPvOUyQJS8Of">
-                            <td data-page-node-id="h158EuDXvFNuBqQHzGF2Fa"><strong data-page-node-id="nuH4nkp3TfM4ag4LNuX5AL">用户支付费率</strong></td>
+                            <td data-page-node-id="h158EuDXvFNuBqQHzGF2Fa"><strong data-page-node-id="nuH4nkp3TfM4ag4LNuX5AL">客户支付费率</strong></td>
                             <td data-page-node-id="ELuxll3Bo6BC2PAb6x2Zwa">
-                                1、初始化值为平台后台-支付机构的支付方式中配置的"用户支付费率"<br data-page-node-id="gNQzHHIQu01ki4CGeCC2DV">
+                                1、初始化值为平台后台-支付机构的支付方式中配置的"客户支付费率"<br data-page-node-id="gNQzHHIQu01ki4CGeCC2DV">
                                 2、可按店铺单独修改费率<br data-page-node-id="QGRyDH63qWbe0biot9HiIk">
-                                3、移动商城下单时，入驻店的支付方式费率按本表格配置的费率进行读取<br data-page-node-id="6m6NrSwr80l0QrCfDoQeTK">
+                                3、移动商城下单时，入驻店的支付方式费率按本表格配置的费率进行读取（支付分账、分账退回都按此费率）<br data-page-node-id="6m6NrSwr80l0QrCfDoQeTK">
                                 4、格式示例：0.60%
+                            </td>
+                        </tr>
+                        <tr data-page-node-id="merchantPayRateFieldDesc">
+                            <td data-page-node-id="merchantPayRateFieldName"><strong data-page-node-id="merchantPayRateFieldStrong">商户支付费率</strong></td>
+                            <td data-page-node-id="merchantPayRateFieldValue">
+                                1、商户侧在支付交易中承担的手续费费率<br data-page-node-id="merchantPayRateLine1">
+                                2、可按店铺单独修改<br data-page-node-id="merchantPayRateLine2">
+                                3、格式示例：0.50%
+                            </td>
+                        </tr>
+                        <tr data-page-node-id="merchantRefundRateFieldDesc">
+                            <td data-page-node-id="merchantRefundRateFieldName"><strong data-page-node-id="merchantRefundRateFieldStrong">商户支付退回费率</strong></td>
+                            <td data-page-node-id="merchantRefundRateFieldValue">
+                                1、商户侧在支付退回（退款）时承担的手续费费率<br data-page-node-id="merchantRefundRateLine1">
+                                2、初始化值为平台分账规则对应支付机构-支付方式的“分账退回”规则设置商户支付费率；可按店铺单独修改<br data-page-node-id="merchantRefundRateLine2">
+                                3、格式示例：0.30%
                             </td>
                         </tr>
                         <tr data-page-node-id="whHxqgg88LMPvOUyQJS8Of">
@@ -1691,7 +1751,7 @@
                             <td data-page-node-id="exceptionReasonFieldValue">
                                 1、显示支付接口返回的具体异常原因<br data-page-node-id="exceptionReasonLine1">
                                 2、支付失败时记录，支付成功后自动清除<br data-page-node-id="exceptionReasonLine2">
-                                3、筛选「支付异常」时仅展示有异常原因的行
+                                3、筛选「异常」时仅展示有异常原因的行
                             </td>
                         </tr>
                         <tr data-page-node-id="4zXN2MGo3eAIQZ2qXREo1B">
@@ -1701,14 +1761,14 @@
                                 2、可选项：已开通、未开通<br data-page-node-id="4dPyqvkvSj06CV09rb67BK">
                                 3、已开通：商家已完成支付机构扫码产品的开通流程<br data-page-node-id="uFPPgdNSOGC7c2sAyctqUH">
                                 4、未开通：商家尚未完成支付机构扫码产品的开通<br data-page-node-id="exceptionReasonLine3">
-                                5、当存在异常原因时，状态列显示为「支付异常」（标记态，非状态机正式状态）
+                                5、当存在异常原因时，状态列显示为「异常」（标记态，非状态机正式状态）
                             </td>
                         </tr>
                         <tr data-page-node-id="4zXN2MGo3eAIQZ2qXREo1B">
                             <td data-page-node-id="nDcN5aEHqCV20GHLSF54Wh"><strong data-page-node-id="kfKr6nmhGnhhD5d35OEnlV">操作</strong></td>
                             <td data-page-node-id="S6ffoHhfTt2nMj0vyuNAEk">
                                 1、提供「修改」按钮，点击后可批量修改当前行的分账时点<br data-page-node-id="g9FBRfsTkDUcz7JXrxHEvx">
-                                2、弹窗中显示当前行的商家名称、信用代码、店铺名称（只读）<br data-page-node-id="4dPyqvkvSj06CV09rb67BK">
+                                2、弹窗中显示当前行的商家名称、信用代码、店铺名称、支付方式（只读）<br data-page-node-id="4dPyqvkvSj06CV09rb67BK">
                                 3、分账时点支持下拉选择「发货时间」或「收货时间」，并输入对应天数<br data-page-node-id="uFPPgdNSOGC7c2sAyctqUH">
                                 4、点击「保存」按钮更新当前行的分账时点配置
                             </td>
@@ -1756,7 +1816,10 @@
         const editCreditCode = document.getElementById('editCreditCode');
         const editMerchantNo = document.getElementById('editMerchantNo');
         const editStoreName = document.getElementById('editStoreName');
+        const editPayMethod = document.getElementById('editPayMethod');
         const editPaymentRate = document.getElementById('editPaymentRate');
+        const editMerchantPayRate = document.getElementById('editMerchantPayRate');
+        const editMerchantRefundRate = document.getElementById('editMerchantRefundRate');
         const editSettlementType = document.getElementById('editSettlementType');
         const editSettlementDays = document.getElementById('editSettlementDays');
 
@@ -1769,21 +1832,28 @@
                 const row = this.closest('tr');
                 currentEditRow = row;
 
-                // 获取当前行数据
+                // 获取当前行数据（按最新列顺序）
+                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=客户支付费率,9=商户支付费率,10=商户支付退回费率,11=分账时点,12=异常原因,13=状态,14=操作
                 const cells = row.querySelectorAll('td');
-                const merchantName = cells[1].textContent;
-                const creditCode = cells[2].textContent;
-                const merchantNo = cells[3].textContent;
-                const storeName = cells[4].textContent;
-                const paymentRate = cells[7].textContent;
-                const settlementTime = cells[8].textContent;
+                const merchantName = cells[2].textContent;
+                const creditCode = cells[3].textContent;
+                const merchantNo = cells[4].textContent;
+                const storeName = cells[5].textContent;
+                const payMethod = cells[7].textContent;
+                const paymentRate = cells[8].textContent;
+                const merchantPayRate = cells[9].textContent;
+                const merchantRefundRate = cells[10].textContent;
+                const settlementTime = cells[11].textContent;
 
                 // 填充表单
                 editMerchantName.value = merchantName;
                 editCreditCode.value = creditCode;
                 editMerchantNo.value = merchantNo;
                 editStoreName.value = storeName;
+                editPayMethod.value = payMethod;
                 editPaymentRate.value = paymentRate;
+                editMerchantPayRate.value = merchantPayRate;
+                editMerchantRefundRate.value = merchantRefundRate;
 
                 // 解析分账时点
                 if (settlementTime.includes('发货时间')) {
@@ -1812,19 +1882,33 @@
         saveBatchEdit.addEventListener('click', function() {
             if (currentEditRow) {
                 const paymentRate = editPaymentRate.value.trim();
+                const merchantPayRate = editMerchantPayRate.value.trim();
+                const merchantRefundRate = editMerchantRefundRate.value.trim();
                 const days = editSettlementDays.value.trim();
 
                 // 验证费率格式
                 const ratePattern = /^\d+\.?\d*%?$/;
                 if (!paymentRate) {
-                    alert('请输入用户支付费率');
+                    alert('请输入客户支付费率');
                     editPaymentRate.focus();
                     return;
                 }
 
                 if (!ratePattern.test(paymentRate)) {
-                    alert('费率格式不正确，请输入如：0.60% 或 0.6');
+                    alert('客户支付费率格式不正确，请输入如：0.60% 或 0.6');
                     editPaymentRate.focus();
+                    return;
+                }
+
+                if (!merchantPayRate || !ratePattern.test(merchantPayRate)) {
+                    alert('商户支付费率格式不正确，请输入如：0.50% 或 0.5');
+                    editMerchantPayRate.focus();
+                    return;
+                }
+
+                if (!merchantRefundRate || !ratePattern.test(merchantRefundRate)) {
+                    alert('商户支付退回费率格式不正确，请输入如：0.30% 或 0.3');
+                    editMerchantRefundRate.focus();
                     return;
                 }
 
@@ -1836,9 +1920,11 @@
 
                 // 更新表格数据
                 const cells = currentEditRow.querySelectorAll('td');
-                cells[7].textContent = paymentRate;
+                cells[8].textContent = paymentRate;
+                cells[9].textContent = merchantPayRate;
+                cells[10].textContent = merchantRefundRate;
                 const newSettlementTime = editSettlementType.value + '+' + days + '天';
-                cells[8].textContent = newSettlementTime;
+                cells[11].textContent = newSettlementTime;
 
                 // 关闭弹窗
                 closeBatchEdit();
@@ -1898,6 +1984,8 @@
 
             // 清空表单
             document.getElementById('batchPaymentRate').value = '';
+            document.getElementById('batchMerchantPayRate').value = '';
+            document.getElementById('batchMerchantRefundRate').value = '';
             document.getElementById('batchSettlementType').value = '';
             document.getElementById('batchSettlementDays').value = '';
 
@@ -1923,22 +2011,32 @@
         // 确认批量修改
         confirmBatchModal.addEventListener('click', function() {
             const paymentRate = document.getElementById('batchPaymentRate').value.trim();
+            const merchantPayRate = document.getElementById('batchMerchantPayRate').value.trim();
+            const merchantRefundRate = document.getElementById('batchMerchantRefundRate').value.trim();
             const settlementType = document.getElementById('batchSettlementType').value;
             const settlementDays = document.getElementById('batchSettlementDays').value.trim();
 
             // 验证至少有一个字段被填写
-            if (!paymentRate && !settlementType && !settlementDays) {
+            if (!paymentRate && !merchantPayRate && !merchantRefundRate && !settlementType && !settlementDays) {
                 alert('请至少填写一个要修改的字段');
                 return;
             }
 
             // 验证费率格式
-            if (paymentRate) {
-                const ratePattern = /^\d+\.?\d*%?$/;
-                if (!ratePattern.test(paymentRate)) {
-                    alert('费率格式不正确，请输入如：0.60% 或 0.6');
-                    return;
-                }
+            const ratePattern = /^\d+\.?\d*%?$/;
+            if (paymentRate && !ratePattern.test(paymentRate)) {
+                alert('客户支付费率格式不正确，请输入如：0.60% 或 0.6');
+                return;
+            }
+
+            if (merchantPayRate && !ratePattern.test(merchantPayRate)) {
+                alert('商户支付费率格式不正确，请输入如：0.50% 或 0.5');
+                return;
+            }
+
+            if (merchantRefundRate && !ratePattern.test(merchantRefundRate)) {
+                alert('商户支付退回费率格式不正确，请输入如：0.30% 或 0.3');
+                return;
             }
 
             // 验证天数
@@ -1958,22 +2056,32 @@
                 if (row) {
                     const cells = row.querySelectorAll('td');
 
-                    // 更新用户支付费率
+                    // 更新客户支付费率
                     if (paymentRate) {
-                        cells[7].textContent = paymentRate;
+                        cells[8].textContent = paymentRate;
+                    }
+
+                    // 更新商户支付费率
+                    if (merchantPayRate) {
+                        cells[9].textContent = merchantPayRate;
+                    }
+
+                    // 更新商户支付退回费率
+                    if (merchantRefundRate) {
+                        cells[10].textContent = merchantRefundRate;
                     }
 
                     // 更新分账时点
                     if (settlementType && settlementDays) {
                         const newSettlementTime = settlementType + '+' + settlementDays + '天';
-                        cells[8].textContent = newSettlementTime;
+                        cells[11].textContent = newSettlementTime;
                     } else if (settlementType) {
                         // 如果只选了时点类型，保持原来的天数
-                        const currentSettlement = cells[8].textContent;
+                        const currentSettlement = cells[11].textContent;
                         const daysMatch = currentSettlement.match(/\+(\d+)天/);
                         const currentDays = daysMatch ? daysMatch[1] : '0';
                         const newSettlementTime = settlementType + '+' + currentDays + '天';
-                        cells[8].textContent = newSettlementTime;
+                        cells[11].textContent = newSettlementTime;
                     }
 
                     updateCount++;
@@ -1992,7 +2100,7 @@
             updateSelectedCount();
         });
 
-        // 状态tab筛选功能（增强：支持“支付异常”）
+        // 状态tab筛选功能（增强：支持“异常”）
         const tabItems = document.querySelectorAll('.tab-item');
         let currentStatusFilter = '';
 
@@ -2011,8 +2119,8 @@
 
         /**
          * 根据状态筛选表格
-         * @param {string} status - 筛选值（''=全部, '已开通', '未开通', '支付异常'）
-         * 支付异常筛选逻辑：查找异常原因列（索引10）不为空且不为“—”的行
+         * @param {string} status - 筛选值（''=全部, '已开通', '未开通', '异常'）
+         * 异常筛选逻辑：查找异常原因列（索引12）不为空且不为“—”的行
          */
         function filterTableByStatus(status) {
             const tableBody = document.querySelector('table tbody');
@@ -2023,12 +2131,11 @@
                 const cells = row.cells;
                 if (!cells) return;
 
-                // 获取状态列和异常原因列的文本
-                const statusCell = cells[11]; // 状态列索引（0开始：序号0? 注意列顺序）
-                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=用户支付费率,9=分账时点,10=异常原因,11=状态,12=操作
+                // 列索引：0=复选框,1=序号,2=商家名称,3=信用代码,4=商户号,5=店铺名称,6=支付机构,7=支付方式,8=客户支付费率,9=商户支付费率,10=商户支付退回费率,11=分账时点,12=异常原因,13=状态,14=操作
+                const statusCell = cells[13];
                 const statusText = statusCell ? statusCell.textContent.trim() : '';
 
-                const exceptionCell = cells[10];
+                const exceptionCell = cells[12];
                 const exceptionText = exceptionCell ? exceptionCell.textContent.trim() : '';
 
                 let shouldShow = false;
@@ -2036,8 +2143,8 @@
                 if (!status) {
                     // 全部
                     shouldShow = true;
-                } else if (status === '支付异常') {
-                    // 支付异常：异常原因不为空、不为破折号
+                } else if (status === '异常') {
+                    // 异常：异常原因不为空、不为破折号
                     shouldShow = exceptionText && exceptionText !== '—' && exceptionText !== '';
                 } else {
                     // 已开通/未开通：状态匹配
@@ -2047,13 +2154,6 @@
                 row.style.display = shouldShow ? '' : 'none';
             });
         }
-
-        // 初始化：确保表格状态（默认全部显示）
-        // 注意：为了确保“支付异常”标签行显示为“支付异常”，但这里已开通行状态是“已开通”，可正常筛选
-        // 对于支付异常行，状态已经是“支付异常”，但筛选“已开通”时不应显示它，符合预期。
-        // 但需要注意：如果状态列为“支付异常”，筛选“已开通”时不会显示。这符合需求（支付异常是独立筛选）。
-        // 初始化修正：确保操作列固定样式使用:last-child，操作列现在是最后一列
-        // 不需要额外调整。
     </script>
 </body>
 </html>
