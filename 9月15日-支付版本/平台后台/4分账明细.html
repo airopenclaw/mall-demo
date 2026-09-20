@@ -1314,7 +1314,7 @@
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费</div>
                         <div><span class="scene-card-label">款项金额：</span>− (订单SKU实付金额 × SKU的对应类目的服务费率)</div>
-                        <div><span class="scene-card-label">备注：</span>类目服务费，是下单时订单按当时SKU对应类目记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div><span class="scene-card-label">备注：</span>类目服务费，是下单时订单按当时SKU对应类目记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
 
@@ -1325,7 +1325,7 @@
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>客户支付手续费</div>
                         <div><span class="scene-card-label">款项金额：</span>− (订单SKU实付金额 × 客户支付手续费)</div>
-                        <div><span class="scene-card-label">备注：</span>客户支付手续费，是下单时按店铺支付方式记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div><span class="scene-card-label">备注：</span>客户支付手续费，是下单时按店铺支付方式记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
 
@@ -1336,7 +1336,7 @@
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>商户支付手续费退回单</div>
                         <div><span class="scene-card-label">款项金额：</span>分账退回商户支付手续费 × 售后单实际退款金额</div>
-                        <div><span class="scene-card-label">备注：</span>款项金额=0时不生成，分账退回商户支付手续费是销售单支付成功时按当时分账退回规则记录的费率，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div><span class="scene-card-label">备注：</span>款项金额=0时不生成，分账退回商户支付手续费是销售单支付成功时按当时分账退回规则记录的费率，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
 
@@ -1347,7 +1347,7 @@
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费退回</div>
                         <div><span class="scene-card-label">款项金额：</span>售后单SKU类目退回费率 × 售后单实际退款金额</div>
-                        <div><span class="scene-card-label">备注：</span>款项金额=0时不生成，SKU类目退回费率是下单时销售单记录的SKU类目的退回费率，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div><span class="scene-card-label">备注：</span>款项金额=0时不生成，SKU类目退回费率是下单时销售单记录的SKU类目的退回费率，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
 
@@ -1358,7 +1358,7 @@
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>客户手续费退回</div>
                         <div><span class="scene-card-label">款项金额：</span>订单原客户手续费 × 售后单实退金额</div>
-                        <div class="scene-card-note">注：属于平台账户分账退回给商家账户，退回成功后生成流水，金额为0不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div class="scene-card-note">注：属于平台账户分账退回给商家账户，退回成功后生成流水，金额为0不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
             </div>
@@ -1370,7 +1370,7 @@
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>商户支付手续费</div>
                         <div><span class="scene-card-label">款项金额：</span>− （订单SKU实付金额+套购优惠回收金额）× 商户支付手续费率)</div>
-                        <div><span class="scene-card-label">备注：</span>需要对未退的商品重新生成，商户支付手续费率是下单时订单按当时的分账规则记录的支付费率，款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"，</div>
+                        <div><span class="scene-card-label">备注：</span>需要对未退的商品重新生成，商户支付手续费率是下单时订单按当时的分账规则记录的支付费率，款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率，</div>
                     </div>
                 </div>
 
@@ -1381,7 +1381,7 @@
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费</div>
                         <div><span class="scene-card-label">款项金额：</span>− (（订单SKU实付金额+套购优惠回收金额） × SKU的对应类目的服务费率)</div>
-                        <div><span class="scene-card-label">备注：</span>需要对未退的商品重新生成，类目服务费，是下单时订单按当时SKU对应类目记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div><span class="scene-card-label">备注：</span>需要对未退的商品重新生成，类目服务费，是下单时订单按当时SKU对应类目记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
 
@@ -1392,7 +1392,7 @@
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>客户支付手续费</div>
                         <div><span class="scene-card-label">款项金额：</span>− 订单SKU实付金额+套购优惠回收金额）× 客户支付手续费)</div>
-                        <div><span class="scene-card-label">备注：</span>需要对未退的商品重新生成，客户支付手续费，是下单时按店铺支付方式记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"</div>
+                        <div><span class="scene-card-label">备注：</span>需要对未退的商品重新生成，客户支付手续费，是下单时按店铺支付方式记录的费率。款项金额=0时不生成，分账明细生成时时,如果费率为空时,生成的单 据状态为"分账异常"；定时任务处理时重新取最新的费率更新订单记录的分账规则并更新分账明细的费率</div>
                     </div>
                 </div>
 
