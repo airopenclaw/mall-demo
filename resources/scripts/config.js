@@ -1,4 +1,4 @@
-// 页面数据配置 - 自动生成于 2026/9/21 09:31:55
+// 页面数据配置 - 自动生成于 2026/9/21 10:38:52
 // 由 scan_html.js 生成，结构与 server.js /api/config 一致
 // 重新生成: node scan_html.js
 
@@ -59,6 +59,10 @@ const defaultPageConfig = {
                         {
                             "name": "分账规则",
                             "file": "9月1日-设置版本/平台后台/分账规则.html"
+                        },
+                        {
+                            "name": "支付机构",
+                            "file": "9月1日-设置版本/平台后台/支付机构.html"
                         },
                         {
                             "name": "类目服务费",

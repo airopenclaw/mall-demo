@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付机构</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        /* 顶部菜单栏 */
+        .top-menu {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .top-menu-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 20px;
+            border-right: 1px solid #e0e0e0;
+            margin-right: 0;
+            white-space: nowrap;
+            width: 187px;
+            flex-shrink: 0;
+        }
+
+        .top-menu-left {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .top-menu-item {
+            padding: 0 15px;
+            height: 50px;
+            line-height: 50px;
+            cursor: default;
+            color: #666;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .top-menu-item:hover {
+            color: #333;
+        }
+
+        .top-menu-item.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .top-menu-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #667eea;
+        }
+
+        .top-menu-right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-text {
+            background: transparent;
+            border: 1px solid #667eea;
+            color: #667eea;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-text:hover {
+            background: #667eea;
+            color: #fff;
+        }
+
+        /* 主体布局 */
+        .main-container {
+            display: flex;
+            margin-top: 50px;
+            min-height: calc(100vh - 50px);
+        }
+
+        /* 左侧菜单 */
+        .left-sidebar {
+            width: 187px;
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+
+        .menu-level-1 {
+            margin-bottom: 5px;
+        }
+
+        .menu-level-1-header {
+            padding: 10px 20px;
+            cursor: default;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .menu-level-1-header::after {
+            content: '▼';
+            font-size: 10px;
+            color: #999;
+        }
+
+        .menu-level-2 {
+            padding-left: 0;
+        }
+
+        .menu-level-2-item {
+            padding: 8px 20px 8px 40px;
+            cursor: default;
+            color: #666;
+        }
+
+        .menu-level-2-item:hover {
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .menu-level-2-item.active {
+            color: #667eea;
+            background: #f0f4ff;
+            font-weight: 500;
+        }
+
+        /* 右侧内容区 */
+        .content-area {
+            flex: 1;
+            background: #f0f2f5;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid #ebeef5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 0;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 0;
+            padding: 0 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #fafafa;
+        }
+
+        thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #606266;
+            border-bottom: 1px solid #e4e7ed;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0 14px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            background: #207FE9;
+            color: #fff;
+        }
+
+        .btn-link {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 说明区域 */
+        .notice-list {
+            padding: 12px 20px 0 20px;
+            color: #333;
+            font-size: 13px;
+            line-height: 1.8;
+            list-style: none;
+        }
+
+        .notice-list li {
+            margin-bottom: 6px;
+        }
+
+        /* 支付方式表格样式 */
+        .pay-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #fff;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .pay-table th {
+            background: #f7f8fa;
+            color: #1f2d3d;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e4e7ed;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .pay-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ebeef5;
+            vertical-align: middle;
+            background: #fff;
+        }
+
+        .pay-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* 支付方式文字 */
+        .pay-method-text {
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* 开关样式 (模拟) */
+        .switch-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #606266;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background: #dcdfe6;
+            border-radius: 20px;
+            transition: background 0.2s;
+            cursor: default;
+            flex-shrink: 0;
+        }
+
+        .switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .switch.on {
+            background: #207FE9;
+        }
+
+        .switch.on::after {
+            transform: translateX(20px);
+        }
+
+        .switch-label {
+            color: #606266;
+            font-size: 13px;
+        }
+
+        .switch-label.active {
+            color: #207FE9;
+            font-weight: 500;
+        }
+
+        /* 费率输入框 */
+        .rate-input {
+            width: 100%;
+            max-width: 160px;
+            height: 32px;
+            padding: 0 8px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .rate-input:focus {
+            border-color: #207FE9;
+        }
+
+        /* Logo 列样式 */
+        .logo-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-preview {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid #e4e7ed;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-preview .logo-placeholder {
+            font-size: 11px;
+            color: #c0c4cc;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .logo-upload-link {
+            color: #207FE9;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .logo-upload-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 列表底部保存按钮区域 */
+        .table-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 20px 24px 20px;
+            border-top: 1px solid #ebeef5;
+        }
+
+        .btn-save {
+            min-width: 120px;
+            height: 36px;
+            padding: 0 24px;
+            background: #207FE9;
+            color: #fff;
+            border: 1px solid #207FE9;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save:hover {
+            background: #1a6fd1;
+            border-color: #1a6fd1;
+        }
+
+        .btn-save:active {
+            background: #1660b5;
+            border-color: #1660b5;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 8px;
+            width: 420px;
+            max-width: 90vw;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            animation: modalIn 0.2s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #ebeef5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 4px;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-desc {
+            background: #f4f8ff;
+            border: 1px solid #d9e6ff;
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 12px;
+            color: #4b6a9b;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .modal-desc strong {
+            color: #207FE9;
+        }
+
+        .upload-area {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            padding: 24px 16px;
+            text-align: center;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            border-color: #207FE9;
+            background: #f0f6ff;
+        }
+
+        .upload-area .upload-icon {
+            font-size: 28px;
+            color: #c0c4cc;
+            margin-bottom: 6px;
+        }
+
+        .upload-area .upload-text {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .upload-area .upload-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .upload-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid #ebeef5;
+            border-radius: 6px;
+            margin-top: 12px;
+            background: #fff;
+        }
+
+        .upload-preview.show {
+            display: flex;
+        }
+
+        .upload-preview img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 4px;
+            border: 1px solid #ebeef5;
+        }
+
+        .upload-preview .file-info {
+            flex: 1;
+            font-size: 12px;
+            color: #666;
+            overflow: hidden;
+        }
+
+        .upload-preview .file-info .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .modal-footer {
+            padding: 12px 20px 18px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            color: #606266;
+            padding: 7px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            color: #207FE9;
+            border-color: #207FE9;
+        }
+
+        .btn-primary {
+            background: #207FE9;
+            border: 1px solid #207FE9;
+            color: #fff;
+            padding: 7px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #1a6fd1;
+            border-color: #1a6fd1;
+        }
+
+        .btn-primary:disabled {
+            background: #a0cfff;
+            border-color: #a0cfff;
+            cursor: not-allowed;
+        }
+
+        /* 保存成功提示 */
+        .toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #f0f9eb;
+            color: #67c23a;
+            border: 1px solid #e1f3d8;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* 页面标题（智付支付 显示在标题位置） */
+        .page-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #207FE9;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #207FE9;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e4e7ed;
+            margin: 8px 0 16px 0;
+        }
+
+        .card-body .inner-pad {
+            padding: 16px 20px 20px 20px;
+        }
+
+        /* ===== 需求抽屉样式 ===== */
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .drawer-overlay.show {
+            display: block;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .drawer.show {
+            right: 0;
+        }
+
+        .drawer-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1;
+        }
+
+        .drawer-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .drawer-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-close:hover {
+            color: #333;
+        }
+
+        .drawer-body {
+            padding: 20px;
+        }
+
+        /* 需求说明（黄色提示块） */
+        .note-section {
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff9e6;
+            border-left: 4px solid #ffa726;
+        }
+
+        .note-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f57c00;
+        }
+
+        .note-section p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 抽屉内的表格样式 */
+        .drawer-body .table-container {
+            padding: 0;
+        }
+
+        .drawer-body table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .drawer-body thead th {
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #606266;
+            background: #fafafa;
+            border-bottom: 1px solid #e4e7ed;
+            font-size: 13px;
+        }
+
+        .drawer-body td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ebeef5;
+            font-size: 13px;
+            vertical-align: top;
+            line-height: 1.8;
+        }
+
+        .drawer-body td strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部菜单栏 -->
+    <div class="top-menu">
+        <div class="top-menu-title">平台后台</div>
+        <div class="top-menu-item">运营</div>
+        <div class="top-menu-item">商品</div>
+        <div class="top-menu-item">订单</div>
+        <div class="top-menu-item">客户</div>
+        <div class="top-menu-item">plus客户</div>
+        <div class="top-menu-item">营销</div>
+        <div class="top-menu-item">装修</div>
+        <div class="top-menu-item">店铺</div>
+        <div class="top-menu-item">财务</div>
+        <div class="top-menu-item">风控</div>
+        <div class="top-menu-item active">入驻</div>
+        <div class="top-menu-item">设置</div>
+        <div class="top-menu-right">
+            <button class="btn-text" id="viewRequirementBtn">查看需求</button>
+        </div>
+    </div>
+
+    <!-- 主体容器 -->
+    <div class="main-container">
+        <!-- 左侧菜单：选中「支付机构」 -->
+        <div class="left-sidebar">
+            <div class="menu-level-1">
+                <div class="menu-level-1-header">分账设置</div>
+                <div class="menu-level-2">
+                    <div class="menu-level-2-item active">支付机构</div>
+                    <div class="menu-level-2-item">分账规则</div>
+                    <div class="menu-level-2-item">类目服务费</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧内容区 -->
+        <div class="content-area">
+            <!-- 支付机构卡片 -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="inner-pad">
+                        <!-- 智付支付（原支付机构标题位置） -->
+                        <div class="page-section-title">智付支付</div>
+                        <div class="divider"></div>
+
+                        <!-- 说明文字 -->
+                        <ul class="notice-list" style="padding:0 0 8px 0;">
+                            <li>1、请设置支付机构收取平台的支付手续费费率，不能设置多也不能少</li>
+                            <li>2、入驻店铺默认显示已开启的支付方式</li>
+                            <li>3、客户支付手续费=订单实付金额*客户支付费率</li>
+                        </ul>
+
+                        <!-- 支付方式列表（含 Logo 列） -->
+                        <div class="table-container" style="padding:0; margin-top:12px;">
+                            <table class="pay-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:14%;">支付方式</th>
+                                        <th style="width:20%;">Logo</th>
+                                        <th style="width:20%;">是否启用</th>
+                                        <th style="width:22%;">支付费率成本%</th>
+                                        <th style="width:24%;">客户支付费率%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 支付宝 -->
+                                    <tr>
+                                        <td>
+                                            <span class="pay-method-text">支付宝</span>
+                                        </td>
+                                        <td>
+                                            <div class="logo-cell" data-method="支付宝">
+                                                <div class="logo-preview">
+                                                    <span class="logo-placeholder">暂无<br>Logo</span>
+                                                </div>
+                                                <a class="logo-upload-link" onclick="openUploadModal('支付宝', this)">上传</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="switch-wrap">
+                                                <span class="switch-label">关闭</span>
+                                                <span class="switch on" role="switch" aria-checked="true"></span>
+                                                <span class="switch-label active">开启</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input class="rate-input" type="text" value="0.00" placeholder="0.00">
+                                        </td>
+                                        <td>
+                                            <input class="rate-input" type="text" value="0.00" placeholder="0.00">
+                                        </td>
+                                    </tr>
+                                    <!-- 微信 -->
+                                    <tr>
+                                        <td>
+                                            <span class="pay-method-text">微信</span>
+                                        </td>
+                                        <td>
+                                            <div class="logo-cell" data-method="微信">
+                                                <div class="logo-preview">
+                                                    <span class="logo-placeholder">暂无<br>Logo</span>
+                                                </div>
+                                                <a class="logo-upload-link" onclick="openUploadModal('微信', this)">上传</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="switch-wrap">
+                                                <span class="switch-label">关闭</span>
+                                                <span class="switch on" role="switch" aria-checked="true"></span>
+                                                <span class="switch-label active">开启</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input class="rate-input" type="text" value="1999999.00" placeholder="0.00">
+                                        </td>
+                                        <td>
+                                            <input class="rate-input" type="text" value="2222222.11" placeholder="0.00">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 列表底部保存按钮 -->
+                        <div class="table-footer">
+                            <button class="btn-save" onclick="saveAllSettings()">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传 Logo 弹窗 -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">上传 <span id="modalMethodName" style="color:#207FE9;"></span>Logo</div>
+                <button class="modal-close" onclick="closeUploadModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- 功能说明 -->
+                <div class="modal-desc">
+                    1. 上传的 Logo 用于商城支付展示；<br>
+                    2. 请上传 <strong>PNG / JPG </strong> 格式，尺寸为 <strong>200×200px</strong>； <br>
+                    3. logo 大小不超过 <strong>500k</strong>。<br>
+
+                </div>
+
+                <!-- 上传区域 -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">＋</div>
+                    <div class="upload-text">点击或拖拽文件到此处上传</div>
+                    <div class="upload-hint">支持 PNG / JPG ，最大 500k</div>
+                    <input type="file" id="logoFileInput" accept="image/png,image/jpeg,image/svg+xml" onchange="handleFileSelect(event)">
+                </div>
+
+                <!-- 预览区域 -->
+                <div class="upload-preview" id="uploadPreview">
+                    <img id="previewImg" src="" alt="预览">
+                    <div class="file-info">
+                        <div class="file-name" id="fileName"></div>
+                        <div style="color:#999;font-size:11px;" id="fileSize"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeUploadModal()">取消</button>
+                <button class="btn-primary" id="saveLogoBtn" disabled onclick="saveLogo()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 需求抽屉 -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer" id="requirementDrawer">
+        <div class="drawer-header">
+            <h2 class="drawer-title">功能说明</h2>
+            <button class="drawer-close" id="drawerClose">&times;</button>
+        </div>
+        <div class="drawer-body">
+
+            <!-- 需求说明（黄色提示块） -->
+            <div class="note-section">
+                <h4>需求</h4>
+                <p>
+                    1、本功能用于配置支付机构下的支付方式（如支付宝、微信），支持设置启用状态、支付费率及 Logo<br>
+                    2、支付费率成本%：支付机构收取平台的支付手续费费率，必填<br>
+                    3、客户支付费率%：向客户收取的支付费率，客户支付手续费=订单实付金额*客户支付费率<br>
+                    4、Logo：用于在支付方式列表中区分不同支付渠道，点击上传后立即生效
+                </p>
+            </div>
+
+            <!-- 字段说明表格 -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:30%;">元素</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>支付方式</strong></td>
+                            <td>
+                                1、展示当前支付机构（智付支付）下已接入的支付方式，如支付宝、微信等<br>
+                                2、不可编辑，由系统根据支付机构接入情况自动展示
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logo</strong></td>
+                            <td>
+                                1、用于商城支付方式的显示<br>
+                                2、点击“上传”打开弹窗，支持 PNG / JPG 格式，最大 500k<br>
+                                3、上传成功后列表同步更新，再次点击可“更换”Logo
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>是否启用</strong></td>
+                            <td>
+                                1、控制该支付方式在入驻店铺端是否默认显示<br>
+                                2、开启后，店铺入驻时默认显示该支付方式；关闭则不显示
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>支付费率成本%</strong></td>
+                            <td>
+                                1、支付机构收取平台的支付手续费费率<br>
+                                2、必填，不能设置多也不能少
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>客户支付费率%</strong></td>
+                            <td>
+                                1、向客户收取的支付费率<br>
+                                2、客户支付手续费 = 订单实付金额 × 客户支付费率
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>保存</strong></td>
+                            <td>
+                                1、位于列表底部，点击后保存当前页面所有支付方式的配置（启用状态、费率、Logo 等）<br>
+                                2、Logo 上传后立即生效，无需额外保存操作
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 保存成功提示 -->
+    <div class="toast" id="toast">操作成功</div>
+
+    <script>
+        /* ==================== 支付机构页逻辑 ==================== */
+        let currentMethod = '';
+        let currentLogoCell = null;
+        let selectedFile = null;
+
+        // 打开上传弹窗
+        function openUploadModal(method, linkEl) {
+            currentMethod = method;
+            currentLogoCell = linkEl.closest('.logo-cell');
+            selectedFile = null;
+
+            document.getElementById('modalMethodName').textContent = method;
+            document.getElementById('logoFileInput').value = '';
+            document.getElementById('uploadPreview').classList.remove('show');
+            document.getElementById('previewImg').src = '';
+            document.getElementById('fileName').textContent = '';
+            document.getElementById('fileSize').textContent = '';
+            document.getElementById('saveLogoBtn').disabled = true;
+
+            document.getElementById('uploadModal').classList.add('show');
+        }
+
+        // 关闭上传弹窗
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('show');
+            currentMethod = '';
+            currentLogoCell = null;
+            selectedFile = null;
+        }
+
+        // 文件选择
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['image/png', 'image/jpeg', 'image/svg+xml'];
+            if (!validTypes.includes(file.type)) {
+                alert('请上传 PNG / JPG 格式的图片');
+                event.target.value = '';
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                alert('图片大小不能超过 500k');
+                event.target.value = '';
+                return;
+            }
+
+            selectedFile = file;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+                document.getElementById('uploadPreview').classList.add('show');
+                document.getElementById('saveLogoBtn').disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 保存 Logo
+        function saveLogo() {
+            if (!selectedFile || !currentLogoCell) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewBox = currentLogoCell.querySelector('.logo-preview');
+                previewBox.innerHTML = '<img src="' + e.target.result + '" alt="logo">';
+
+                const link = currentLogoCell.querySelector('.logo-upload-link');
+                link.textContent = '更换';
+
+                closeUploadModal();
+                showToast('Logo 上传成功');
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+
+        // 整表保存
+        function saveAllSettings() {
+            showToast('设置保存成功');
+        }
+
+        // Toast 提示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // 点击遮罩关闭上传弹窗
+        document.getElementById('uploadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUploadModal();
+            }
+        });
+
+        /* ==================== 需求抽屉逻辑 ==================== */
+        const viewRequirementBtn = document.getElementById('viewRequirementBtn');
+        const requirementDrawer = document.getElementById('requirementDrawer');
+        const drawerClose = document.getElementById('drawerClose');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+
+        // 打开抽屉
+        viewRequirementBtn.addEventListener('click', function() {
+            requirementDrawer.classList.add('show');
+            drawerOverlay.classList.add('show');
+        });
+
+        // 关闭抽屉
+        function closeDrawerFunc() {
+            requirementDrawer.classList.remove('show');
+            drawerOverlay.classList.remove('show');
+        }
+
+        drawerClose.addEventListener('click', closeDrawerFunc);
+
+        // 点击遮罩层关闭抽屉
+        drawerOverlay.addEventListener('click', function(e) {
+            if (e.target === drawerOverlay) {
+                closeDrawerFunc();
+            }
+        });
+    </script>
+</body>
+</html>
