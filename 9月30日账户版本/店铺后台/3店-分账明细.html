@@ -19,12 +19,13 @@
             line-height: 1.6;
         }
 
-        /* 顶部菜单栏 */
-        .top-menu {
+        /* ===== 顶部栏 ===== */
+        .top-bar {
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 20px;
             height: 50px;
             position: fixed;
@@ -34,57 +35,62 @@
             z-index: 100;
         }
 
-        .top-menu-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            padding: 0 20px;
-            border-right: 1px solid #e0e0e0;
-            margin-right: 0;
-            white-space: nowrap;
-            width: 180px;
-            flex-shrink: 0;
-        }
-
-        .top-menu-left {
+        .top-bar-left {
             display: flex;
             align-items: center;
             flex-shrink: 0;
         }
 
-        .top-menu-item {
+        .top-bar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             padding: 0 15px;
             height: 50px;
             line-height: 50px;
             cursor: default;
             color: #666;
-            position: relative;
+            font-size: 12px;
             white-space: nowrap;
         }
 
-        .top-menu-item:hover {
+        .top-bar-item:hover {
             color: #333;
         }
 
-        .top-menu-item.active {
+        .top-bar-item.active {
             color: #667eea;
             font-weight: 600;
         }
 
-        .top-menu-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #667eea;
+        .top-bar-item .icon {
+            font-size: 14px;
         }
 
-        .top-menu-right {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
+        .top-bar-divider {
+            width: 1px;
+            height: 24px;
+            background: #e0e0e0;
+            margin: 0 8px;
+        }
+
+        .top-bar-user {
+            font-weight: 500;
+            color: #333;
         }
 
         .btn-text {
@@ -96,6 +102,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
+            margin-left: 10px;
         }
 
         .btn-text:hover {
@@ -110,7 +117,7 @@
             min-height: calc(100vh - 50px);
         }
 
-        /* 左侧菜单 */
+        /* ===== 左侧菜单 ===== */
         .left-sidebar {
             width: 200px;
             background: #fff;
@@ -265,7 +272,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1200px;
+            min-width: 1000px;
         }
 
         thead {
@@ -290,6 +297,18 @@
 
         tbody tr:hover {
             background: #f9f9f9;
+        }
+
+        /* 状态列：加宽并禁止换行 */
+        .col-status {
+            min-width: 110px;
+            white-space: nowrap;
+        }
+
+        /* 款项类型列：加宽并禁止换行 */
+        .col-payment-type {
+            min-width: 160px;
+            white-space: nowrap;
         }
 
         .form-section {
@@ -668,14 +687,17 @@
             padding: 20px;
         }
 
-        /* 状态tab筛选 */
+        /* ===== 状态tab筛选 ===== */
         .tab-filter {
             display: flex;
+            align-items: center;
             gap: 20px;
-            padding: 14px 20px;
+            padding: 0 20px;
+            height: 56px;
             border-bottom: 1px solid #e4e7ed;
             margin-bottom: 0;
             margin-top: -20px;
+            position: relative;
         }
 
         .tab-item {
@@ -688,42 +710,22 @@
             height: 24px;
             line-height: 24px;
         }
-
-        .tab-item:hover {
-            color: #667eea;
-        }
-
-        .tab-item.active {
-            color: #667eea;
-            font-weight: 600;
-        }
+        .tab-item:hover { color: #667eea; }
+        .tab-item.active { color: #667eea; font-weight: 600; }
 
         .tab-item.active::after {
             content: '';
             position: absolute;
-            bottom: -13px;
             left: 0;
             right: 0;
+            bottom: -16px;
             height: 2px;
             background: #667eea;
+            transform: translateY(50%);
         }
 
-        /* 操作列样式 */
-        .action-column {
-            position: sticky;
-            right: 0;
-            background: #fff;
-            z-index: 10;
-            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .action-column td {
-            background: #fff;
-        }
-
-        .action-column:hover td {
-            background: #f9f9f9;
-        }
+        .tab-filter + .table-container { margin-top: 16px; }
+        .card-body .table-container:first-of-type { padding-top: 0; }
 
         /* ===== 场景与资金计算 ===== */
         .scene-section {
@@ -860,21 +862,10 @@
             border-radius: 50%;
         }
 
-        .dot-pending {
-            background: #f59e0b;
-        }
-
-        .dot-success {
-            background: #10b981;
-        }
-
-        .dot-failed {
-            background: #ef4444;
-        }
-
-        .dot-closed {
-            background: #9ca3af;
-        }
+        .dot-pending { background: #f59e0b; }
+        .dot-success { background: #10b981; }
+        .dot-failed  { background: #ef4444; }
+        .dot-closed  { background: #9ca3af; }
 
         .flow-group {
             margin-bottom: 18px;
@@ -917,35 +908,11 @@
             border: 1px solid transparent;
         }
 
-        .node-start {
-            background: #eef2ff;
-            color: #4f46e5;
-            border-color: #c7d2fe;
-        }
-
-        .node-pending {
-            background: #fffbeb;
-            color: #b45309;
-            border-color: #fde68a;
-        }
-
-        .node-success {
-            background: #ecfdf5;
-            color: #047857;
-            border-color: #a7f3d0;
-        }
-
-        .node-failed {
-            background: #fef2f2;
-            color: #b91c1c;
-            border-color: #fecaca;
-        }
-
-        .node-closed {
-            background: #f3f4f6;
-            color: #4b5563;
-            border-color: #d1d5db;
-        }
+        .node-start   { background: #eef2ff; color: #4f46e5; border-color: #c7d2fe; }
+        .node-pending { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+        .node-success { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .node-failed  { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+        .node-closed  { background: #f3f4f6; color: #4b5563; border-color: #d1d5db; }
 
         .flow-arrow {
             display: inline-flex;
@@ -1006,7 +973,6 @@
             font-size: 12.5px;
         }
 
-        /* 需求弹窗元素表：加宽第一列，文案不换行 */
         .drawer-body .table-container table {
             min-width: 100%;
             table-layout: auto;
@@ -1035,50 +1001,46 @@
     </style>
 </head>
 <body>
-    <!-- 顶部菜单栏 -->
-    <div class="top-menu">
-        <div class="top-menu-title">平台后台</div>
-        <div class="top-menu-item">运营</div>
-        <div class="top-menu-item">商品</div>
-        <div class="top-menu-item">订单</div>
-        <div class="top-menu-item">客户</div>
-        <div class="top-menu-item">plus客户</div>
-        <div class="top-menu-item">营销</div>
-        <div class="top-menu-item">装修</div>
-        <div class="top-menu-item">店铺</div>
-        <div class="top-menu-item">财务</div>
-        <div class="top-menu-item">风控</div>
-        <div class="top-menu-item active">入驻</div>
-        <div class="top-menu-item">设置</div>
-        <div class="top-menu-right">
-            <button class="btn-text" id="viewRequirementBtn">查看需求</button>
+    <!-- ===== 顶部栏 ===== -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="top-bar-title">店铺后台</div>
+        </div>
+        <div class="top-bar-right">
+            <div class="top-bar-item">
+                <span class="icon">📊</span>
+                <span>导出导入中心</span>
+            </div>
+            <div class="top-bar-divider"></div>
+            <div class="top-bar-item">
+                <span class="icon">🏪</span>
+                <span>XX科技有限公司</span>
+            </div>
+            <div class="top-bar-item">
+                <span class="icon">🔄</span>
+                <span>切换店铺</span>
+            </div>
+            <div class="top-bar-divider"></div>
+            <div class="top-bar-item">
+                <span class="icon">👤</span>
+                <span class="top-bar-user">张三</span>
+            </div>
+            <button class="btn-text" id="viewRequirementBtn">
+                <span>查看需求</span>
+            </button>
         </div>
     </div>
 
     <!-- 主体容器 -->
     <div class="main-container">
-        <!-- 左侧菜单 -->
+        <!-- ===== 左侧菜单 ===== -->
         <div class="left-sidebar">
-            <div class="menu-level-1">
-                <div class="menu-level-1-header">商家管理</div>
-                <div class="menu-level-2">
-                    <div class="menu-level-2-item">商家审核</div>
-                    <div class="menu-level-2-item">货款账户</div>
-                    <div class="menu-level-2-item">账户流水</div>
-                    <div class="menu-level-2-item">交易流水</div>
-                </div>
-            </div>
             <div class="menu-level-1">
                 <div class="menu-level-1-header">财务管理</div>
                 <div class="menu-level-2">
+                    <div class="menu-level-2-item">货款账户</div>
+                    <div class="menu-level-2-item">交易流水</div>
                     <div class="menu-level-2-item active">分账明细</div>
-                </div>
-            </div>
-            <div class="menu-level-1">
-                <div class="menu-level-1-header">分账设置</div>
-                <div class="menu-level-2">
-                    <div class="menu-level-2-item">分账规则</div>
-                    <div class="menu-level-2-item">类目服务费</div>
                 </div>
             </div>
         </div>
@@ -1099,18 +1061,7 @@
                                 <label>客户信息</label>
                                 <input type="text" class="form-control" placeholder="请客户信息">
                             </div>
-                            <div class="search-item">
-                                <label>商家信息</label>
-                                <input type="text" class="form-control" placeholder="商家名/信用代码/店铺名称">
-                            </div>
                        
-                            <div class="search-item">
-                                <label>支付机构</label>
-                                <select class="form-control">
-                                    <option value="">全部</option>
-                                    <option value="zhifu">智付支付</option>
-                                </select>
-                            </div>
                             <div class="search-item">
                                 <label>支付方式</label>
                                 <select class="form-control">
@@ -1167,20 +1118,15 @@
                                     <th>SKU规格编码</th>
                                     <th>后台类目</th>
                                     <th>分账比例</th>
-                                    <th>商家名称</th>
-                                    <th>信用代码</th>
-                                    <th>店铺名称</th>
                                     <th>交易类型</th>
-                                    <th>款项类型</th>
+                                    <th class="col-payment-type">款项类型</th>
                                     <th>款项金额</th>
-                                    <th>支付机构</th>
+                                    <th>商户号</th>
                                     <th>支付方式</th>
-                                    <th>分账时点</th>  <!-- 新增列 -->
-                                    <th>状态</th>
+                                    <th class="col-status">状态</th>
                                     <th>失败原因</th>
                                     <th>交易用户</th>
                                     <th>分账时间</th>
-                                    <th width="80">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1190,22 +1136,17 @@
                                     <td>DD202309010001</td>
                                     <td>-</td>
                                     <td>SKU001</td>
-                                    <td>洗衣机</td>
+                                    <td>空调</td>
                                     <td>10%</td>
-                                    <td>XX科技有限公司</td>
-                                    <td>91110000MA01234567</td>
-                                    <td>XX数码旗舰店</td>
                                     <td>支付分账</td>
-                                    <td>类目服务费</td>
+                                    <td class="col-payment-type">类目服务费</td>
                                     <td>1,280.00</td>
-                                    <td>智付支付</td>
+                                    <td>M202309001</td>
                                     <td>微信支付</td>
-                                    <td>发货时间+10天</td>  <!-- 新增数据：支付分账用发货/收货时间 -->
-                                    <td>待分账</td>
+                                    <td class="col-status">待分账</td>
                                     <td>-</td>
                                     <td>张三</td>
                                     <td>2023-09-01 14:30:25</td>
-                                    <td class="action-column">-</td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -1213,22 +1154,17 @@
                                     <td>DD202309010002</td>
                                     <td>SH202309010001</td>
                                     <td>SKU002</td>
-                                    <td>电视机</td>
+                                    <td>电视</td>
                                     <td>15%</td>
-                                    <td>YY商贸有限公司</td>
-                                    <td>91110000MA09876543</td>
-                                    <td>YY家居专营店</td>
                                     <td>分账退回</td>
-                                    <td>商户支付手续费</td>
+                                    <td class="col-payment-type">商户支付手续费</td>
                                     <td>580.00</td>
-                                    <td>智付支付</td>
+                                    <td>M202309001</td>
                                     <td>支付宝</td>
-                                    <td>售后通过</td>  <!-- 分账退回默认“售后通过” -->
-                                    <td>已分账</td>
+                                    <td class="col-status">已分账</td>
                                     <td>-</td>
                                     <td>李四</td>
                                     <td>2023-09-01 15:20:10</td>
-                                    <td class="action-column">-</td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -1236,24 +1172,17 @@
                                     <td>DD202309010003</td>
                                     <td>-</td>
                                     <td>SKU003</td>
-                                    <td>空调</td>
+                                    <td>洗衣机</td>
                                     <td>8%</td>
-                                    <td>ZZ网络科技公司</td>
-                                    <td>91110000MA05678912</td>
-                                    <td>ZZ生鲜超市</td>
                                     <td>支付分账</td>
-                                    <td>客户支付手续费</td>
+                                    <td class="col-payment-type">客户支付手续费</td>
                                     <td>240.00</td>
-                                    <td>智付支付</td>
+                                    <td>M202309001</td>
                                     <td>微信支付</td>
-                                    <td>发货时间+3天</td>  <!-- 新增数据 -->
-                                    <td>分账异常</td>
+                                    <td class="col-status">分账异常</td>
                                     <td>余额不足</td>
                                     <td>王五</td>
                                     <td>2023-09-01 16:05:33</td>
-                                    <td class="action-column">
-                                        <a href="javascript:void(0);" class="btn-link" data-split-id="LS202309010003">分账</a>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1299,7 +1228,7 @@
 
             <!-- ===== 场景与资金计算 ===== -->
             <div class="scene-section">
-                <div class="scene-section-title">分账明细生成（本期涉及支付成功时分账明细生成+"支付分账"类型的分账动作）</div>
+                <div class="scene-section-title">分账明细生成（本期涉及：场景4、场景5、场景6、场景7、场景8、场景9）</div>
 
                 <!-- 场景1：支付手续费分账 -->
                 <div class="scene-card">
@@ -1336,18 +1265,18 @@
 
                 <!-- 场景5：商户支付手续费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景4：售后审核通过-商户支付手续费退回生成</div>
+                    <div class="scene-card-title">场景4：售后审核通过+售后sku商户手续费已分账：商户支付手续费退回生成</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>商户支付手续费退回单</div>
-                        <div><span class="scene-card-label">款项金额：</span>分账退回商户支付手续费 × 售后单实际退款金额</div>
-                        <div><span class="scene-card-label">备注：</span>款项金额=0时不生成，分账退回商户支付手续费是销售单支付成功时按当时分账退回规则记录的费率</div>
+                        <div><span class="scene-card-label">款项金额：</span>分账退回商户支付手续费 × 售后单实际退款金额；</div>
+                        <div><span class="scene-card-label">备注：</span>款项金额=0时不生成，分账退回商户支付手续费是销售单支付成功时按当时分账退回规则记录的费率；</div>
                     </div>
                 </div>
 
                 <!-- 场景6：类目服务费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景5：售后审核完成-类目服务费退回生成</div>
+                    <div class="scene-card-title">场景5：售后审核通过+售后sku类目服务费已分账：类目服务费退回生成</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费退回</div>
@@ -1358,7 +1287,7 @@
 
                 <!-- 场景7：客户手续费退回 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景6：售后审核通过-客户手续费退回生成</div>
+                    <div class="scene-card-title">场景6：售后审核通过+售后sku客户手续费已分账：客户手续费退回生成</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>分账退回</div>
                         <div><span class="scene-card-label">款项类型：</span>客户手续费退回</div>
@@ -1370,7 +1299,7 @@
 
                 <!-- 场景1：支付手续费分账 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景7：售后审核通过（套购订单）-商户支付手续费生成</div>
+                    <div class="scene-card-title">场景7：售后审核通过+订单是套购订单+订单非本次售后的SKU的客户手续费未分账+本次回收了套购优惠：关闭原商户手续费分账单重新生成商户支付手续费分账单</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>商户支付手续费</div>
@@ -1381,7 +1310,7 @@
 
                 <!-- 场景3：类目服务费分账 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景8：售后审核通过（套购订单）-类目服务费生成</div>
+                    <div class="scene-card-title">场景8：售后审核通过+订单是套购订单+订单非本次售后的SKU的客户手续费未分账+本次回收了套购优惠：关闭原类目服务费分账单重新生成类目服务费分账单</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>类目服务费</div>
@@ -1392,7 +1321,7 @@
 
                     <!-- 场景3：类目服务费分账 -->
                 <div class="scene-card">
-                    <div class="scene-card-title">场景9：售后审核通过（套购订单）-客户支付手续费生成</div>
+                    <div class="scene-card-title">场景9：售后审核通过+订单是套购订单+订单非本次售后的SKU的客户手续费未分账+本次回收了套购优惠：关闭原客户手续费分账单重新生成客户支付手续费分账单</div>
                     <div class="scene-card-body">
                         <div><span class="scene-card-label">交易类型：</span>支付分账</div>
                         <div><span class="scene-card-label">款项类型：</span>客户支付手续费</div>
@@ -1403,7 +1332,7 @@
 
             <!-- ==================== 状态机说明（新增） ==================== -->
             <div class="state-machine">
-                <h4>图一：支付分账状态机（本期只做正向流程）</h4>
+                <h4>图一：支付分账状态机（上期已做正向，本期做逆向）</h4>
 
                 <!-- 图例 -->
                 <div class="state-legend">
@@ -1623,8 +1552,8 @@
                             <td><strong>后台类目</strong></td>
                             <td>
                                 1、SKU所属的后台类目名称<br>
-                                2、支持按类目名称模糊搜索<br>
-                                3、格式示例：洗衣机
+                                2、只显示一级类目，如"空调、电视、洗衣机"<br>
+                                3、格式示例：空调
                             </td>
                         </tr>
                         <tr>
@@ -1662,19 +1591,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>支付机构</strong></td>
+                            <td><strong>商户号</strong></td>
                             <td>
-                                1、默认选择智付支付<br>
-                                2、以后会接入其它支付机构
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>分账时点</strong></td>
-                            <td>
-                                1、按订单下单时记录的分账时点进行初始化<br>
-                                2、支付分账类型：格式有“发货时间+xx天”、“收货时间+xx天”，发货时间与收货时间均以主订单的时间为准<br>
-                                3、分账退回类型：默认为“售后通过”<br>
-                                4、示例：发货时间为26年5月1日 8:00，分账时点为发货时间+10天，则当前时间＞发货26年5月11日 8:00，且分账明细为待分账/分账失败时，执行分账。
+                                1、商家在支付平台的唯一标识号<br>
+                                2、格式示例：M202309001
                             </td>
                         </tr>
                         <tr>
@@ -1709,27 +1629,6 @@
                                 2、格式：YYYY-MM-DD HH:mm:ss
                             </td>
                         </tr>
-                        <tr>
-                            <td><strong>操作（固定悬浮栏）</strong></td>
-                            <td>
-                                <strong>【显示规则】</strong><br>
-                                1、操作栏固定在表格最右侧，不随横向滚动而移动<br>
-                                2、仅对"分账异常"状态的记录显示"分账"按钮<br>
-                                3、"待分账"和"已分账"状态的记录不显示操作按钮<br>
-                                <strong>【分账按钮】</strong><br>
-                                4、按钮文字：分账<br>
-                                5、点击后调用分账接口，重新发起分账请求<br>
-                                <strong>【并发控制】</strong><br>
-                                6、按钮点击后立即禁用并显示加载状态，防止用户重复点击<br>
-                                7、后端接口需做幂等性处理：根据流水号判断是否已发起过分账请求<br>
-                                8、建议使用分布式锁或数据库乐观锁控制并发，避免重复分账<br>
-                                9、接口返回结果后，无论成功或失败，都需解锁并更新按钮状态<br>
-                                <strong>【处理逻辑】</strong><br>
-                                10、调用成功后刷新列表数据，状态变为"待分账"或"已分账"<br>
-                                11、调用失败后保留"分账异常"状态，显示最新的失败原因<br>
-                                12、如遇网络异常，需支持用户手动重新发起分账
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1743,99 +1642,29 @@
         const drawerClose = document.getElementById('drawerClose');
         const drawerOverlay = document.getElementById('drawerOverlay');
 
-        // 打开抽屉
         viewRequirementBtn.addEventListener('click', function() {
             requirementDrawer.classList.add('show');
             drawerOverlay.classList.add('show');
         });
 
-        // 关闭抽屉
         function closeDrawerFunc() {
             requirementDrawer.classList.remove('show');
             drawerOverlay.classList.remove('show');
         }
 
         drawerClose.addEventListener('click', closeDrawerFunc);
-
-        // 点击遮罩层关闭抽屉
         drawerOverlay.addEventListener('click', function(e) {
-            if (e.target === drawerOverlay) {
-                closeDrawerFunc();
-            }
+            if (e.target === drawerOverlay) closeDrawerFunc();
         });
 
-        // Tab筛选控制
+        // Tab筛选
         const tabItems = document.querySelectorAll('.tab-item');
         tabItems.forEach(tab => {
             tab.addEventListener('click', function() {
                 tabItems.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
-                const status = this.getAttribute('data-status');
-                console.log('筛选状态：', status);
+                console.log('筛选状态：', this.getAttribute('data-status'));
             });
-        });
-
-        // 分账按钮点击处理（并发控制）
-        const splitButtons = document.querySelectorAll('.btn-link');
-        const processingSplitIds = new Set();
-
-        splitButtons.forEach(button => {
-            button.addEventListener('click', async function(e) {
-                e.preventDefault();
-
-                const splitId = this.getAttribute('data-split-id');
-
-                if (processingSplitIds.has(splitId)) {
-                    alert('该记录正在分账处理中，请勿重复点击');
-                    return;
-                }
-
-                processingSplitIds.add(splitId);
-
-                try {
-                    this.style.color = '#c0c4cc';
-                    this.style.pointerEvents = 'none';
-                    this.textContent = '处理中';
-
-                    console.log(`发起分账请求，流水号：${splitId}`);
-
-                    const response = await fetch('/api/split/retry', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            splitId: splitId,
-                        })
-                    });
-
-                    const result = await response.json();
-
-                    if (result.code === 0 || result.success) {
-                        alert('分账请求已提交成功');
-                        console.log('分账成功：', result.data);
-                    } else {
-                        alert('分账异常：' + (result.message || '未知错误'));
-                        console.error('分账异常：', result);
-                    }
-
-                } catch (error) {
-                    console.error('调用分账接口异常：', error);
-                    alert('网络异常，请稍后重试');
-                } finally {
-                    processingSplitIds.delete(splitId);
-                    this.style.color = '';
-                    this.style.pointerEvents = '';
-                    this.textContent = '分账';
-                }
-            });
-        });
-
-        // 页面卸载时清理处理中的任务
-        window.addEventListener('beforeunload', function() {
-            if (processingSplitIds.size > 0) {
-                console.warn('有分账任务正在进行中，建议等待完成后再关闭页面');
-            }
         });
     </script>
 </body>

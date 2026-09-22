@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>货款账户</title>
+<html lang="zh-CN" data-page-node-id="scs0bbBwaDUVweUHFkMPKo">
+<head data-page-node-id="YLes0aHxfo1nkv7qoKRUPN">
+    <meta charset="UTF-8" data-page-node-id="uXeBBowaZbk1gVQ54CsCAu">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="N4ZZ0GQmVrtwMgMOfH06Ch">
+    <title>账户流水</title>
     <style>
         * {
             margin: 0;
@@ -19,14 +19,7 @@
             line-height: 1.6;
         }
 
-        /* 主体布局 */
-        .main-container {
-            display: flex;
-            margin-top: 50px;
-            min-height: calc(100vh - 50px);
-        }
-
-        /* 精简顶部栏 */
+        /* ===== 顶部栏（替换为交易流水页面的精简顶部栏） ===== */
         .top-bar {
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
@@ -109,6 +102,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
+            margin-left: 10px;
         }
 
         .btn-text:hover {
@@ -117,8 +111,13 @@
         }
 
         /* 主体布局 */
+        .main-container {
+            display: flex;
+            margin-top: 50px;
+            min-height: calc(100vh - 50px);
+        }
 
-        /* 左侧菜单 */
+        /* ===== 左侧菜单（替换为交易流水页面的菜单） ===== */
         .left-sidebar {
             width: 200px;
             background: #fff;
@@ -272,7 +271,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1200px;
+            min-width: 900px;
         }
 
         thead {
@@ -289,32 +288,87 @@
             font-size: 13px;
         }
 
-        /* 确保表头和数据都左对齐 */
-        .table-container th,
-        .table-container td {
-            text-align: left !important;
-        }
-
         td {
             padding: 11px 16px;
             border-bottom: 1px solid #ebeef5;
             font-size: 13px;
+            text-align: left;
         }
 
-        /* 移除表格行悬浮效果 */
-
-        /* 操作列固定在右侧 */
-        .table-container table thead th:last-child,
-        .table-container table tbody tr td:last-child {
-            position: sticky;
-            right: 10px;
-            background: #fff;
-            z-index: 10;
+        tbody tr:hover {
+            background: #f9f9f9;
         }
 
-        .table-container table thead th:last-child {
-            background: #fafafa;
-            z-index: 11;
+        /* 金额颜色 + 收支标签 */
+        .amount-cell {
+            white-space: nowrap;
+        }
+        .amount-tag {
+            display: inline-block;
+            padding: 0 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            line-height: 18px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .amount-tag-income {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        .amount-tag-expense {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        .amount-positive {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .amount-negative {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        /* ===== Tab 切换样式 ===== */
+        .tab-bar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tab-item {
+            position: relative;
+            padding: 6px 16px;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-item:hover {
+            color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .tab-item.active {
+            color: #667eea;
+            font-weight: 600;
+            background: #f0f4ff;
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: 16px;
+            right: 16px;
+            height: 2px;
+            background: #667eea;
+            border-radius: 1px;
         }
 
         /* 查看流水按钮样式 */
@@ -411,13 +465,13 @@
             background: #fff;
             padding: 20px;
             border-radius: 4px;
-            margin-bottom: 16px;
+            margin-bottom: 0;
             border: none;
         }
 
         .search-row {
             display: flex;
-            gap: 30px;
+            gap: 24px;
             margin-bottom: 0;
             align-items: center;
             flex-wrap: wrap;
@@ -452,6 +506,95 @@
         .search-item .form-control:focus {
             outline: none;
             border-color: #667eea;
+        }
+
+        /* ===== 可搜索下拉框 ===== */
+        .searchable-select {
+            position: relative;
+            width: 200px;
+        }
+
+        .searchable-select-input {
+            width: 100%;
+            height: 32px;
+            padding: 0 28px 0 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #606266;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .searchable-select-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .searchable-select-input::placeholder {
+            color: #c0c4cc;
+        }
+
+        .searchable-select-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: #c0c4cc;
+            pointer-events: none;
+            transition: transform 0.2s ease;
+        }
+
+        .searchable-select.open .searchable-select-arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .searchable-select-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+
+        .searchable-select.open .searchable-select-dropdown {
+            display: block;
+        }
+
+        .searchable-select-option {
+            padding: 8px 12px;
+            font-size: 13px;
+            color: #606266;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .searchable-select-option:hover {
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        .searchable-select-option.selected {
+            background: #f0f4ff;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .searchable-select-empty {
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #c0c4cc;
+            text-align: center;
         }
 
         .search-buttons {
@@ -532,6 +675,93 @@
             line-height: 1.8;
         }
 
+        /* 弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
         /* 抽屉样式 */
         .drawer-overlay {
             display: none;
@@ -606,10 +836,294 @@
             padding: 20px;
         }
 
+        /* 需求抽屉中的表格样式 */
+        .drawer-body .note-section + .table-container table,
+        .drawer-body .account-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .drawer-body .note-section + .table-container thead th,
+        .drawer-body .account-table-container thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #606266;
+            border-bottom: 1px solid #e4e7ed;
+            font-size: 13px;
+            background: #fafafa;
+        }
+
+        .drawer-body .note-section + .table-container tbody td,
+        .drawer-body .account-table-container tbody td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #ebeef5;
+            font-size: 13px;
+        }
+
+        .drawer-body .note-section + .table-container table th:first-child,
+        .drawer-body .note-section + .table-container table td:first-child,
+        .drawer-body .account-table-container table th:first-child,
+        .drawer-body .account-table-container table td:first-child {
+            width: 25%;
+            font-weight: 600;
+        }
+
+        .drawer-body .note-section + .table-container table th:last-child,
+        .drawer-body .note-section + .table-container table td:last-child,
+        .drawer-body .account-table-container table th:last-child,
+        .drawer-body .account-table-container table td:last-child {
+            width: 75%;
+        }
+
+        /* 修正：需求抽屉内字段说明表格不应用主表格"操作列固定右侧"样式 */
+        .drawer-body .note-section + .table-container table thead th:last-child,
+        .drawer-body .note-section + .table-container table tbody td:last-child,
+        .drawer-body .account-table-container table thead th:last-child,
+        .drawer-body .account-table-container table tbody td:last-child {
+            position: static;
+            right: auto;
+            background: transparent;
+            z-index: auto;
+        }
+
+        /* 账户信息说明标题 */
+        .account-table-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            margin-top: 8px;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+            line-height: 1.4;
+        }
+
+        /* ===== 场景与资金计算卡片样式 ===== */
+        .scene-section {
+            margin-bottom: 24px;
+            margin-top: 32px;
+        }
+        .scene-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+            line-height: 1.4;
+        }
+        .scene-card {
+            background: #f8faff;
+            border: 1px solid #e6ebf5;
+            border-radius: 6px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
+        }
+        .scene-card-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .scene-card-body {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.8;
+        }
+        .scene-card-label {
+            display: inline-block;
+            width: 100px;
+            color: #888;
+        }
+        .scene-card-positive {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .scene-card-negative {
+            color: #c62828;
+            font-weight: 500;
+        }
+        .scene-card-note {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #999;
+            background: #fff8e1;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+        .scene-summary {
+            margin-top: 16px;
+            padding: 10px 14px;
+            background: #f0f4ff;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* ===== 账户信息展示卡片 ===== */
+        .account-info-card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+            padding: 0;
+            position: relative;
+        }
+        .account-info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 16px 24px 20px;
+            gap: 8px 0;
+        }
+        .account-info-item {
+            flex: 1 0 16%;
+            min-width: 140px;
+            padding: 6px 0;
+            border-right: 1px solid #f0f0f0;
+        }
+        .account-info-item:last-child {
+            border-right: none;
+        }
+        .account-info-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 2px;
+        }
+        .account-info-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        .account-info-value.normal {
+            color: #2e7d32;
+        }
+        .account-info-value.frozen {
+            color: #c62828;
+        }
+        /* 提现按钮区域（替代最后更新时间位置） */
+        .account-info-action {
+            flex: 0 0 auto;
+            min-width: 80px;
+            padding: 6px 0;
+            border-right: none;
+            display: flex;
+            align-items: center;
+        }
+        .btn-withdraw {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0 20px;
+            border: 1px solid #667eea;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            background: #fff;
+            color: #667eea;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-withdraw:hover {
+            background: #667eea;
+            color: #fff;
+        }
+        /* 右下角灰色更新时间 */
+        .account-info-footer {
+            position: absolute;
+            right: 24px;
+            bottom: 8px;
+            font-size: 12px;
+            color: #bbb;
+            line-height: 1.4;
+        }
+
+        /* ===== 分页样式（演示版） ===== */
+        .pagination-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 16px 20px 8px;
+            gap: 12px;
+            border-top: 1px solid #ebeef5;
+            margin-top: 8px;
+        }
+        .pagination-info {
+            font-size: 13px;
+            color: #909399;
+            margin-right: auto;
+        }
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .pagination li {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            height: 30px;
+            padding: 0 6px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #606266;
+            cursor: pointer;
+            background: #fff;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .pagination li:hover:not(.disabled):not(.active) {
+            color: #667eea;
+            border-color: #667eea;
+        }
+        .pagination li.active {
+            background: #667eea;
+            border-color: #667eea;
+            color: #fff;
+            font-weight: 600;
+            cursor: default;
+        }
+        .pagination li.disabled {
+            color: #c0c4cc;
+            cursor: not-allowed;
+            background: #f5f7fa;
+        }
+        .pagination li.ellipsis {
+            border: none;
+            cursor: default;
+            background: transparent;
+            color: #606266;
+        }
+        .pagination li.ellipsis:hover {
+            color: #606266;
+        }
+        .page-size-select {
+            height: 30px;
+            padding: 0 8px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #606266;
+            background: #fff;
+            cursor: pointer;
+            outline: none;
+        }
+        .page-size-select:focus {
+            border-color: #667eea;
+        }
     </style>
 </head>
-<body>
-    <!-- 精简顶部栏 -->
+<body data-page-node-id="QmBUrrSgBdIHrvDKaBVRBm">
+    <!-- ===== 顶部栏（替换为交易流水页面的精简顶部栏） ===== -->
     <div class="top-bar">
         <div class="top-bar-left">
             <div class="top-bar-title">店铺后台</div>
@@ -639,28 +1153,325 @@
         </div>
     </div>
 
-    <!-- 需求说明抽屉 -->
-    <div class="drawer-overlay" id="drawerOverlay"></div>
-    <div class="drawer" id="requirementDrawer">
-        <div class="drawer-header">
-            <h2 class="drawer-title">功能说明</h2>
-            <button class="drawer-close" id="drawerClose">&times;</button>
+    <!-- 主体容器 -->
+    <div class="main-container">
+        <!-- ===== 左侧菜单（替换为交易流水页面的菜单） ===== -->
+        <div class="left-sidebar">
+            <div class="menu-level-1">
+                <div class="menu-level-1-header">财务管理</div>
+                <div class="menu-level-2">
+                    <div class="menu-level-2-item active">货款账户</div>
+                    <div class="menu-level-2-item">交易流水</div>
+                    <div class="menu-level-2-item">分账明细</div>
+                </div>
+            </div>
         </div>
-        <div class="drawer-body">
+
+        <!-- 右侧内容区 -->
+        <div class="content-area" data-page-node-id="K8WdcJEw2DFJDxN0sYwrdV">
+
+            <!-- ===== 账户信息展示（仅展示一个账户） ===== -->
+            <div class="account-info-card">
+                <div class="account-info-grid">
+                    <div class="account-info-item">
+                        <div class="account-info-label">账户余额</div>
+                        <div class="account-info-value">10,000.00</div>
+                    </div>
+                    <div class="account-info-item">
+                        <div class="account-info-label">充值余额</div>
+                        <div class="account-info-value">2,000.00</div>
+                    </div>
+                    <div class="account-info-item">
+                        <div class="account-info-label">冻结金额</div>
+                        <div class="account-info-value">1,000.00</div>
+                    </div>
+                    <div class="account-info-item">
+                        <div class="account-info-label">可提现余额</div>
+                        <div class="account-info-value">9,000.00</div>
+                    </div>
+                    <div class="account-info-item">
+                        <div class="account-info-label">账户状态</div>
+                        <div class="account-info-value normal">正常</div>
+                    </div>
+                    <!-- 提现按钮（替代最后更新时间位置） -->
+                    <div class="account-info-action">
+                        <button class="btn-withdraw" id="withdrawBtn">提现</button>
+                    </div>
+                </div>
+                <!-- 右下角灰色小字：最后更新时间 -->
+                <div class="account-info-footer">最后更新时间：2023-09-01 14:30:25</div>
+            </div>
+
+            <!-- ===== 搜索卡片（下移到账户信息下方） ===== -->
+            <div class="card" data-page-node-id="9yHxUNrG65CzQjKO5a0Q56">
+                <div class="card-body" data-page-node-id="ZbeUh1c4ROelKXw25NHBid">
+                    <div class="search-area" data-page-node-id="ewhHGncqdXMzncPKpxWY8m">
+                        <div class="search-row" data-page-node-id="A37KiYXiABrYXVI0zcZsfW">
+                            <div class="search-item" data-page-node-id="pH0EYECvUhMHuYMhPUnb1H">
+                                <label data-page-node-id="VwsKWHzk2tHpz5xgEOYqXC">商户号</label>
+                                <input type="text" class="form-control" placeholder="请输入商户号" data-page-node-id="2wyl1YzCtEQHzoNOoz7HjO">
+                            </div>
+
+                            <!-- 款项类型：可搜索下拉 -->
+                            <div class="search-item">
+                                <label>款项类型</label>
+                                <div class="searchable-select" id="typeSelect">
+                                    <input type="text" class="searchable-select-input" id="typeSelectInput" placeholder="全部" readonly>
+                                    <span class="searchable-select-arrow">▼</span>
+                                    <div class="searchable-select-dropdown" id="typeSelectDropdown">
+                                        <!-- 选项由 JS 渲染 -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 新增：订单号/售后单号搜索 -->
+                            <div class="search-item">
+                                <label>订单号/售后单号</label>
+                                <input type="text" class="form-control" placeholder="请输入订单号或售后单号" style="width:200px;" id="orderNoSearch">
+                            </div>
+
+                            <div class="search-buttons" data-page-node-id="gmCdCcnQaEJAA3FPw5BpPB">
+                                <button class="search-btn primary" data-page-node-id="BEeYIl99WelQyVnj0XKXVp">搜索</button>
+                                <button class="search-btn" data-page-node-id="u4jQFRo842BI7V1gi3fw7S">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 账户流水卡片 -->
+            <div class="card" data-page-node-id="roCQs0WpY8fbhi8g5kG4jL">
+                <div class="card-header" data-page-node-id="ZZdAj0IoVElIqtJtAApEbj">
+                    <!-- Tab 切换 -->
+                    <div class="tab-bar" id="flowTabs">
+                        <div class="tab-item active" data-tab="all">全部</div>
+                        <div class="tab-item" data-tab="income">收入</div>
+                        <div class="tab-item" data-tab="expense">支出</div>
+                    </div>
+                </div>
+                <div class="card-body" data-page-node-id="Dvq9fgawqHYccpLD2S9nW0">
+                    <div class="table-container" data-page-node-id="3QN9z5iUZmb3H07Gelylm5">
+                        <table data-page-node-id="UB2rBJoXB2zG15pMrH8bHT">
+                    <thead>
+                        <tr>
+                            <th width="50">序号</th>
+                            <th>商户号</th>
+                            <th>款项类型</th>
+                            <th>变动金额</th>
+                            <th>可提现余额</th>
+                            <th>变动时间</th>
+                            <th>订单号/售后单号</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flowTableBody">
+                        <tr data-flow-type="income" data-payment-type="货款分账">
+                            <td>1</td>
+                            <td>M202309001</td>
+                            <td>货款分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+10000</span></td>
+                            <td>9000</td>
+                            <td>2023-09-01 14:30:25</td>
+                            <td>ORD202309010001</td>
+                        </tr>
+                        <tr data-flow-type="income" data-payment-type="账户充值">
+                            <td>2</td>
+                            <td>M202309001</td>
+                            <td>账户充值</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+2000</span></td>
+                            <td>11000</td>
+                            <td>2023-09-01 15:20:10</td>
+                            <td>-</td>
+                        </tr>
+                        <tr data-flow-type="expense" data-payment-type="客户支付手续费分账">
+                            <td>3</td>
+                            <td>M202309001</td>
+                            <td>客户支付手续费分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-50</span></td>
+                            <td>10950</td>
+                            <td>2023-09-01 16:05:33</td>
+                            <td>ORD202309010001</td>
+                        </tr>
+                        <tr data-flow-type="expense" data-payment-type="类目服务费分账">
+                            <td>4</td>
+                            <td>M202309001</td>
+                            <td>类目服务费分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-30</span></td>
+                            <td>10920</td>
+                            <td>2023-09-02 09:15:00</td>
+                            <td>ORD202309010001</td>
+                        </tr>
+                        <tr data-flow-type="expense" data-payment-type="商户支付手续费分账">
+                            <td>5</td>
+                            <td>M202309001</td>
+                            <td>商户支付手续费分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-20</span></td>
+                            <td>10900</td>
+                            <td>2023-09-02 14:30:00</td>
+                            <td>ORD202309020002</td>
+                        </tr>
+                        <tr data-flow-type="expense" data-payment-type="货款退款">
+                            <td>6</td>
+                            <td>M202309001</td>
+                            <td>货款退款</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-500</span></td>
+                            <td>10400</td>
+                            <td>2023-09-02 16:00:00</td>
+                            <td>REF202309020001</td>
+                        </tr>
+                        <tr data-flow-type="income" data-payment-type="商户支付手续费退回">
+                            <td>7</td>
+                            <td>M202309001</td>
+                            <td>商户支付手续费退回</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+10</span></td>
+                            <td>10410</td>
+                            <td>2023-09-02 16:00:00</td>
+                            <td>REF202309020001</td>
+                        </tr>
+                        <tr data-flow-type="income" data-payment-type="类目服务费退回">
+                            <td>8</td>
+                            <td>M202309001</td>
+                            <td>类目服务费退回</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5</span></td>
+                            <td>10415</td>
+                            <td>2023-09-02 16:00:00</td>
+                            <td>REF202309020001</td>
+                        </tr>
+                        <tr data-flow-type="income" data-payment-type="货款分账">
+                            <td>9</td>
+                            <td>M202309002</td>
+                            <td>货款分账</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5000</span></td>
+                            <td>5000</td>
+                            <td>2023-09-01 10:00:00</td>
+                            <td>ORD202309010003</td>
+                        </tr>
+                        <tr data-flow-type="expense" data-payment-type="账户提现">
+                            <td>10</td>
+                            <td>M202309002</td>
+                            <td>账户提现</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1000</span></td>
+                            <td>4000</td>
+                            <td>2023-09-02 11:20:00</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                    <!-- 分页（演示版，纯静态展示） -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">共 10 条</div>
+                        <ul class="pagination" id="demoPagination">
+                            <li class="disabled">上一页</li>
+                            <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>下一页</li>
+                        </ul>
+                        <select class="page-size-select">
+                            <option>10条/页</option>
+                            <option>20条/页</option>
+                            <option>50条/页</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增分账规则弹窗（保留原有结构） -->
+    <div class="modal-overlay" id="addRuleModal" data-page-node-id="npF1SATc1EpqIcAazks5ve">
+        <div class="modal" data-page-node-id="X9HQWXzRcLWby7vcS8zZ9Z">
+            <div class="modal-header" data-page-node-id="8WkeLBe0nq1WpPVdMhBHLk">
+                <h2 class="modal-title" data-page-node-id="TaxqegGm42MVYxZU5C4DDX">新增分账规则</h2>
+                <button class="modal-close" id="closeModal" data-page-node-id="8adHew3vMTPaPATW8hrcAe">&times;</button>
+            </div>
+            <div class="modal-body" data-page-node-id="puKJY9wNPOoN9TI5NfVk1X">
+                <div class="form-row" data-page-node-id="HNcK5uUdKdJokJnibD6Sif">
+                    <div class="form-group" data-page-node-id="rNPXiuO1dWUZn3lqB5B0KJ">
+                        <label data-page-node-id="AmXqV8KbjdWrFrzZ9H8SrC">支付机构</label>
+                        <select class="form-control" data-page-node-id="DIQls1xEwHks6IFD3BGthg">
+                            <option data-page-node-id="HmVZq8OyuganaMDb9A7Car">智付支付</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" data-page-node-id="b0y814VFnAARkRN5EF9P0l">
+                        <label data-page-node-id="TwvIs5R1oAIF2XimWZtdMp">支付方式</label>
+                        <select class="form-control" data-page-node-id="eGb3ocdG6aBtGonjBPZRRN">
+                            <option data-page-node-id="ZGwRpyVWHymt7gaYva9kBh">微信</option>
+                            <option data-page-node-id="JjSSyh1hvM2m8Wd3PJKz5w">支付宝</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" data-page-node-id="IzRbiVnn6FKfkxkujqfMRf">
+                        <label data-page-node-id="3A8h95B882FCxC0iRAOXqV">分账款项</label>
+                        <select class="form-control" data-page-node-id="cnCpjFREZr3CXDkOvhBfQE">
+                            <option data-page-node-id="T3sDQgXH4xkBjtH8w62nbX">订单支付</option>
+                            <option data-page-node-id="vjvJJdYfU5UAEWAkz3A3B3">订单退货</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 分账规则表格 -->
+                <div class="sub-table" data-page-node-id="dXR1ua53eU0tzFVapmkw4C">
+                    <table data-page-node-id="jQ0gzGnOGloD8Df6Z5MWjq">
+                        <thead data-page-node-id="sydH2WX4fSyoroZAt8g6nQ">
+                            <tr data-page-node-id="CuclgdNXNtchvNq1kUhHRK">
+                                <th width="30%" data-page-node-id="N6uGaIDERNPR0tOf9Vu52D">款项类型</th>
+                                <th width="30%" data-page-node-id="sRNmfNNeY6nLP68ZsDGvy1">分账比例%</th>
+                                <th width="30%" data-page-node-id="d75SPgarqe9TO9HJMgkQNw">收款角色</th>
+                            </tr>
+                        </thead>
+                        <tbody id="splitRulesTable" data-page-node-id="KN61NyfQRLkBzm4J6GAL1X">
+                            <tr data-page-node-id="nUtChqXJPqn9uH2MZ6eQJZ">
+                                <td data-page-node-id="OQ3jFWhBeXa3PLAO7fGb5B"></td>
+                                <td data-page-node-id="nEe1JZW4jEql1VLArzZwq9"><input type="text" class="form-control" placeholder="请输入" style="width: 120px;" data-page-node-id="VjVwBv75fB1EhDBEe3w6Lt"></td>
+                                <td data-page-node-id="5JInxL7R6Pjk4BklLCVEku">平台</td>
+                            </tr>
+                            <tr data-page-node-id="a9enFEwMC7YErKc9F0DjJM">
+                                <td data-page-node-id="FxR8UahH5rjrVXYF3lxMlw">类目服务费</td>
+                                <td data-page-node-id="0h61o5ZYGAUfnRmKz2ChUR">按类目</td>
+                                <td data-page-node-id="IPtYvpI4KT9AHK9yUgDXD6">平台</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" data-page-node-id="FLnH1EjLeWwQRiE4gbBSJk">
+                <button class="btn-secondary" id="cancelBtn" data-page-node-id="JX5QQ0xz7Vv7vwdKasN8Mh">取消</button>
+                <button class="btn-primary" data-page-node-id="EmdTvrmv2MrU1XazwJl0zJ">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 需求抽屉 -->
+    <div class="drawer-overlay" id="drawerOverlay" data-page-node-id="PKL3YENEUmQpwMmpvcZgxj"></div>
+    <div class="drawer" id="requirementDrawer" data-page-node-id="Tydc755vory6lEa03BGDHo">
+        <div class="drawer-header" data-page-node-id="sCh3rC7B6fTU5Ddth6znBi">
+            <h2 class="drawer-title" data-page-node-id="uyNOXHBjaotQEl6W5Iu3pV">功能说明</h2>
+            <button class="drawer-close" id="drawerClose" data-page-node-id="IUjiFqpwkHC0LhmOL5Kwhy">&times;</button>
+        </div>
+        <div class="drawer-body" data-page-node-id="kaPPPUsrFvPjL7yEu2d9f5">
             <!-- 需求说明 -->
             <div class="note-section">
                 <h4>需求</h4>
                 <p>
-                    1、本功能主要提供查看各个入驻店铺的货款账户信息<br>
-                    2、展示商家的货款账户余额、充值余额、冻结金额、可结算余额等信息<br>
+                    1、本功能主要提供查看各个入驻店铺的账户流水明细<br>
+                    2、展示商家的账户流水各类变动流水记录，包括正向收支和退款退回<br>
                     3、本页面为只读页面，不支持新增、编辑、删除操作<br>
-                    4、支持按商家名称、商户号、信用代码搜索<br>
-                    5、支持查看商家的支付流水明细
+                    4、支持按商户号、款项类型、订单号/售后单号搜索<br>
+                    5、列表上方支持按“全部 / 收入 / 支出”Tab切换筛选<br>
+                    6、款项类型包括：货款分账、货款退款、账户充值、账户提现、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回<br>
+                    7、账户信息展示：账户余额、充值余额、冻结金额、可提现余额、账户状态、最后更新时间<br>
+                    8、列表支持分页<br>
+                    9、账户信息中增加“提现”按钮
                 </p>
             </div>
 
-            <!-- 字段说明表格 -->
-            <div class="table-container">
+            <!-- ===== 账户信息字段说明表格（增加标题） ===== -->
+            <div class="account-table-title">账户信息说明</div>
+            <div class="account-table-container">
                 <table>
                     <thead>
                         <tr>
@@ -669,25 +1480,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><strong>序号</strong></td>
-                            <td>
-                                1、自增序号，从1开始
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>商家名称</strong></td>
-                            <td>
-                                1、入驻企业的全称
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>商户号</strong></td>
-                            <td>
-                                1、商家在支付平台的唯一标识号<br>
-                                2、格式示例：M202309001
-                            </td>
-                        </tr>
                         <tr>
                             <td><strong>信用代码</strong></td>
                             <td>
@@ -717,10 +1509,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>可结算余额</strong></td>
+                            <td><strong>可提现余额</strong></td>
                             <td>
-                                1、可结算的货款金额，取智付接口的settlableBalance<br>
-                                2、计算公式：可结算余额 = 账户余额 - 冻结金额<br>
+                                1、可提现的货款金额，取智付接口的settlableBalance<br>
+                                2、计算公式：可提现余额 = 账户余额 - 冻结金额<br>
                                 3、格式：保留两位小数
                             </td>
                         </tr>
@@ -740,128 +1532,195 @@
                                 2、格式：YYYY-MM-DD HH:mm:ss
                             </td>
                         </tr>
-                        <tr>
-                            <td><strong>操作</strong></td>
-                            <td>
-                                1、查看商家的支付流水明细<br>
-                                2、点击"查看流水"跳转到支付流水页面，并自动筛选对应商户号的流水
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
+            <!-- ===== 账户信息字段说明表格结束 ===== -->
 
-    <!-- 主体容器 -->
-    <div class="main-container">
-        <!-- 左侧菜单 -->
-        <div class="left-sidebar">
-            <div class="menu-level-1">
-                <div class="menu-level-1-header">财务管理</div>
-                <div class="menu-level-2">
-                    <div class="menu-level-2-item active">货款账户</div>
-                    <div class="menu-level-2-item">账户流水</div>
-                    <div class="menu-level-2-item">交易流水</div>
-                    <div class="menu-level-2-item">分账明细</div>
-                </div>
-            
-            </div>
-        </div>
+            <!-- ===== 场景与资金计算 ===== -->
+            <div class="scene-section">
+                <div class="scene-section-title">场景与资金计算（本期只涉及“售后退款完成、分账退回成功”的流水）</div>
 
-        <!-- 右侧内容区 -->
-        <div class="content-area">
-            <!-- 搜索卡片 -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="search-area">
-                        <div class="search-row">
-                            <div class="search-item">
-                                <label>商家信息</label>
-                                <input type="text" class="form-control" placeholder="名称/信用代码">
-                            </div>
-                           
-                            <div class="search-item">
-                                <label>商户号</label>
-                                <input type="text" class="form-control" placeholder="请输入商户号">
-                            </div>
-                            <div class="search-buttons">
-                                <button class="search-btn primary">搜索</button>
-                                <button class="search-btn">重置</button>
-                            </div>
-                        </div>
+                <!-- 场景1：货款 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景1：支付分账成功-货款分账</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>货款分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 订单实付金额 − 支付手续费 − 类目服务费（若有）</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 分账规则卡片 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">账户流水</div>
+                <!-- 场景2：商户支付手续费 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景2：支付分账成功-商户支付手续费分账</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>商户支付手续费分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − (订单实付金额 × 支付手续费率)</div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="table-container">
-                        <table>
-                    <thead>
-                        <tr>
-                            <th width="50">序号</th>
-                            <th>商家名称</th>
-                            <th>信用代码</th>
-                            <th>商户号</th>
-                            <th>账户余额</th>
-                            <th>充值余额</th>
-                            <th>冻结金额</th>
-                            <th>可结算余额</th>
-                            <th>账户状态</th>
-                            <th>最后更新时间</th>
-                            <th>操作</th>
 
+                <!-- 场景3：客户支付手续费 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景3：支付分账成功-客户支付手续费分账</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>客户支付手续费分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = − (订单实付金额 × 支付手续费率)</div>
+                    </div>
+                </div>
+
+                <!-- 场景4：类目服务费 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景4：支付分账成功-类目服务费分账</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>类目服务费分账</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = − (订单实付金额 × 类目服务费率)</div>
+                    </div>
+                </div>
+
+                <!-- 场景5：货款退款 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景5：售后退款完成-货款退款</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>货款退款</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按售后订单的实退金额即可。变动金额 = − 退款实退金额（原路退回给客户）</div>
+                    </div>
+                </div>
+
+                <!-- 场景6：商户支付手续费退回 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景6：分账退回成功-商户支付手续费退回</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>商户支付手续费退回</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = 订单原支付手续费 × (退款金额 / 订单实付金额)</div>
+                    </div>
+                </div>
+
+                <!-- 场景7：类目服务费退回 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景7：分账退回成功-类目服务费退回</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>类目服务费退回</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = 订单原类目服务费 × (退款金额 / 订单实付金额)</div>
+                    </div>
+                </div>
+
+                <!-- 场景8：客户手续费退回 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景8：分账退回成功-客户手续费退回</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>客户支付手续费分账（退回）</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>按对应分账明细中的款项金额即可。变动金额 = 订单原客户手续费 × (退款金额 / 订单实付金额)</div>
+                        <div class="scene-card-note">注：客户手续费退回为平台账户分账退回给商家账户，退回成功后生成流水</div>
+                    </div>
+                </div>
+
+                <!-- 场景9：账户充值 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景9：账户充值</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>账户充值</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-positive">收入</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = 实际充值到账金额（用户支付金额）</div>
+                    </div>
+                </div>
+
+                <!-- 场景10：账户提现 -->
+                <div class="scene-card">
+                    <div class="scene-card-title">场景10：账户提现</div>
+                    <div class="scene-card-body">
+                        <div><span class="scene-card-label">款项类型：</span>账户提现</div>
+                        <div><span class="scene-card-label">收支方向：</span><span class="scene-card-negative">支出</span></div>
+                        <div><span class="scene-card-label">计算公式：</span>变动金额 = − 提现金额（从可提现余额扣减）</div>
+                        <div class="scene-card-note">注：提现成功时生成流水，可提现余额相应减少。</div>
+                    </div>
+                </div>
+
+                <!-- 补充说明：可提现余额变化 -->
+                <div class="scene-summary">
+                    <strong style="color: #333;">可提现余额变化：</strong>每笔流水生成后，可提现余额 = 上一笔可提现余额 + 变动金额（正数增加，负数减少）。账户充值、货款分账、各类退回增加余额；支付手续费分账、类目服务费分账、货款退款、账户提现减少余额。
+                </div>
+            </div>
+            <!-- ===== 场景与资金计算结束 ===== -->
+
+            <!-- 字段说明表格 -->
+            <div class="table-container" data-page-node-id="wOEm6IVbzJGDV9FR0hSFFS">
+                <table data-page-node-id="9FyG6Skr5pF8uWwjDjWhOQ">
+                    <thead data-page-node-id="jEDGBs93qH3kIUlekhbV4z">
+                        <tr data-page-node-id="u58PzbcJchyr4SJiKUdtT9">
+                            <th data-page-node-id="zCqKQPw4Ki3acBRXZJcfeP">元素</th>
+                            <th data-page-node-id="UNEP332BDHqcV2kGd5sok5">说明</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>XX科技有限公司</td>
-                            <td>91110000MA01234567</td>
-                            <td>M202309001</td>
-                            <td>10,000.00</td>
-                            <td>2,000.00</td>
-                            <td>1,000.00</td>
-                            <td>9,000.00</td>
-                            <td>正常</td>
-                            <td>2023-09-01 14:30:25</td>
-                            <td><a href="#" class="btn-view">查看流水</a></td>
+                            <td><strong>序号</strong></td>
+                            <td>
+                                1、自增序号，从1开始
+                            </td>
                         </tr>
                         <tr>
-                            <td>2</td>
-                            <td>YY商贸有限公司</td>
-                            <td>91110000MA09876543</td>
-                            <td>M202309002</td>
-                            <td>5,000.00</td>
-                            <td>1,000.00</td>
-                            <td>500.00</td>
-                            <td>4,500.00</td>
-                            <td>冻结</td>
-                            <td>2023-09-01 15:20:10</td>
-                            <td><a href="#" class="btn-view">查看流水</a></td>
+                            <td><strong>商户号</strong></td>
+                            <td>
+                                1、商家在支付平台的唯一标识号<br>
+                                2、格式示例：M202309001
+                            </td>
                         </tr>
                         <tr>
-                            <td>3</td>
-                            <td>ZZ网络科技公司</td>
-                           <td>91110000MA05678912</td>
-                            <td>M202309003</td>
-                            <td>2,000.00</td>
-                            <td>500.00</td>
-                            <td>500.00</td>
-                            <td>1,500.00</td>
-                            <td>冻结</td>
-                            <td>2023-09-01 16:05:33</td>
-                            <td><a href="#" class="btn-view">查看流水</a></td>
+                            <td><strong>款项类型</strong></td>
+                            <td>
+                                1、货款分账：为商户的收入，商家销售所得的正向货款，分账后生成<br>
+                                2、货款退款：商户的支出，金额为负数，当订单已分账且发生售后完成时原路退钱给客户，退款成功后生成<br>
+                                3、账户充值：商家充值账户的正向金额<br>
+                                4、账户提现：商户的支出，商家从平台账户提现的金额，提现成功后生成<br>
+                                5、客户支付手续费分账：商户的支出，平台收取客户的支付手续费，分账后生成<br>
+                                6、商户支付手续费分账：商户的支出，平台收取商家的支付手续费，分账后生成<br>
+                                7、商户支付手续费退回：商户的收入，发生售后退款完成时按分账规则退回给商家账户<br>
+                                8、类目服务费分账：商户的支出，平台收取的类目服务费，分账后生成<br>
+                                9、类目服务费退回：商户的收入，发生售后退款完成时按分账规则退回给商家账户
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>变动金额</strong></td>
+                            <td>
+                                1、收入类款项为正数（整数），支出类款项为负数<br>
+                                2、金额前带“收/支”标签，分别表示收入与支出<br>
+                                3、格式：整数（正数或负数）
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>可提现余额</strong></td>
+                            <td>
+                                1、商家当前可提现的金额<br>
+                                2、计算公式：可提现余额 = 账户余额 - 冻结金额<br>
+                                3、格式：保留两位小数
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>变动时间</strong></td>
+                            <td>
+                                1、记录账户变动的精确时间<br>
+                                2、格式：YYYY-MM-DD HH:mm:ss
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>订单号/售后单号</strong></td>
+                            <td>
+                                1、关联的订单号或售后单号<br>
+                                2、货款分账、货款退款、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回显示订单号或售后单号<br>
+                                3、账户充值、账户提现显示"-"<br>
+                                4、格式示例：ORD202309010001
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -873,13 +1732,11 @@
         const drawerClose = document.getElementById('drawerClose');
         const drawerOverlay = document.getElementById('drawerOverlay');
 
-        // 打开抽屉
         viewRequirementBtn.addEventListener('click', function() {
             requirementDrawer.classList.add('show');
             drawerOverlay.classList.add('show');
         });
 
-        // 关闭抽屉
         function closeDrawerFunc() {
             requirementDrawer.classList.remove('show');
             drawerOverlay.classList.remove('show');
@@ -887,10 +1744,221 @@
 
         drawerClose.addEventListener('click', closeDrawerFunc);
 
-        // 点击遮罩层关闭抽屉
         drawerOverlay.addEventListener('click', function(e) {
             if (e.target === drawerOverlay) {
                 closeDrawerFunc();
+            }
+        });
+
+        /* ===== 提现按钮（已移除弹窗，仅保留按钮） ===== */
+
+        /* ===== 筛选状态 ===== */
+        let currentTabType = 'all';       // all / income / expense
+        let selectedPaymentType = '全部';  // 款项类型筛选
+
+        const flowTabs = document.getElementById('flowTabs');
+        const flowTableBody = document.getElementById('flowTableBody');
+        const flowRows = Array.from(flowTableBody.querySelectorAll('tr'));
+
+        /* ===== 统一应用筛选 ===== */
+        function applyFilters() {
+            flowRows.forEach(function(row) {
+                const rowFlowType = row.getAttribute('data-flow-type');       // income / expense
+                const rowPaymentType = row.getAttribute('data-payment-type'); // 款项类型
+
+                // Tab 筛选
+                let tabMatch = true;
+                if (currentTabType !== 'all') {
+                    tabMatch = (rowFlowType === currentTabType);
+                }
+
+                // 款项类型筛选
+                let paymentMatch = true;
+                if (selectedPaymentType && selectedPaymentType !== '全部') {
+                    paymentMatch = (rowPaymentType === selectedPaymentType);
+                }
+
+                row.style.display = (tabMatch && paymentMatch) ? '' : 'none';
+            });
+        }
+
+        /* ===== Tab 切换 ===== */
+        flowTabs.addEventListener('click', function(e) {
+            const tab = e.target.closest('.tab-item');
+            if (!tab) return;
+
+            flowTabs.querySelectorAll('.tab-item').forEach(function(item) {
+                item.classList.remove('active');
+            });
+            tab.classList.add('active');
+
+            currentTabType = tab.getAttribute('data-tab');
+            applyFilters();
+        });
+
+        /* ===== 分页演示：点击页码切换高亮 ===== */
+        (function() {
+            const pagination = document.getElementById('demoPagination');
+            if (!pagination) return;
+            pagination.addEventListener('click', function(e) {
+                const li = e.target.closest('li');
+                if (!li) return;
+                if (li.classList.contains('disabled') || li.classList.contains('ellipsis')) return;
+                // 移除所有 active
+                pagination.querySelectorAll('li').forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                // 如果是"上一页"或"下一页"，简单演示：把当前active的页码±1
+                if (li.textContent.trim() === '上一页' || li.textContent.trim() === '下一页') {
+                    const currentActive = pagination.querySelector('li.active');
+                    if (!currentActive) return;
+                    let currentPage = parseInt(currentActive.textContent.trim(), 10);
+                    if (li.textContent.trim() === '上一页') {
+                        currentPage = Math.max(1, currentPage - 1);
+                    } else {
+                        currentPage = Math.min(5, currentPage + 1);
+                    }
+                    // 找到对应页码的li
+                    pagination.querySelectorAll('li').forEach(function(item) {
+                        if (item.textContent.trim() === String(currentPage)) {
+                            item.classList.add('active');
+                        }
+                    });
+                } else {
+                    // 点击页码
+                    li.classList.add('active');
+                }
+                // 更新上一页/下一页禁用状态
+                const activePage = parseInt(pagination.querySelector('li.active').textContent.trim(), 10);
+                const firstLi = pagination.querySelector('li:first-child');
+                const lastLi = pagination.querySelector('li:last-child');
+                if (activePage <= 1) {
+                    firstLi.classList.add('disabled');
+                } else {
+                    firstLi.classList.remove('disabled');
+                }
+                if (activePage >= 5) {
+                    lastLi.classList.add('disabled');
+                } else {
+                    lastLi.classList.remove('disabled');
+                }
+            });
+        })();
+
+        /* ===== 通用：可搜索下拉 ===== */
+        function createSearchableSelect(config) {
+            const root = document.getElementById(config.rootId);
+            const input = document.getElementById(config.inputId);
+            const dropdown = document.getElementById(config.dropdownId);
+            let selectedValue = config.defaultValue || '全部';
+            let filterKeyword = '';
+
+            function renderOptions(keyword) {
+                const kw = (keyword || '').trim().toLowerCase();
+                const filtered = config.options.filter(function(opt) {
+                    return opt.toLowerCase().indexOf(kw) !== -1;
+                });
+
+                if (filtered.length === 0) {
+                    dropdown.innerHTML = '<div class="searchable-select-empty">无匹配选项</div>';
+                    return;
+                }
+
+                dropdown.innerHTML = filtered.map(function(opt) {
+                    return '<div class="searchable-select-option' + (opt === selectedValue ? ' selected' : '') + '" data-value="' + opt + '">' + opt + '</div>';
+                }).join('');
+            }
+
+            function open() {
+                root.classList.add('open');
+                input.removeAttribute('readonly');
+                input.value = filterKeyword;
+                input.focus();
+                renderOptions(filterKeyword);
+            }
+
+            function close() {
+                root.classList.remove('open');
+                input.setAttribute('readonly', 'readonly');
+                if (selectedValue === '全部') {
+                    input.value = '';
+                    input.placeholder = '全部';
+                } else {
+                    input.value = selectedValue;
+                    input.placeholder = selectedValue;
+                }
+                filterKeyword = '';
+            }
+
+            input.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (root.classList.contains('open')) {
+                    close();
+                } else {
+                    open();
+                }
+            });
+
+            input.addEventListener('input', function() {
+                filterKeyword = input.value;
+                renderOptions(filterKeyword);
+            });
+
+            dropdown.addEventListener('click', function(e) {
+                const option = e.target.closest('.searchable-select-option');
+                if (!option) return;
+                selectedValue = option.getAttribute('data-value');
+                filterKeyword = '';
+                close();
+                if (config.onChange) config.onChange(selectedValue);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!root.contains(e.target)) {
+                    if (root.classList.contains('open')) {
+                        close();
+                    }
+                }
+            });
+
+            input.placeholder = '全部';
+
+            return {
+                getValue: function() { return selectedValue; },
+                setValue: function(val) {
+                    selectedValue = val;
+                    if (val === '全部') {
+                        input.value = '';
+                        input.placeholder = '全部';
+                    } else {
+                        input.value = val;
+                        input.placeholder = val;
+                    }
+                }
+            };
+        }
+
+        /* ===== 款项类型下拉 ===== */
+        createSearchableSelect({
+            rootId: 'typeSelect',
+            inputId: 'typeSelectInput',
+            dropdownId: 'typeSelectDropdown',
+            defaultValue: '全部',
+            options: [
+                '全部',
+                '货款分账',
+                '货款退款',
+                '账户充值',
+                '账户提现',
+                '客户支付手续费分账',
+                '商户支付手续费分账',
+                '商户支付手续费退回',
+                '类目服务费分账',
+                '类目服务费退回'
+            ],
+            onChange: function(val) {
+                selectedPaymentType = val;
+                applyFilters();
             }
         });
     </script>
