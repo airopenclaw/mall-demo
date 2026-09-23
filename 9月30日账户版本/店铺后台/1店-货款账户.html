@@ -83,7 +83,7 @@
     .card-body { padding: 20px 0; }
 
     .table-container { width: 100%; overflow-x: auto; padding: 0 10px; }
-    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1100px; }
     thead { background: #fafafa; }
     thead th {
         padding: 12px 16px; text-align: left; font-weight: 600;
@@ -113,7 +113,7 @@
     /* 搜索区域 */
     .search-area { background: #fff; padding: 20px; border-radius: 4px; border: none; }
     .search-row {
-        display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+        display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
     }
     .search-item { display: flex; align-items: center; gap: 10px; }
     .search-item label {
@@ -128,7 +128,7 @@
     .search-item .form-control:focus { outline: none; border-color: #667eea; }
 
     /* 可搜索下拉框 */
-    .searchable-select { position: relative; width: 200px; }
+    .searchable-select { position: relative; width: 180px; }
     .searchable-select-input {
         width: 100%; height: 32px; padding: 0 28px 0 12px;
         border: 1px solid #dcdfe6; border-radius: 4px;
@@ -175,17 +175,25 @@
         background: #fff; border-radius: 4px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.05);
         margin-bottom: 16px; padding: 0; position: relative;
+        overflow: visible;
     }
     .account-info-grid {
         display: flex; flex-wrap: wrap; align-items: center;
         padding: 16px 24px 20px; gap: 8px 0;
+        overflow: visible;
     }
     .account-info-item {
-        flex: 1 0 16%; min-width: 140px; padding: 6px 0;
+        flex: 1 0 20%; min-width: 140px; padding: 6px 0;
         border-right: 1px solid #f0f0f0;
+        overflow: visible;
     }
     .account-info-item:last-child { border-right: none; }
-    .account-info-label { font-size: 12px; color: #999; margin-bottom: 2px; }
+    .account-info-label {
+        font-size: 12px; color: #999; margin-bottom: 2px;
+        display: flex; align-items: center; gap: 4px;
+        position: relative;
+        overflow: visible;
+    }
     .account-info-value { font-size: 15px; font-weight: 600; color: #333; }
     .account-info-value.normal { color: #2e7d32; }
     .account-info-value.frozen { color: #c62828; }
@@ -205,6 +213,60 @@
     .account-info-footer {
         position: absolute; right: 24px; bottom: 8px;
         font-size: 12px; color: #bbb; line-height: 1.4;
+    }
+
+    /* ===== 问号提示图标 ===== */
+    .help-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #c0c4cc;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 600;
+        cursor: help;
+        position: relative;
+        flex-shrink: 0;
+        line-height: 1;
+        font-style: normal;
+    }
+    .help-icon:hover {
+        background: #667eea;
+    }
+    .help-icon .tooltip {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: calc(100% + 8px);
+        transform: translateX(-50%);
+        background: rgba(50, 50, 50, 0.95);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.6;
+        padding: 8px 12px;
+        border-radius: 4px;
+        white-space: normal;
+        width: 260px;
+        text-align: left;
+        z-index: 9999;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        pointer-events: none;
+    }
+    .help-icon .tooltip::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-bottom-color: rgba(50, 50, 50, 0.95);
+    }
+    .help-icon:hover .tooltip {
+        display: block;
     }
 
     /* ===== 分页样式 ===== */
@@ -475,23 +537,36 @@
         <div class="account-info-card">
             <div class="account-info-grid">
                 <div class="account-info-item">
-                    <div class="account-info-label">账户余额</div>
+                    <div class="account-info-label">
+                        <span>账户余额</span>
+                        <span class="help-icon">?
+                            <span class="tooltip">商家的货款账户总余额，取智付接口的 merchantBalance，保留两位小数。</span>
+                        </span>
+                    </div>
                     <div class="account-info-value">10,000.00</div>
                 </div>
                 <div class="account-info-item">
-                    <div class="account-info-label">充值余额</div>
-                    <div class="account-info-value">2,000.00</div>
-                </div>
-                <div class="account-info-item">
-                    <div class="account-info-label">冻结金额</div>
+                    <div class="account-info-label">
+                        <span>冻结金额</span>
+                        <span class="help-icon">?
+                            <span class="tooltip">被冻结的货款金额，暂不可提现，取智付接口的 frozenBalance，保留两位小数。</span>
+                        </span>
+                    </div>
                     <div class="account-info-value">1,000.00</div>
                 </div>
                 <div class="account-info-item">
-                    <div class="account-info-label">可提现余额</div>
+                    <div class="account-info-label">
+                        <span>可提现余额</span>
+                        <span class="help-icon">?
+                            <span class="tooltip">可提现的货款金额，取智付接口的 settlableBalance。计算公式：可提现余额 = 账户余额 - 冻结金额，保留两位小数。</span>
+                        </span>
+                    </div>
                     <div class="account-info-value">9,000.00</div>
                 </div>
                 <div class="account-info-item">
-                    <div class="account-info-label">账户状态</div>
+                    <div class="account-info-label">
+                        <span>账户状态</span>
+                    </div>
                     <div class="account-info-value normal">正常</div>
                 </div>
                 <div class="account-info-action">
@@ -522,6 +597,10 @@
                             <label>订单号/售后单号</label>
                             <input type="text" class="form-control" placeholder="请输入订单号或售后单号" style="width:200px;">
                         </div>
+                        <div class="search-item">
+                            <label>SKU规格编码</label>
+                            <input type="text" class="form-control" placeholder="请输入SKU规格编码" style="width:200px;">
+                        </div>
                         <div class="search-buttons">
                             <button class="search-btn primary">搜索</button>
                             <button class="search-btn">重置</button>
@@ -549,9 +628,9 @@
                                 <th>商户号</th>
                                 <th>款项类型</th>
                                 <th>变动金额</th>
-                                <th>可提现余额</th>
                                 <th>变动时间</th>
                                 <th>订单号/售后单号</th>
+                                <th>SKU规格编码</th>
                             </tr>
                         </thead>
                         <tbody id="flowTableBody">
@@ -559,73 +638,73 @@
                                 <td>1</td>
                                 <td>M202309001</td>
                                 <td>订单结算</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+1004</span></td>
-                                <td>9000</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+1004.00</span></td>
                                 <td>2023-09-01 14:30:25</td>
                                 <td>ORD202309010001</td>
+                                <td>-</td>
                             </tr>
                             <tr data-flow-type="expense" data-payment-type="客户支付手续费分账">
                                 <td>2</td>
                                 <td>M202309001</td>
                                 <td>客户支付手续费分账</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-4</span></td>
-                                <td>10950</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-4.00</span></td>
                                 <td>2023-09-01 16:05:33</td>
                                 <td>ORD202309010001</td>
+                                <td>SKU20230901001</td>
                             </tr>
                             <tr data-flow-type="expense" data-payment-type="商户支付手续费分账">
                                 <td>3</td>
                                 <td>M202309001</td>
                                 <td>商户支付手续费分账</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-2</span></td>
-                                <td>10920</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-2.00</span></td>
                                 <td>2023-09-02 09:15:00</td>
                                 <td>ORD202309010001</td>
+                                <td>SKU20230901001</td>
                             </tr>
                             <tr data-flow-type="expense" data-payment-type="类目服务费分账">
                                 <td>4</td>
                                 <td>M202309001</td>
                                 <td>类目服务费分账</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-30</span></td>
-                                <td>10920</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-30.00</span></td>
                                 <td>2023-09-02 09:15:00</td>
                                 <td>ORD202309010001</td>
+                                <td>SKU20230901001</td>
                             </tr>
                             <tr data-flow-type="expense" data-payment-type="账户提现">
                                 <td>5</td>
                                 <td>M202309001</td>
                                 <td>账户提现</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1000</span></td>
-                                <td>9920</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1000.00</span></td>
                                 <td>2023-09-03 10:00:00</td>
+                                <td>-</td>
                                 <td>-</td>
                             </tr>
                             <tr data-flow-type="expense" data-payment-type="订单退款">
                                 <td>6</td>
                                 <td>M202309001</td>
                                 <td>订单退款</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1004</span></td>
-                                <td>9420</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1004.00</span></td>
                                 <td>2023-09-02 16:00:00</td>
                                 <td>REF202309020001</td>
+                                <td>SKU20230901001</td>
                             </tr>
                             <tr data-flow-type="income" data-payment-type="商户支付手续费退回">
                                 <td>7</td>
                                 <td>M202309001</td>
                                 <td>商户支付手续费退回</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+10</span></td>
-                                <td>9430</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+10.00</span></td>
                                 <td>2023-09-02 16:00:00</td>
                                 <td>REF202309020001</td>
+                                <td>SKU20230901001</td>
                             </tr>
                             <tr data-flow-type="income" data-payment-type="类目服务费退回">
                                 <td>8</td>
                                 <td>M202309001</td>
                                 <td>类目服务费退回</td>
-                                <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5</span></td>
-                                <td>9435</td>
+                                <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5.00</span></td>
                                 <td>2023-09-02 16:00:00</td>
                                 <td>REF202309020001</td>
+                                <td>SKU20230901001</td>
                             </tr>
                         </tbody>
                     </table>
@@ -738,17 +817,21 @@
                 1、本功能主要提供查看各个入驻店铺的货款账户余额及账户流水明细<br>
                 2、展示商家的账户流水各类变动流水记录，包括正向收支和退款退回<br>
                 3、本页面为只读页面，不支持新增、编辑、删除流水操作<br>
-                4、支持按商户号、款项类型、订单号/售后单号搜索<br>
+                4、支持按商户号、款项类型、订单号/售后单号、SKU规格编码搜索<br>
                 5、列表上方支持按“全部 / 收入 / 支出”Tab切换筛选<br>
                 6、款项类型包括：订单结算、订单退款、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回、账户提现<br>
-                7、账户信息展示：账户余额、充值余额、冻结金额、可提现余额、账户状态、最后更新时间<br>
-                8、列表支持分页<br>
-                9、账户信息中增加“提现”按钮，点击打开新增提现弹窗<br>
-                10、提现方式仅支持“对公账户”<br>
-                11、申请提现时，账户必须保留 5,000.00 元预留作售后扣减，本次最高可提现 = 可提现余额 - 5,000.00<br>
-                12、提现弹窗中不展示“账户保留余额”字段，仅在提现金额下方提示“最低提现1元，本次最高可提现 4000.00 元（账户须保留 5,000.00 元预作售后扣减）”<br>
-                13、当输入的提现金额大于本次最高可提现时，输入框标红并显示错误提示“提现金额不能超过本次最高可提现 4000.00 元”<br>
-                14、本期不做“账户充值”功能
+                7、账户信息展示：账户余额、冻结金额、可提现余额、账户状态、最后更新时间<br>
+                8、账户余额、冻结金额、可提现余额后增加问号小图标，鼠标悬停可查看对应说明<br>
+                9、列表支持分页<br>
+                10、账户信息中增加“提现”按钮，点击打开新增提现弹窗<br>
+                11、提现方式仅支持“对公账户”<br>
+                12、申请提现时，账户必须保留 5,000.00 元预留作售后扣减，本次最高可提现 = 可提现余额 - 5,000.00<br>
+                13、提现弹窗中不展示“账户保留余额”字段，仅在提现金额下方提示“最低提现1元，本次最高可提现 4000.00 元（账户须保留 5,000.00 元预作售后扣减）”<br>
+                14、当输入的提现金额大于本次最高可提现时，输入框标红并显示错误提示“提现金额不能超过本次最高可提现 4000.00 元”<br>
+                15、本期不做“账户充值”功能<br>
+                16、变动金额保留两位小数<br>
+                17、流水列表在“订单号/售后单号”后增加“SKU规格编码”列<br>
+                18、订单结算类型不显示 SKU规格编码，显示“-”
             </p>
         </div>
 
@@ -774,21 +857,16 @@
                         <td><strong>账户余额</strong></td>
                         <td>
                             1、商家的货款账户总余额，取智付接口的merchantBalance<br>
-                            2、格式：保留两位小数，如 10,000.00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>充值余额</strong></td>
-                        <td>
-                            1、商家充值的余额金额，取智付接口的rechargeBalance<br>
-                            2、格式：保留两位小数，如 5,000.00
+                            2、格式：保留两位小数，如 10,000.00<br>
+                            3、字段后带问号小图标，鼠标悬停显示该说明
                         </td>
                     </tr>
                     <tr>
                         <td><strong>冻结金额</strong></td>
                         <td>
                             1、被冻结的货款金额，暂不可提现，取智付接口的frozenBalance<br>
-                            2、格式：保留两位小数，如 1,000.00
+                            2、格式：保留两位小数，如 1,000.00<br>
+                            3、字段后带问号小图标，鼠标悬停显示该说明
                         </td>
                     </tr>
                     <tr>
@@ -796,7 +874,8 @@
                         <td>
                             1、可提现的货款金额，取智付接口的settlableBalance<br>
                             2、计算公式：可提现余额 = 账户余额 - 冻结金额<br>
-                            3、格式：保留两位小数
+                            3、格式：保留两位小数<br>
+                            4、字段后带问号小图标，鼠标悬停显示该说明
                         </td>
                     </tr>
                     <tr>
@@ -896,17 +975,9 @@
                     <tr>
                         <td><strong>变动金额</strong></td>
                         <td>
-                            1、收入类款项为正数（整数），支出类款项为负数<br>
+                            1、收入类款项为正数，支出类款项为负数<br>
                             2、金额前带“收/支”标签，分别表示收入与支出<br>
-                            3、格式：整数（正数或负数）
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>可提现余额</strong></td>
-                        <td>
-                            1、商家当前可提现的金额<br>
-                            2、计算公式：可提现余额 = 账户余额 - 冻结金额<br>
-                            3、格式：保留两位小数
+                            3、格式：保留两位小数（如 +1004.00、-4.00）
                         </td>
                     </tr>
                     <tr>
@@ -922,7 +993,19 @@
                             1、关联的订单号或售后单号<br>
                             2、订单结算、订单退款、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回显示订单号或售后单号<br>
                             3、账户提现显示"-"<br>
-                            4、格式示例：ORD202309010001
+                            4、格式示例：ORD202309010001<br>
+                            5、支持按订单号/售后单号搜索
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>SKU规格编码</strong></td>
+                        <td>
+                            1、关联的 SKU 规格编码<br>
+                            2、订单退款、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回显示 SKU规格编码<br>
+                            3、订单结算不显示 SKU规格编码，显示"-"<br>
+                            4、账户提现显示"-"<br>
+                            5、格式示例：SKU20230901001<br>
+                            6、支持按 SKU规格编码搜索
                         </td>
                     </tr>
                 </tbody>
@@ -1060,9 +1143,9 @@
     const amountTip = document.getElementById('amountTip');
     const sendCodeBtn = document.getElementById('sendCodeBtn');
 
-    const AVAILABLE_BALANCE = 9000.00;   // 可提现余额
-    const RESERVED_BALANCE = 5000.00;    // 账户保留余额（预留作售后扣减）
-    const MAX_WITHDRAW = AVAILABLE_BALANCE - RESERVED_BALANCE; // 4000.00
+    const AVAILABLE_BALANCE = 9000.00;
+    const RESERVED_BALANCE = 5000.00;
+    const MAX_WITHDRAW = AVAILABLE_BALANCE - RESERVED_BALANCE;
 
     const DEFAULT_TIP = '最低提现1元，本次最高可提现 ' + MAX_WITHDRAW.toFixed(2) + ' 元（账户须保留 5,000.00 元预作售后扣减）';
     const ERROR_TIP = '提现金额不能超过本次最高可提现 ' + MAX_WITHDRAW.toFixed(2) + ' 元';
@@ -1102,7 +1185,6 @@
         }
 
         if (val > MAX_WITHDRAW) {
-            // 超出本次最高可提现：输入框标红 + 错误提示
             withdrawAmount.classList.add('input-error');
             amountTip.textContent = ERROR_TIP;
             amountTip.classList.add('error');

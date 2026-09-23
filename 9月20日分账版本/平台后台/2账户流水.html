@@ -1080,6 +1080,18 @@
                                 </div>
                             </div>
 
+                            <!-- 订单号/售后单号 -->
+                            <div class="search-item">
+                                <label>订单号/售后单号</label>
+                                <input type="text" class="form-control" placeholder="请输入订单号或售后单号">
+                            </div>
+
+                            <!-- SKU规格编码 -->
+                            <div class="search-item">
+                                <label>SKU规格编码</label>
+                                <input type="text" class="form-control" placeholder="请输入SKU规格编码">
+                            </div>
+
                             <div class="search-buttons" data-page-node-id="gmCdCcnQaEJAA3FPw5BpPB">
                                 <button class="search-btn primary" data-page-node-id="BEeYIl99WelQyVnj0XKXVp">搜索</button>
                                 <button class="search-btn" data-page-node-id="u4jQFRo842BI7V1gi3fw7S">重置</button>
@@ -1110,9 +1122,9 @@
                             <th>商户号</th>
                             <th>款项类型</th>
                             <th>变动金额</th>
-                            <th>可结算余额</th>
                             <th>变动时间</th>
                             <th>订单号/售后单号</th>
+                            <th>SKU规格编码</th>
                         </tr>
                     </thead>
                     <tbody id="flowTableBody">
@@ -1123,10 +1135,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>订单结算</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+1004</span></td>
-                            <td>1004</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+1004.00</span></td>
                             <td>2023-09-01 14:30:25</td>
                             <td>ORD202309010001</td>
+                            <td>-</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="客户支付手续费分账">
                             <td>2</td>
@@ -1134,10 +1146,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>客户支付手续费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-4</span></td>
-                            <td>1000</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-4.00</span></td>
                             <td>2023-09-01 14:30:26</td>
                             <td>ORD202309010001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="商户支付手续费分账">
                             <td>3</td>
@@ -1145,10 +1157,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>商户支付手续费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-2</span></td>
-                            <td>998</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-2.00</span></td>
                             <td>2023-09-01 14:30:27</td>
                             <td>ORD202309010001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="类目服务费分账">
                             <td>4</td>
@@ -1156,10 +1168,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>类目服务费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-4</span></td>
-                            <td>994</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-4.00</span></td>
                             <td>2023-09-01 14:30:28</td>
                             <td>ORD202309010001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <!-- 订单3：订单结算497，客户手续费3，商户手续费2，类目1 -->
                         <tr data-flow-type="income" data-payment-type="订单结算">
@@ -1168,10 +1180,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>订单结算</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+497</span></td>
-                            <td>1491</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+497.00</span></td>
                             <td>2023-09-02 10:15:00</td>
                             <td>ORD202309020002</td>
+                            <td>-</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="客户支付手续费分账">
                             <td>6</td>
@@ -1179,10 +1191,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>客户支付手续费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-3</span></td>
-                            <td>1488</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-3.00</span></td>
                             <td>2023-09-02 10:15:01</td>
                             <td>ORD202309020002</td>
+                            <td>SKU202309020002</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="商户支付手续费分账">
                             <td>7</td>
@@ -1190,10 +1202,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>商户支付手续费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-2</span></td>
-                            <td>1486</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-2.00</span></td>
                             <td>2023-09-02 10:15:02</td>
                             <td>ORD202309020002</td>
+                            <td>SKU202309020002</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="类目服务费分账">
                             <td>8</td>
@@ -1201,10 +1213,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>类目服务费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1</span></td>
-                            <td>1485</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1.00</span></td>
                             <td>2023-09-02 10:15:03</td>
                             <td>ORD202309020002</td>
+                            <td>SKU202309020002</td>
                         </tr>
                         <!-- 订单1退款：先退回，再订单退款 -->
                         <tr data-flow-type="income" data-payment-type="客户支付手续费退回">
@@ -1213,10 +1225,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>客户支付手续费退回</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+4</span></td>
-                            <td>1489</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+4.00</span></td>
                             <td>2023-09-02 16:00:00</td>
                             <td>REF202309020001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <tr data-flow-type="income" data-payment-type="商户支付手续费退回">
                             <td>10</td>
@@ -1224,10 +1236,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>商户支付手续费退回</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+2</span></td>
-                            <td>1491</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+2.00</span></td>
                             <td>2023-09-02 16:00:01</td>
                             <td>REF202309020001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <tr data-flow-type="income" data-payment-type="类目服务费退回">
                             <td>11</td>
@@ -1235,10 +1247,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>类目服务费退回</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+4</span></td>
-                            <td>1495</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+4.00</span></td>
                             <td>2023-09-02 16:00:02</td>
                             <td>REF202309020001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="订单退款">
                             <td>12</td>
@@ -1246,10 +1258,10 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>订单退款</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1004</span></td>
-                            <td>491</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-1004.00</span></td>
                             <td>2023-09-02 16:00:03</td>
                             <td>REF202309020001</td>
+                            <td>SKU202309010001</td>
                         </tr>
                         <!-- 账户提现 -->
                         <tr data-flow-type="expense" data-payment-type="账户提现">
@@ -1258,9 +1270,9 @@
                             <td>91110000MA01234567</td>
                             <td>M202309001</td>
                             <td>账户提现</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-400</span></td>
-                            <td>91</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-400.00</span></td>
                             <td>2023-09-03 11:20:00</td>
+                            <td>-</td>
                             <td>-</td>
                         </tr>
                         <!-- 商户2：订单结算 -->
@@ -1270,10 +1282,10 @@
                             <td>91110000MA09876543</td>
                             <td>M202309002</td>
                             <td>订单结算</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5022.5</span></td>
-                            <td>5022.5</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-income">收</span><span class="amount-positive">+5022.50</span></td>
                             <td>2023-09-01 10:00:00</td>
                             <td>ORD202309010003</td>
+                            <td>-</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="客户支付手续费分账">
                             <td>15</td>
@@ -1281,10 +1293,10 @@
                             <td>91110000MA09876543</td>
                             <td>M202309002</td>
                             <td>客户支付手续费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-22.5</span></td>
-                            <td>5000</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-22.50</span></td>
                             <td>2023-09-01 10:00:01</td>
                             <td>ORD202309010003</td>
+                            <td>SKU202309010003</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="商户支付手续费分账">
                             <td>16</td>
@@ -1292,10 +1304,10 @@
                             <td>91110000MA09876543</td>
                             <td>M202309002</td>
                             <td>商户支付手续费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-10</span></td>
-                            <td>4990</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-10.00</span></td>
                             <td>2023-09-01 10:00:02</td>
                             <td>ORD202309010003</td>
+                            <td>SKU202309010003</td>
                         </tr>
                         <tr data-flow-type="expense" data-payment-type="类目服务费分账">
                             <td>17</td>
@@ -1303,10 +1315,10 @@
                             <td>91110000MA09876543</td>
                             <td>M202309002</td>
                             <td>类目服务费分账</td>
-                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-20</span></td>
-                            <td>4970</td>
+                            <td class="amount-cell"><span class="amount-tag amount-tag-expense">支</span><span class="amount-negative">-20.00</span></td>
                             <td>2023-09-01 10:00:03</td>
                             <td>ORD202309010003</td>
+                            <td>SKU202309010003</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1397,14 +1409,16 @@
                     1、本功能主要提供查看各个入驻店铺的账户流水明细<br>
                     2、展示商家的账户流水各类变动流水记录，包括正向收支和退款退回<br>
                     3、本页面为只读页面，不支持新增、编辑、删除操作<br>
-                    4、支持按商家名称、商户号、信用代码、款项类型搜索<br>
+                    4、支持按商家名称、商户号、信用代码、款项类型、订单号/售后单号、SKU规格编码搜索<br>
                     5、列表上方支持按“全部 / 收入 / 支出”Tab切换筛选<br>
                     6、款项类型包括：订单结算、订单退款、账户提现、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回<br>
-                    7、<strong>订单结算金额 = 订单实付金额（货款 + 客户支付手续费）</strong>，即订单支付成功后，先将订单实付金额全额结算给商家，再进行客户支付手续费分账、商户支付手续费分账、类目服务费分账
+                    7、<strong>订单结算金额 = 订单实付金额（货款 + 客户支付手续费）</strong>，即订单支付成功后，先将订单实付金额全额结算给商家，再进行客户支付手续费分账、商户支付手续费分账、类目服务费分账<br>
+                    8、SKU规格编码：关联的分账规则编码；<strong>订单结算类型不显示 SKU 规格编码</strong>，其余款项类型均展示对应的 SKU 规格编码<br>
+                    9、变动金额格式：<strong>保留 2 位小数</strong>（如 +1004.00、-4.50）
                 </p>
             </div>
 
-            <!-- ===== 举例：订单金额1000，以微信为例 ===== -->
+            <!-- ===== 举例：订单金额1000 ===== -->
             <div class="rate-table-wrap">
                 <div class="rate-table-title">4、举例：订单金额1000，假设客户费率0.45%，商户支付和退货费率均为0.2%；商户流水如下：</div>
 
@@ -1426,32 +1440,32 @@
                             <td class="col-seq">1</td>
                             <td>订单支付</td>
                             <td>收入</td>
-                            <td class="amount-income">+1004.5</td>
-                            <td>1004.5</td>
+                            <td class="amount-income">+1004.50</td>
+                            <td>1004.50</td>
                             <td>订单实付金额 + 客户手续费一并进入商家账户</td>
                         </tr>
                         <tr>
                             <td class="col-seq">2</td>
                             <td>客户支付手续费分账</td>
                             <td>支出</td>
-                            <td class="amount-expense">-4.5</td>
-                            <td>1000</td>
+                            <td class="amount-expense">-4.50</td>
+                            <td>1000.00</td>
                             <td>平台从商家账户扣走客户手续费</td>
                         </tr>
                         <tr>
                             <td class="col-seq">3</td>
                             <td>商户支付手续费分账</td>
                             <td>支出</td>
-                            <td class="amount-expense">-2</td>
-                            <td>998</td>
+                            <td class="amount-expense">-2.00</td>
+                            <td>998.00</td>
                             <td>平台收取商家的支付手续费</td>
                         </tr>
                         <tr>
                             <td class="col-seq">4</td>
                             <td>类目服务费分账</td>
                             <td>支出</td>
-                            <td class="amount-expense">-4</td>
-                            <td>994</td>
+                            <td class="amount-expense">-4.00</td>
+                            <td>994.00</td>
                             <td>平台收取的类目服务费</td>
                         </tr>
                     </tbody>
@@ -1475,39 +1489,39 @@
                             <td class="col-seq">5</td>
                             <td>客户支付手续费退回</td>
                             <td>收入</td>
-                            <td class="amount-income">+4.5</td>
-                            <td>998.5</td>
+                            <td class="amount-income">+4.50</td>
+                            <td>998.50</td>
                             <td>平台将客户手续费退回商家账户</td>
                         </tr>
                         <tr>
                             <td class="col-seq">6</td>
                             <td>商户支付手续费退回</td>
                             <td>收入</td>
-                            <td class="amount-income">+2</td>
-                            <td>1000.5</td>
+                            <td class="amount-income">+2.00</td>
+                            <td>1000.50</td>
                             <td>商户手续费按比例退回</td>
                         </tr>
                         <tr>
                             <td class="col-seq">7</td>
                             <td>类目服务费退回</td>
                             <td>收入</td>
-                            <td class="amount-income">+4</td>
-                            <td>1004.5</td>
+                            <td class="amount-income">+4.00</td>
+                            <td>1004.50</td>
                             <td>类目服务费按比例退回</td>
                         </tr>
                         <tr>
                             <td class="col-seq">8</td>
                             <td>订单退款</td>
                             <td>支出</td>
-                            <td class="amount-expense">-1004.5</td>
-                            <td>0</td>
+                            <td class="amount-expense">-1004.50</td>
+                            <td>0.00</td>
                             <td>原路退回客户实付金额 + 客户手续费</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <div class="flow-example-note">
-                    说明：订单金额 1000 元；客户费率 0.45%，客户支付手续费 = 1000 × 0.45% = 4.5 元；商户支付和退货费率均为 0.2%，商户支付手续费 = 1000 × 0.2% = 2 元；类目服务费按类目规则计算，此处示例取 4 元。
+                    说明：订单金额 1000 元；客户费率 0.45%，客户支付手续费 = 1000 × 0.45% = 4.5 元；商户支付和退货费率均为 0.2%，商户支付手续费 = 1000 × 0.2% = 2 元；类目服务费按类目规则计算，此处示例取 4 元。金额均保留 2 位小数。
                 </div>
             </div>
             <!-- ===== 费率与举例结束 ===== -->
@@ -1667,17 +1681,9 @@
                         <tr>
                             <td><strong>变动金额</strong></td>
                             <td>
-                                1、收入类款项为正数（整数），支出类款项为负数<br>
+                                1、收入类款项为正数，支出类款项为负数<br>
                                 2、金额前带“收/支”标签，分别表示收入与支出<br>
-                                3、格式：整数（正数或负数）
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>可结算余额</strong></td>
-                            <td>
-                                1、商家当前可结算的金额<br>
-                                2、计算公式：可结算余额 = 账户余额 - 冻结金额<br>
-                                3、格式：保留两位小数
+                                3、格式：<strong>保留 2 位小数</strong>（如 +1004.00、-4.50）
                             </td>
                         </tr>
                         <tr>
@@ -1694,6 +1700,15 @@
                                 2、订单结算、订单退款、客户支付手续费分账、商户支付手续费分账、商户支付手续费退回、类目服务费分账、类目服务费退回显示订单号或售后单号<br>
                                 3、账户提现显示"-"<br>
                                 4、格式示例：ORD202309010001
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>SKU规格编码</strong></td>
+                            <td>
+                                1、关联的分账规则编码<br>
+                                2、<strong>订单结算类型不显示 SKU 规格编码</strong><br>
+                                3、其余款项类型均展示对应的 SKU 规格编码<br>
+                                4、账户提现显示"-"
                             </td>
                         </tr>
                     </tbody>
