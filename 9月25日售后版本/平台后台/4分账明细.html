@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>分账明细 · 场景与资金计算 · 状态机</title>
+    <title>分账明细 · 场景与资金计算 · 状态机 · 举例说明</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -266,16 +266,16 @@
             display: flex; justify-content: flex-end; gap: 10px;
         }
 
-        /* ===== 状态tab筛选 — 文字在区域内垂直居中，横线与灰色分割线重叠居中 ===== */
+        /* 状态tab筛选 */
         .tab-filter {
             display: flex;
-            align-items: center;        /* 关键：让 tab 文字在区域内垂直居中 */
+            align-items: center;
             gap: 20px;
-            padding: 0 20px;            /* 上下 padding 去掉，由固定高度 + align-items 控制居中 */
-            height: 56px;               /* 固定区域高度，文字在其中垂直居中 */
+            padding: 0 20px;
+            height: 56px;
             border-bottom: 1px solid #e4e7ed;
             margin-bottom: 0;
-            margin-top: -20px;          /* 抵消 card-body 的 padding-top，整体位置上移对齐 */
+            margin-top: -20px;
             position: relative;
         }
 
@@ -292,23 +292,20 @@
         .tab-item:hover { color: #667eea; }
         .tab-item.active { color: #667eea; font-weight: 600; }
 
-        /* 选中横线：与灰色分割线重叠居中 */
         .tab-item.active::after {
             content: '';
             position: absolute;
             left: 0;
             right: 0;
-            bottom: -16px;              /* 相对 tab 向下偏移到区域底部（24px文字高 + 16px = 距离区域顶部40px） */
+            bottom: -16px;
             height: 2px;
             background: #667eea;
-            transform: translateY(50%); /* 再下移一半，使横线中心落在 1px 灰色分割线上 */
+            transform: translateY(50%);
         }
 
-        /* 列表与 tab 之间增加间距 */
         .tab-filter + .table-container { margin-top: 16px; }
         .card-body .table-container:first-of-type { padding-top: 0; }
 
-        /* 抽屉内表格微调 */
         .drawer-body .table-container { padding: 0; }
         .drawer-body table { min-width: 100%; font-size: 13px; }
         .drawer-body thead th { padding: 10px 12px; font-size: 12.5px; }
@@ -316,6 +313,122 @@
         .drawer-body table th:first-child,
         .drawer-body table td:first-child {
             min-width: 130px; width: 150px; white-space: nowrap;
+        }
+
+        /* ===== 举例说明卡片 ===== */
+        .example-section {
+            margin: 24px 0 32px 0;
+            background: #f4f9f4;
+            border-radius: 8px;
+            padding: 18px 16px;
+            border: 1px solid #d5e8d5;
+        }
+        .example-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e4b1e;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #b8d9b8;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+        }
+        .example-section-title::before {
+            content: "📋";
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        .example-card {
+            background: #ffffff;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2f0e2;
+        }
+        .example-card:last-child { margin-bottom: 0; }
+        .example-card-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #1e4b1e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .example-card-title::before {
+            content: "▸";
+            color: #2e7d32;
+            font-size: 14px;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+        .example-card-body {
+            padding-left: 16px;
+            font-size: 13px;
+            color: #2f3a4f;
+            line-height: 1.8;
+        }
+        .example-card-body ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 6px 0 0 0;
+        }
+        .example-card-body li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: #2f3a4f;
+        }
+        .example-card-body li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+        .example-highlight {
+            background: #e8f5e9;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #1e4b1e;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            font-size: 12.5px;
+        }
+        .example-table th {
+            background: #e8f5e9;
+            padding: 6px 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #1e4b1e;
+            border: 1px solid #c8e6c9;
+            font-size: 12px;
+        }
+        .example-table td {
+            padding: 5px 10px;
+            border: 1px solid #c8e6c9;
+            color: #2f3a4f;
+        }
+        .example-table tr:hover td {
+            background: #f1f8f1;
+        }
+        .example-note {
+            background: #fff9e6;
+            border-left: 3px solid #ffa726;
+            padding: 8px 12px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 12.5px;
+            color: #6b5e2e;
+        }
+        .example-note strong {
+            color: #b45309;
         }
     </style>
 </head>
@@ -431,7 +544,7 @@
             <!-- 分账规则卡片 -->
             <div class="card">
                 <div class="card-body">
-                    <!-- 状态tab筛选：文字垂直居中，横线与灰色分割线重叠居中 -->
+                    <!-- 状态tab筛选 -->
                     <div class="tab-filter">
                         <div class="tab-item active" data-status="">全部</div>
                         <div class="tab-item" data-status="pending">待分账</div>
@@ -466,13 +579,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- 原有演示数据 -->
                                 <tr>
                                     <td>1</td>
                                     <td>LS202309010001</td>
                                     <td>DD202309010001</td>
                                     <td>-</td>
                                     <td>SKU001</td>
-                                    <td>数码电器/手机/智能手机</td>
+                                    <td>数码电器</td>
                                     <td>10%</td>
                                     <td>XX科技有限公司</td>
                                     <td>91110000MA01234567</td>
@@ -494,7 +608,7 @@
                                     <td>DD202309010002</td>
                                     <td>SH202309010001</td>
                                     <td>SKU002</td>
-                                    <td>家居生活/家具/沙发</td>
+                                    <td>家居生活</td>
                                     <td>15%</td>
                                     <td>YY商贸有限公司</td>
                                     <td>91110000MA09876543</td>
@@ -516,7 +630,7 @@
                                     <td>DD202309010003</td>
                                     <td>-</td>
                                     <td>SKU003</td>
-                                    <td>食品饮料/零食/坚果</td>
+                                    <td>食品饮料</td>
                                     <td>8%</td>
                                     <td>ZZ网络科技公司</td>
                                     <td>91110000MA05678912</td>
@@ -532,6 +646,121 @@
                                     <td>2023-09-01 16:05:33</td>
                                     <td class="action-column">
                                         <a href="javascript:void(0);" class="btn-link" data-split-id="LS202309010003">分账</a>
+                                    </td>
+                                </tr>
+
+                                <!-- ===== 举例说明对应的演示数据（订单1000元，费率0.4%/0.2%/0.4%） ===== -->
+                                <tr>
+                                    <td>4</td>
+                                    <td>LS202309020001</td>
+                                    <td>DD202309020001</td>
+                                    <td>SH202309020001</td>
+                                    <td>SKU-AIR-001</td>
+                                    <td>空调</td>
+                                    <td>0.4%</td>
+                                    <td>AA电器有限公司</td>
+                                    <td>91110000MA01111111</td>
+                                    <td>AA空调旗舰店</td>
+                                    <td>分账退回</td>
+                                    <td>客户手续费退回</td>
+                                    <td>4.00</td>
+                                    <td>智付支付</td>
+                                    <td>微信支付</td>
+                                    <td>待分账</td>
+                                    <td>-</td>
+                                    <td>赵六</td>
+                                    <td>2023-09-02 10:15:00</td>
+                                    <td class="action-column">-</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>LS202309020002</td>
+                                    <td>DD202309020001</td>
+                                    <td>SH202309020001</td>
+                                    <td>SKU-AIR-001</td>
+                                    <td>空调</td>
+                                    <td>0.2%</td>
+                                    <td>AA电器有限公司</td>
+                                    <td>91110000MA01111111</td>
+                                    <td>AA空调旗舰店</td>
+                                    <td>分账退回</td>
+                                    <td>商户支付手续费退回</td>
+                                    <td>2.00</td>
+                                    <td>智付支付</td>
+                                    <td>微信支付</td>
+                                    <td>待分账</td>
+                                    <td>-</td>
+                                    <td>赵六</td>
+                                    <td>2023-09-02 10:15:00</td>
+                                    <td class="action-column">-</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>LS202309020003</td>
+                                    <td>DD202309020001</td>
+                                    <td>SH202309020001</td>
+                                    <td>SKU-AIR-001</td>
+                                    <td>空调</td>
+                                    <td>0.4%</td>
+                                    <td>AA电器有限公司</td>
+                                    <td>91110000MA01111111</td>
+                                    <td>AA空调旗舰店</td>
+                                    <td>分账退回</td>
+                                    <td>类目服务费退回</td>
+                                    <td>4.00</td>
+                                    <td>智付支付</td>
+                                    <td>微信支付</td>
+                                    <td>待分账</td>
+                                    <td>-</td>
+                                    <td>赵六</td>
+                                    <td>2023-09-02 10:15:00</td>
+                                    <td class="action-column">-</td>
+                                </tr>
+                                <!-- 补充电视、洗衣机示例 -->
+                                <tr>
+                                    <td>7</td>
+                                    <td>LS202309020004</td>
+                                    <td>DD202309020002</td>
+                                    <td>SH202309020002</td>
+                                    <td>SKU-TV-001</td>
+                                    <td>电视</td>
+                                    <td>0.3%</td>
+                                    <td>BB电子有限公司</td>
+                                    <td>91110000MA02222222</td>
+                                    <td>BB电视专营店</td>
+                                    <td>分账退回</td>
+                                    <td>客户手续费退回</td>
+                                    <td>3.00</td>
+                                    <td>智付支付</td>
+                                    <td>支付宝</td>
+                                    <td>已分账</td>
+                                    <td>-</td>
+                                    <td>孙七</td>
+                                    <td>2023-09-02 11:30:00</td>
+                                    <td class="action-column">-</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>LS202309020005</td>
+                                    <td>DD202309020003</td>
+                                    <td>SH202309020003</td>
+                                    <td>SKU-WASH-001</td>
+                                    <td>洗衣机</td>
+                                    <td>0.5%</td>
+                                    <td>CC家电有限公司</td>
+                                    <td>91110000MA03333333</td>
+                                    <td>CC洗衣机旗舰店</td>
+                                    <td>分账退回</td>
+                                    <td>类目服务费退回</td>
+                                    <td>5.00</td>
+                                    <td>智付支付</td>
+                                    <td>微信支付</td>
+                                    <td>分账异常</td>
+                                    <td>费率未配置</td>
+                                    <td>周八</td>
+                                    <td>2023-09-02 14:45:00</td>
+                                    <td class="action-column">
+                                        <a href="javascript:void(0);" class="btn-link" data-split-id="LS202309020005">分账</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -557,8 +786,8 @@
             <div class="note-section">
                 <h4>需求</h4>
                 <p>
-                    1、本功能主要提供查看各个入驻店铺的分账明细记录<br>
-                    2、展示支付分账、分账退回相关的分账明细<br>
+                    1、本期只做售后相关的分账明细<br>
+                    2、展示分账退回相关的分账明细<br>
                     3、本页面为只读页面，不支持新增、编辑、删除操作<br>
                     4、支持按状态筛选：待分账/已分账/分账异常/已关闭<br>
                     5、分账异常时显示具体的失败原因<br>
@@ -570,14 +799,84 @@
                     11、按钮点击后立即禁用，防止用户重复点击；接口调用完成后根据结果恢复状态<br>
                     12、系统需要定时对分账异常、待分账的任务进行定时执行分账（是否可以分账需要满足条件）<br>
                     13、支付分账：分账条件为满足分账时点<br>
-                    14、分账退回：分账条件为：1. 退款申请表.审核状态 = 申请通过2. 对应销售单的SKU分账明细表.支付分账状态 = 已分账<br>
+                    14、分账退回：分账条件为：分账明细表状态 = 已分账或分账异常<br>
                     15、<strong>费率校验规则</strong>：生成分账明细时，如果费率（商户支付手续费率、类目服务费率、客户支付手续费）为空或未配置，则生成的分账明细状态直接为「分账异常」，不进入「待分账」状态
                 </p>
             </div>
 
+            <!-- 举例说明 -->
+            <div class="example-section">
+                <div class="example-section-title">举例说明：订单金额 1000 元</div>
+                <div class="example-card">
+                    <div class="example-card-title">场景设定</div>
+                    <div class="example-card-body">
+                        <div>订单金额：<span class="example-highlight">1000.00 元</span></div>
+                        <div>客户支付手续费退回费率：<span class="example-highlight">0.4%</span></div>
+                        <div>商户支付手续费退回费率：<span class="example-highlight">0.2%</span></div>
+                        <div>类目服务费退回费率：<span class="example-highlight">0.4%</span></div>
+                        <div style="margin-top: 6px; color: #5a6e5a; font-size: 12.5px;">* 假设售后审核通过，且对应 SKU 的支付分账均为「已分账」状态，满足分账退回条件。</div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-card-title">生成的分账退回单据（共 3 笔）</div>
+                    <div class="example-card-body">
+                        <table class="example-table">
+                            <thead>
+                                <tr>
+                                    <th>交易类型</th>
+                                    <th>款项类型</th>
+                                    <th>计算过程</th>
+                                    <th>款项金额（元）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>分账退回</td>
+                                    <td>客户手续费退回</td>
+                                    <td>1000 × 0.4%</td>
+                                    <td><span class="example-highlight">4.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td>分账退回</td>
+                                    <td>商户支付手续费退回</td>
+                                    <td>1000 × 0.2%</td>
+                                    <td><span class="example-highlight">2.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td>分账退回</td>
+                                    <td>类目服务费退回</td>
+                                    <td>1000 × 0.4%</td>
+                                    <td><span class="example-highlight">4.00</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 8px; font-size: 12.5px; color: #2e7d32; font-weight: 500;">
+                            合计退回：10.00 元
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-card-title">说明与注意事项</div>
+                    <div class="example-card-body">
+                        <ul>
+                            <li>以上 3 笔单据均基于「分账退回」场景生成，对应状态机图二中「审核通过 → 费率正常 → 待分账」路径。</li>
+                            <li>每笔款项金额为 0 时不会生成单据；本例中金额均大于 0，因此全部生成。</li>
+                            <li>若对应退回费率配置为空，则该笔单据状态直接为「分账异常」，不进入「待分账」。</li>
+                            <li>分账退回成功后，单据状态流转为「已分账」；若退回失败，则状态变为「分账异常」，可在列表手动重试。</li>
+                            <li>退款金额若为部分退款，则按「实际退款金额 × 对应费率」重新计算各笔退回金额。</li>
+                        </ul>
+                        <div class="example-note">
+                            <strong>⚠️ 注意：</strong>以上计算基于订单全额退款（1000元）且所有费率均已正确配置。实际业务中请以售后单实际退款金额和系统记录的费率为准。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- 场景与资金计算 -->
             <div class="scene-section">
-                <div class="scene-section-title">分账明细生成（本期涉及：场景4、场景5、场景6、场景7、场景8、场景9）</div>
+                <div class="scene-section-title">分账明细生成（本期涉及：场景4、场景5、场景6）</div>
 
                 <div class="scene-card">
                     <div class="scene-card-title">场景1：支付成功-商户支付手续费生成</div>
